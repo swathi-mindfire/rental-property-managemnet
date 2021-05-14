@@ -1,0 +1,47 @@
+<div class="login-form">
+    <mat-card>   
+        <mat-card-content>
+            <mat-toolbar  class="header" color="primary">Welcome Back</mat-toolbar>        
+            <form action="" (ngSubmit)="onLogin()" name="loginForm" [formGroup]= "loginForm">
+                <div class="email-input form-group">
+                    <mat-icon class="field-icon"> email</mat-icon> 
+                    <mat-form-field class="full-width" appearance="outline">
+                        <mat-label>Email</mat-label>
+                        <input formControlName= "email" matInput required>
+                        <mat-error *ngIf= "loginForm.controls.email.errors?.required">
+                            Email is required
+                        </mat-error>
+                        <mat-error *ngIf= "loginForm.controls.email.errors?.email">
+                            Invalid email
+                        </mat-error>
+                    </mat-form-field>
+                </div>        
+                <div class="form-group">
+                    <mat-icon class="field-icon"> lock</mat-icon>            
+                    <mat-form-field class="full-width" appearance="outline">
+                        <mat-label>Password</mat-label>
+                        <input formControlName ="password" matInput [type] = "hide?'password' :'text'" required >
+                        <button mat-icon-button matSuffix (click)="hide = !hide"                       >
+                            <mat-icon>{{hide?'visibility_off':'visibility'}}</mat-icon>
+                        </button>
+                        <mat-error *ngIf = "loginForm.controls.password.errors?.required">
+                            Required password
+                        </mat-error>
+                        <mat-error *ngIf = "loginForm.controls.password.errors?.minlength">
+                            Invalid Password
+                        </mat-error>
+                    </mat-form-field>
+                </div>
+                <div class="form-last">
+                    <a [routerLink]="['forgot']">Forgot password</a>
+                     <a [routerLink]="['register']" class="reg"> <button mat-raised-button color="primary">Login</button></a>
+                </div>
+                <div class="login-btn-row">
+                    <button mat-raised-button color="primary"  class="login-btn" [disabled] = "loginForm.invalid">Login</button>   
+                </div>                               
+                   
+            </form>
+        </mat-card-content>
+    </mat-card> 
+
+</div>
