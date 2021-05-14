@@ -33,15 +33,20 @@
                     </mat-form-field>
                 </div>
                 <div class="form-last">
-                    <a [routerLink]="['forgot']">Forgot password</a>
-                     <a [routerLink]="['register']" class="reg"> <button mat-raised-button color="primary">Login</button></a>
+                    <a routerLink='/forgot'>Forgot password</a>
+                     <a routerLink= '/signup'mat-raised-button color="primary" >SignUp</a>
                 </div>
                 <div class="login-btn-row">
-                    <button mat-raised-button color="primary"  class="login-btn" [disabled] = "loginForm.invalid">Login</button>   
+                    <button mat-raised-button color="primary"  class="login-btn" >Login</button>
+                    <!-- [disabled] = "loginForm.invalid" -->
                 </div>                               
                    
             </form>
         </mat-card-content>
     </mat-card> 
 
+</div>
+
+<div class="route-content">
+    <router-outlet></router-outlet>
 </div>

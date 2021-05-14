@@ -39,12 +39,12 @@ a{
     justify-content: space-around;
 
 }
-.login-form{
+.reg-form{
    margin-top: 100px;
    max-width: 500px;
    max-height: 600px;
    margin: auto;
-   margin-top: 50px;
+   margin-top: -30px;
    box-sizing: border-box;  
 }
 .login-btn{
@@ -52,7 +52,7 @@ a{
     height: 40px;    
 }
 
-.mat-raised-button{
+/* .mat-raised-button{
     color: blue !important;
   }
 
@@ -64,4 +64,4 @@ a{
   .reg{
     color: white !important;
 
-  }
+  } */

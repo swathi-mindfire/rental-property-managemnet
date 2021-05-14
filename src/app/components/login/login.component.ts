@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import{FormGroup,FormControl,Validators} from '@angular/forms';
+import { TokenService } from 'src/app/services/token.service';
 import { UserService } from 'src/app/services/user.service';
 import{User} from './../../model/user';
 
@@ -13,7 +14,7 @@ export class LoginComponent implements OnInit {
   loginForm :FormGroup;
   hide= true;
 
-  constructor(public _http: UserService) { }
+  constructor(private _http: UserService,private _tokenService:TokenService) { }
 
   ngOnInit(): void {
     this.loginForm = new FormGroup(
@@ -28,8 +29,9 @@ export class LoginComponent implements OnInit {
     this.formData.email=this.loginForm.value.email;
     this.formData.password  = this.loginForm.value.password;
     this._http.authenticate(this.formData).subscribe(
-      ()=>{
+      (res)=>{
         console.log("success")
+        this._tokenService.saveToken(res.token);
       },
       ()=>{
         console.log("Invald")
