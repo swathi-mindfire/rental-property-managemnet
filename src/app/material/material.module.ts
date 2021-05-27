@@ -12,12 +12,14 @@ import {MatSelectModule} from '@angular/material/select';
 import { NgMatSearchBarModule } from 'ng-mat-search-bar';
 import { MatSidenavModule } from '@angular/material/sidenav';
 import {MatListModule} from '@angular/material/list';
+import{MatProgressSpinnerModule} from'@angular/material/progress-spinner';
+
 
 const MaterialComponents = [
                             MatButtonModule,
                             MatSidenavModule,
                             MatListModule,
-                            
+                            MatProgressSpinnerModule,
                             MatButtonToggleModule,
                             MatIconModule,
                             MatBadgeModule,

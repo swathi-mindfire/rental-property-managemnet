@@ -1,9 +1,46 @@
-<div *ngFor="let property of properties"class="mt-4">
- <mat-card >
-   <mat-card-title class="text-primary">{{property.bhk}} BHK {{property.type}}</mat-card-title>
-   <img [src]="property.imgUrls[0]" alt="image" mat-card-image height="250px">
-   <mat-card-content>{{property.rent}}</mat-card-content>
-  
- </mat-card>
 
+<div class="row mt-4">
+  <div class="col-sm-3">
+    <mat-form-field>
+      <input type="search"matInput [matAutocomplete]="auto"
+      (click)="checkPlaceHolder()"  (blur)="checkPlaceHolder()"placeholder="{{searchPlaceHolder}}" 
+      [formControl]="searchLocation" >
+      <mat-autocomplete #auto="matAutocomplete">
+      <mat-option *ngFor="let location of locations" [value]="location">
+        {{location}}
+      </mat-option>
+      </mat-autocomplete>
+   </mat-form-field>
+   <div class="col-sm-3">
+    <mat-form-field>
+      <input type="search"matInput [matAutocomplete]="types"
+      (click)="pTypePlaceHolder()" placeholder="{{typePlaceHolder}}" 
+      [formControl]="searchType" >
+      <mat-autocomplete #types="matAutocomplete">
+      <mat-option *ngFor="let type of propertyTypes" [value]="type">
+        {{type}}
+      </mat-option>
+      </mat-autocomplete>
+   </mat-form-field>  
+ </div>
 </div>
+
+<div class="mt-4  container"  *ngIf="properties;else loadingBlock">
+  <div class="row">
+    <div class="col-sm-12  col-md-6 col-lg-4 mb-2" *ngFor="let property of properties">
+      <mat-card >
+        <img [src]="property.imgUrls[0]" alt="image" mat-card-image height="250px">
+        <mat-card-content> <strong>{{property.bhk}} BHK {{property.type | titlecase}}</strong></mat-card-content>
+        <mat-card-content>{{property.location |titlecase}},{{property.country}}</mat-card-content> 
+        <mat-card-content>{{property.rent | currency:'INR'}}/month</mat-card-content>     
+      </mat-card>
+    </div>
+  </div>
+</div>
+
+<ng-template #loadingBlock>
+  <div class="mt-5">
+      <mat-spinner color="primary" [diameter]="70" class="mx-auto"></mat-spinner>
+  </div>
+
+</ng-template>
