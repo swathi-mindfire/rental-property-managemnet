@@ -1,0 +1,39 @@
+<mat-toolbar color="primary">  
+        <a mat-button routerLink="/">
+            <mat-icon  class="home-icon">home</mat-icon>Home
+        </a>         
+        <a mat-button routerLink="/about">About</a>
+        <span class="example-spacer"></span>
+        <a mat-button routerLink="/signup" *ngIf="!signedin">SignUp</a>
+        <a mat-button routerLink="/login" *ngIf="!signedin">Login</a>
+        <a mat-button routerLink="/newproperty" *ngIf="signedin">Add Property</a>
+        <a mat-button routerLink="/login" *ngIf="signedin">SignOut</a> 
+</mat-toolbar>
+
+<!-- <mat-toolbar color="primary"> -->
+  
+    <!-- <div>
+      <button mat-icon-button (click)="onToggleSidenav()">
+        <mat-icon>menu</mat-icon>
+      </button>
+    </div>
+  
+    <div>
+      <a routerLink="/">
+        <mat-icon>home</mat-icon>
+      </a>
+    </div>
+  
+    <div >
+      <ul class="nav-items">
+       
+        <li *ngIf="!signedin"><a routerLink="/dashboard">Dashboard</a></li>
+        <li *ngIf="!signedin"><a routerLink="/profile">Profile</a></li>
+        <li *ngIf="!signedin"><a routerLink="/signup">Signup</a></li>
+        <li *ngIf="!signedin"><a routerLink="/login">Login</a></li>
+        <li *ngIf="signedin"><a style="cursor: pointer" >Logout</a></li>
+      </ul>
+    </div>
+  
+  </mat-toolbar>
+   -->

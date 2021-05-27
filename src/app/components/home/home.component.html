@@ -1,1 +1,9 @@
-<p>Home component works</p>
+<div *ngFor="let property of properties"class="mt-4">
+ <mat-card >
+   <mat-card-title class="text-primary">{{property.bhk}} BHK {{property.type}}</mat-card-title>
+   <img [src]="property.imgUrls[0]" alt="image" mat-card-image height="250px">
+   <mat-card-content>{{property.rent}}</mat-card-content>
+  
+ </mat-card>
+
+</div>

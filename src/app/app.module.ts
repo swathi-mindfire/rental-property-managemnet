@@ -9,8 +9,15 @@ import{FormsModule, ReactiveFormsModule} from '@angular/forms';
 import {HttpClientModule} from '@angular/common/http';
 import { NewUserComponent } from './components/new-user/new-user.component';
 import { HomeComponent } from './components/home/home.component';
-import { AboutComponent } from './components/about/about.component';
-import { ContactComponent } from './components/contact/contact.component'
+import { NgMatSearchBarModule } from 'ng-mat-search-bar';
+import { AddNewPropertyComponent } from './components/add-new-property/add-new-property.component';
+import { ListAllPropertiesComponent } from './components/list-all-properties/list-all-properties.component';
+import { SearchComponent } from './components/search/search.component';
+import { HeaderComponent } from './components/header/header.component';
+import { FlashMessagesModule } from 'angular2-flash-messages';
+import { FooterComponent } from './components/footer/footer.component';
+import { SidenavComponent } from './components/sidenav/sidenav.component';
+import { PropertyCardComponent } from './components/property-card/property-card.component';
 
 @NgModule({
   declarations: [
@@ -18,8 +25,13 @@ import { ContactComponent } from './components/contact/contact.component'
     LoginComponent,
     NewUserComponent,
     HomeComponent,
-    AboutComponent,
-    ContactComponent
+    AddNewPropertyComponent,
+    ListAllPropertiesComponent,
+    SearchComponent,
+    HeaderComponent,
+    FooterComponent,
+    SidenavComponent,
+    PropertyCardComponent
   ],
   imports: [
     BrowserModule,
@@ -28,7 +40,9 @@ import { ContactComponent } from './components/contact/contact.component'
     MaterialModule,
     ReactiveFormsModule,
     FormsModule,
-    HttpClientModule
+    HttpClientModule,
+    NgMatSearchBarModule,
+    FlashMessagesModule.forRoot(),
 
   ],
   providers: [],

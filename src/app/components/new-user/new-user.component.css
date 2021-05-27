@@ -1,13 +1,21 @@
 mat-card{
     margin-left:auto;
     margin-right: auto;
-    text-align: center;  
+    text-align: center; 
 }
+.reg-form{ 
+    max-width: 500px;
+    max-height: 600px;
+    margin: auto;
+    margin-top: 20px;
+    box-sizing: border-box;  
+ 
+ }
 .header{
   display: flex;
   align-items: center;
   justify-content: center;
-    
+  color:rgb(240, 13, 145);
 }
 .full-width{
     width: 80%;
@@ -16,52 +24,16 @@ mat-card{
     font-size: 20px;
     position:relative; 
     top:20px;
-    left: 20px;  
-}
-.login-btn-row{
-    margin-top: 30px;
-    display: flex;  
-    justify-content: center;
-}
-.form-last{
-    margin-top:10px;
-    display: flex;
-    align-content: center;
-    justify-content: space-around;    
+    left: 10px;  
 }
 a{
     text-decoration: none;
 }
 .form-group{
-    margin-top:10px;
-    padding-top: 10px;
+    margin-top:5px;   
     display: flex;
     justify-content: space-around;
-
-}
-.reg-form{
-   margin-top: 100px;
-   max-width: 500px;
-   max-height: 600px;
-   margin: auto;
-   margin-top: -30px;
-   box-sizing: border-box;  
-}
-.login-btn{
-    width:80%;
-    height: 40px;    
 }
 
-/* .mat-raised-button{
-    color: blue !important;
-  }
 
-.mat-raised-button:hover{
-    color: white !important;
-    background-color:#2596F1;
-  }
 
-  .reg{
-    color: white !important;
-
-  } */

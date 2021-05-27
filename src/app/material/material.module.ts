@@ -6,23 +6,28 @@ import {MatBadgeModule} from '@angular/material/badge';
 import {MatGridListModule} from '@angular/material/grid-list';
 import{MatCardModule} from '@angular/material/card';
 import{MatInputModule} from '@angular/material/input'
-import {MatToolbarModule} from '@angular/material/toolbar'
-
-
-
-
-
-
+import {MatToolbarModule} from '@angular/material/toolbar';
+import {MatAutocompleteModule} from '@angular/material/autocomplete';
+import {MatSelectModule} from '@angular/material/select';
+import { NgMatSearchBarModule } from 'ng-mat-search-bar';
+import { MatSidenavModule } from '@angular/material/sidenav';
+import {MatListModule} from '@angular/material/list';
 
 const MaterialComponents = [
                             MatButtonModule,
+                            MatSidenavModule,
+                            MatListModule,
+                            
                             MatButtonToggleModule,
                             MatIconModule,
                             MatBadgeModule,
                             MatGridListModule,
                             MatCardModule,
                             MatInputModule,
-                            MatToolbarModule
+                            MatToolbarModule,
+                            MatAutocompleteModule,
+                            MatSelectModule,
+                            NgMatSearchBarModule
                           
                           ]
 

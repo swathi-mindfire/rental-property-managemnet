@@ -19,7 +19,7 @@ export function passwordChecker(
 
            }
            else{
-               confPassword.setErrors(null);
+               confPassword.setErrors({mustmatch :null});
            }
        }
 

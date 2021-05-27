@@ -1,7 +1,8 @@
 <div class="login-form">
-    <mat-card>   
-        <mat-card-content>
-            <mat-toolbar  class="header" color="primary">Welcome Back</mat-toolbar>        
+    <mat-card> 
+        <mat-card-title class="header" color="primary">
+            <mat-toolbar color="primary">Welcome Back </mat-toolbar></mat-card-title>    
+        <mat-card-content>                  
             <form action="" (ngSubmit)="onLogin()" name="loginForm" [formGroup]= "loginForm">
                 <div class="email-input form-group">
                     <mat-icon class="field-icon"> email</mat-icon> 
@@ -34,19 +35,18 @@
                 </div>
                 <div class="form-last">
                     <a routerLink='/forgot'>Forgot password</a>
-                     <a routerLink= '/signup'mat-raised-button color="primary" >SignUp</a>
+                    <a routerLink= '/signup' color="primary" >SignUp</a>
                 </div>
                 <div class="login-btn-row">
-                    <button mat-raised-button color="primary"  class="login-btn" >Login</button>
+                    <button mat-raised-button color="primary" class="login-btn" >Login</button>
                     <!-- [disabled] = "loginForm.invalid" -->
-                </div>                               
+                </div> 
+                <div *ngIf ="errormsg">
+                    {{errormsg}}
+                </div>                              
                    
             </form>
         </mat-card-content>
     </mat-card> 
-
 </div>
 
-<div class="route-content">
-    <router-outlet></router-outlet>
-</div>

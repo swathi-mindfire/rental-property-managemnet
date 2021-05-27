@@ -11,7 +11,7 @@ export class TokenInterceptorService implements HttpInterceptor{
   constructor(private tokenService :TokenService) { }
   intercept(req: HttpRequest<any>, next: HttpHandler): Observable<HttpEvent<any>> {
     const headersConfig = {
-      'Content-Type': 'application/json',
+      'Content-Type': 'application/x-www-form-urlencoded',
       'Accept': 'application/json'
     };
 

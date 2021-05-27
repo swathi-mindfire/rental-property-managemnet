@@ -26,8 +26,6 @@ export class NewUserComponent implements OnInit {
         confirmPassword :['',Validators.required],
        
 
-      },{
-        Validators:passwordChecker('password','confirmPassword')
       });
     }
     onReset(){

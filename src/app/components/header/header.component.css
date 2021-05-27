@@ -1,0 +1,38 @@
+.mat-button:hover{
+    background-color: indianred;
+    color: white;
+}
+mat-toolbar{
+    padding: 0;
+
+}
+
+.example-spacer {
+    flex: 1 1 auto;
+  }
+.home-icon{
+    position: relative;
+    top:-3px
+
+}
+.menu{
+    background-color: #616161;
+}
+/* mat-toolbar {
+    height: 4rem;
+  }
+  
+  a {
+    text-decoration: none;
+    color:#fff
+  }
+  
+  a:hover, a:active, .mat-icon:hover, .mat-icon:active {
+    color: #e0e0e0;
+  }
+  
+  .nav-items {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+  } */

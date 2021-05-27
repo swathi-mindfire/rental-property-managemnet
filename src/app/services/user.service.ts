@@ -1,16 +1,24 @@
+import { HttpParams } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import{HttpClient} from '@angular/common/http';
 import { BehaviorSubject, Observable } from 'rxjs';
+import { environment } from 'src/environments/environment';
+import { HttpService } from './http.service';
+
+
 
 @Injectable({
   providedIn: 'root'
 })
 export class UserService {
-  constructor(private _http: HttpClient) { }
+  private url = environment.api_url;
+  constructor(private _http: HttpService) { }
   
 authenticate(data):Observable<any>{
-  return this._http.post('localhost:9000/users/login',data);
-}
+  // let body = new HttpParams()
+  // .set('email', data['email'])
+  // .set('passwod', data['passwod']);
+  return this._http.POST(`${this.url}/api/users/login`,data);
+  }
 }
 
 

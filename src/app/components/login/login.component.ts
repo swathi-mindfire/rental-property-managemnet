@@ -10,9 +10,10 @@ import{User} from './../../model/user';
   styleUrls: ['./login.component.css']
 })
 export class LoginComponent implements OnInit {
-  formData={email:"",password:""};
+  formData = {'email':"",'password':""};
   loginForm :FormGroup;
   hide= true;
+  errormsg="";
 
   constructor(private _http: UserService,private _tokenService:TokenService) { }
 
@@ -26,15 +27,18 @@ export class LoginComponent implements OnInit {
   }
   
   onLogin(){
-    this.formData.email=this.loginForm.value.email;
+    this.formData.email =this.loginForm.value.email;
     this.formData.password  = this.loginForm.value.password;
+
     this._http.authenticate(this.formData).subscribe(
       (res)=>{
-        console.log("success")
+        console.log(res);
         this._tokenService.saveToken(res.token);
       },
-      ()=>{
-        console.log("Invald")
+      (err)=>{
+        console.log(err);
+        this.errormsg= err.error;
+        
       }
     )
     
