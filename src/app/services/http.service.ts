@@ -17,8 +17,13 @@ POST(path: string, body: HttpParams = null, options?: any): Observable<Object> {
   return this._http.post(path, body, this._httpOptionsForPost)
       
 }
-GET(path: string): Observable<Object> {
+GET(path: string,qparams?): Observable<Object> {
+  if(qparams){
+
+    return this._http.post(path,qparams);
+  }
   return this._http.get(path);
+  
       
 }
 }

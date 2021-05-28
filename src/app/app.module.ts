@@ -18,6 +18,7 @@ import { FlashMessagesModule } from 'angular2-flash-messages';
 import { FooterComponent } from './components/footer/footer.component';
 import { SidenavComponent } from './components/sidenav/sidenav.component';
 import { PropertyCardComponent } from './components/property-card/property-card.component';
+import { PropertyDetailsComponent } from './components/property-details/property-details.component';
 
 @NgModule({
   declarations: [
@@ -31,7 +32,8 @@ import { PropertyCardComponent } from './components/property-card/property-card.
     HeaderComponent,
     FooterComponent,
     SidenavComponent,
-    PropertyCardComponent
+    PropertyCardComponent,
+    PropertyDetailsComponent
   ],
   imports: [
     BrowserModule,

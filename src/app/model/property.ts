@@ -9,6 +9,6 @@ export interface Property{
   state:string;
   address:string;
   zipcode:string;
-  imgUrls :[];
+  imgUrls:[];
   status:string;
  }

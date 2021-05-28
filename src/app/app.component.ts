@@ -7,5 +7,5 @@ import { Component } from '@angular/core';
 })
 export class AppComponent {
   title = 'rental-property-project';
-  notifications=2;
+
 }

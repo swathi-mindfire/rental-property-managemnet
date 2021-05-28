@@ -1,1 +1,6 @@
-<p>property-card works!</p>
+<mat-card (click)="hadlePropertyClick()">
+    <img [src]="property.imgUrls[0]" alt="image" mat-card-image height="250px">
+    <mat-card-content> <strong>{{property.bhk}} BHK {{property.type | titlecase}}</strong></mat-card-content>
+    <mat-card-content>{{property.location |titlecase}},{{property.country}}</mat-card-content> 
+    <mat-card-content>{{property.rent | currency:'INR'}}/month</mat-card-content>     
+</mat-card>

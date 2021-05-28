@@ -4,6 +4,7 @@ import { AddNewPropertyComponent } from './components/add-new-property/add-new-p
 import { HomeComponent } from './components/home/home.component';
 import { LoginComponent } from './components/login/login.component';
 import{NewUserComponent} from './components/new-user/new-user.component'
+import { PropertyDetailsComponent } from './components/property-details/property-details.component';
 
 const routes: Routes = [
   {
@@ -26,6 +27,10 @@ const routes: Routes = [
   {
     path:'newproperty',
     component:AddNewPropertyComponent
+  },
+  {
+    path:'propertydetails',
+    component:PropertyDetailsComponent
   },
 
 ];
