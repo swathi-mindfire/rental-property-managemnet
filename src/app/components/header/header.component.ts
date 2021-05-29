@@ -1,5 +1,6 @@
 import { Component, OnInit, Output, EventEmitter} from '@angular/core';
 import {Router} from '@angular/router';
+import { PropertyService } from 'src/app/services/property.service';
 
 @Component({
   selector: 'app-header',
@@ -11,9 +12,10 @@ export class HeaderComponent implements OnInit {
   
   @Output() toggleSidenav = new EventEmitter<void>();
 
-  constructor(private router:Router) { }
+  constructor(private router:Router,private _ps: PropertyService) { }
 
   ngOnInit(): void {
+    this._ps.propertySearchFilters.subscribe();
   }
   onlogout(){
 
@@ -25,6 +27,9 @@ export class HeaderComponent implements OnInit {
   onToggleSidenav(): void {
     this.toggleSidenav.emit();
   }
- 
+  handleHome(){
+    this._ps.propertySearchFilters.next({});
+
+  }
 
 }

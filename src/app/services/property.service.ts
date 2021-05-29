@@ -35,4 +35,6 @@ export class PropertyService {
       imgUrls:[],
       status:null
   })
+  searchFilters={}
+  propertySearchFilters= new BehaviorSubject(this.searchFilters)
 }

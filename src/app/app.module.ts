@@ -20,6 +20,7 @@ import { SidenavComponent } from './components/sidenav/sidenav.component';
 import { PropertyCardComponent } from './components/property-card/property-card.component';
 import { PropertyDetailsComponent } from './components/property-details/property-details.component';
 import { IvyCarouselModule } from 'angular-responsive-carousel';
+import { PropertyListComponent } from './components/property-list/property-list.component';
 
 @NgModule({
   declarations: [
@@ -34,7 +35,8 @@ import { IvyCarouselModule } from 'angular-responsive-carousel';
     FooterComponent,
     SidenavComponent,
     PropertyCardComponent,
-    PropertyDetailsComponent
+    PropertyDetailsComponent,
+    PropertyListComponent
   ],
   imports: [
     BrowserModule,

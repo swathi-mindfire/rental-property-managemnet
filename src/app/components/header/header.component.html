@@ -1,6 +1,6 @@
 <mat-toolbar color="primary">  
-        <a mat-button routerLink="/">
-            <mat-icon  class="home-icon">home</mat-icon>Home
+        <a mat-button routerLink="/" (click)= "handleHome()">
+            <span ><mat-icon  class="home-icon">home</mat-icon>Home</span>
         </a>         
         <a mat-button routerLink="/about">About</a>
         <span class="example-spacer"></span>
