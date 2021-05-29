@@ -19,6 +19,7 @@ import { FooterComponent } from './components/footer/footer.component';
 import { SidenavComponent } from './components/sidenav/sidenav.component';
 import { PropertyCardComponent } from './components/property-card/property-card.component';
 import { PropertyDetailsComponent } from './components/property-details/property-details.component';
+import { IvyCarouselModule } from 'angular-responsive-carousel';
 
 @NgModule({
   declarations: [
@@ -44,6 +45,7 @@ import { PropertyDetailsComponent } from './components/property-details/property
     FormsModule,
     HttpClientModule,
     NgMatSearchBarModule,
+    IvyCarouselModule,
     FlashMessagesModule.forRoot(),
 
   ],

@@ -22,6 +22,7 @@ GET(path: string,qparams?): Observable<Object> {
 
     return this._http.post(path,qparams);
   }
+  // this.router.navigate(["/propertydetails"],)
   return this._http.get(path);
   
       

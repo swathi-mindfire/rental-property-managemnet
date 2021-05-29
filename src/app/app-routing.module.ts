@@ -29,7 +29,7 @@ const routes: Routes = [
     component:AddNewPropertyComponent
   },
   {
-    path:'propertydetails',
+    path:'propertydetails/:id',
     component:PropertyDetailsComponent
   },
 

@@ -8,12 +8,19 @@ import{Property} from 'src/app/model/property';
 })
 export class PropertyDetailsComponent implements OnInit {
   selectedProperty:any;
+  images=[];
+  imgs=[]
 
   constructor(private ps: PropertyService) { 
     this.ps.selectedProperty.subscribe(
       (res)=>{
         this.selectedProperty=res;
-        console.log(this.selectedProperty.imgUrls[0])
+        this.imgs= this.selectedProperty.imgUrls;
+        for(var url of this.imgs){
+          this.images.push({path:url})
+
+        }
+
 
       }
     )

@@ -21,9 +21,10 @@ export class PropertyCardComponent implements OnInit {
   }
   hadlePropertyClick(){
     this.ps.selectedProperty.next(this.property);
-    this.router.navigate(["/propertydetails"])
-    
+    // this.router.navigate(["/propertydetails",{id:this.property.id}])
+    // this.router.navigate(["/propertydetails"],{queryParams:{id:this.property.id}})
+    this.router.navigate(["/propertydetails",this.property.id])
   
-  }
+ }
 
 }

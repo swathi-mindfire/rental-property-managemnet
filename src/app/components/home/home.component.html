@@ -34,11 +34,13 @@
     </div>
     <div class="col-sm-6 col-lg-2">
       <mat-form-field>
-        <input type="text"matInput 
+        <mat-label>Maxrent</mat-label>
+        <input matInput 
           [formControl]="maxrent" 
           (click)="pmaxBudgetPlaceHolder()" (blur)="pmaxBudgetPlaceHolder()"
           placeholder="{{maxBudgetPlaceHolder}}">
-      </mat-form-field>  
+      </mat-form-field>
+ 
     </div>
     <div class="col-sm-12 col-lg-3 search" (click)="handleSearch()">
       <button mat-raised-button color="primary">search<mat-icon class="field-icon">search</mat-icon> </button>

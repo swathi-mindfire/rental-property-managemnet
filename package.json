@@ -21,6 +21,7 @@
     "@angular/platform-browser": "~11.2.13",
     "@angular/platform-browser-dynamic": "~11.2.13",
     "@angular/router": "~11.2.13",
+    "angular-responsive-carousel": "^2.0.2",
     "angular2-flash-messages": "^3.0.1",
     "angular8": "^0.0.1",
     "bootstrap": "^5.0.0",
