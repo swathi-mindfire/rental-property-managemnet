@@ -21,6 +21,9 @@ import { PropertyCardComponent } from './components/property-card/property-card.
 import { PropertyDetailsComponent } from './components/property-details/property-details.component';
 import { IvyCarouselModule } from 'angular-responsive-carousel';
 import { PropertyListComponent } from './components/property-list/property-list.component';
+import { FilterLocationPipe } from './pipes/filter-location.pipe';
+import { FilterPropertyTypePipe } from './pipes/filter-property-type.pipe';
+import { FilterMinrentPipe } from './pipes/filter-minrent.pipe';
 
 @NgModule({
   declarations: [
@@ -36,7 +39,11 @@ import { PropertyListComponent } from './components/property-list/property-list.
     SidenavComponent,
     PropertyCardComponent,
     PropertyDetailsComponent,
-    PropertyListComponent
+    PropertyListComponent,
+    FilterLocationPipe,
+    FilterPropertyTypePipe,
+    FilterMinrentPipe,
+ 
   ],
   imports: [
     BrowserModule,

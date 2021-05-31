@@ -1,6 +1,6 @@
 import { Component, OnInit,Input } from '@angular/core';
 import { PropertyService } from 'src/app/services/property.service';
-import{Property} from 'src/app/model/property';
+import{FormBuilder,FormGroup,Validators} from '@angular/forms';
 import { FormControl } from '@angular/forms';
 
 @Component({
@@ -9,27 +9,34 @@ import { FormControl } from '@angular/forms';
   styleUrls: ['./search.component.css']
 })
 export class SearchComponent implements OnInit {
-	@Input() locations:[];
-  searchPlaceHolder = "Search by Location";
+	locations=[];
+    searchPlaceHolder = "Search by Location";
 	typePlaceHolder = "Property Type";
 	propertyTypes= ["Villa","House","Flat"];
 	maxBudgetPlaceHolder = "Max Budget";
 	minBudgetPlaceHolder = "Min Budget";
+	error =null;
 
   constructor(private _ps: PropertyService) { }
-
   ngOnInit(): void {
-    this._ps.propertySearchFilters.subscribe()
-  }
-  searchLocation = new FormControl();
-	searchType = new FormControl();
-	minrent = new FormControl();
-	maxrent = new FormControl();
+    this._ps.propertySearchFilters.subscribe();
+	this._ps.fetechedProperties.subscribe(
+		(data)=>{
+		  if(data.fetched==true){
+			this.locations = this._ps.getLocations();	
+			  this.error=null;
+			}		  
+		})
+	}
 	params={};
+	searchLocation ="";
+	propertyType="";
+	minrent="";
+	maxrent="";
+	sort="no"
 	checkPlaceHolder() {
-		if (this.searchPlaceHolder || this.searchLocation.value != null) {
-		    this.searchPlaceHolder = null;
-	
+		if (this.searchLocation!="") {
+		    this.searchPlaceHolder = null;	
 		return;
 		} else {
 			this.searchPlaceHolder ='Search by Location';
@@ -37,7 +44,7 @@ export class SearchComponent implements OnInit {
 		}
 	}
 	pTypePlaceHolder() {
-		if (this.typePlaceHolder  || this.searchType.value != null) {
+		if (this.propertyType!= "") {
 		this.typePlaceHolder = null;
 		return;
 		} else {
@@ -46,7 +53,7 @@ export class SearchComponent implements OnInit {
 		}
 	}
 	pminBudgetPlaceHolder() {
-		if (this.minBudgetPlaceHolder==null ||this.minrent.value == null || this.minrent.value=="") {
+		if (this.minrent == "") {
 		this.minBudgetPlaceHolder = 'Min Budget';
 		return;
 		} else {
@@ -55,7 +62,7 @@ export class SearchComponent implements OnInit {
 		}
 	}
 	pmaxBudgetPlaceHolder() {
-		if (this.maxBudgetPlaceHolder==null||this.maxrent.value == null||this.maxrent.value=="") {
+		if (this.maxrent == "") {
 		    this.maxBudgetPlaceHolder = 'Max Budget';
 		    return;
 		} else {
@@ -63,27 +70,39 @@ export class SearchComponent implements OnInit {
 			return
 		}
 	}
+
 	handleSearch(){
-		if(this.searchLocation.value!=null){
-			this.params["location"]= this.searchLocation.value;
+		if(this.searchLocation!=""){
+			this.params["location"]= this.searchLocation;
 		}
-		if(this.searchType.value!= null){
-			this.params["type"] = this.searchType.value
+		if(this.propertyType!=""){
+			this.params["type"] = this.propertyType;
 		}
-		if(this.minrent.value!= null|| this.minrent.value>0){
-			this.params["minrent"] = this.minrent.value;
+		if(this.minrent!=""){
+			this.params["minrent"] = +this.minrent;
 		}
-		if(this.maxrent.value!= null|| this.maxrent.value>0){
-			this.params["maxrent"] = this.maxrent.value;
+		if(this.maxrent!=""){
+			this.params["maxrent"] = +this.maxrent;
+		}
+		if(this.sort!="no"){
+			this.params["sort"] = this.sort;
 		}
 		this._ps.searchFilters=this.params;
-		
-
 		if(this._ps.searchFilters){
 			// this.getProperties(this.params);
            this._ps.propertySearchFilters.next(this._ps.searchFilters);
 		}
 		
+	}
+
+	clearFilters(){
+		this.searchLocation ="";
+		this.propertyType="";
+		this.minrent="";
+		this.maxrent="";
+		this.sort="no"
+		this._ps.propertySearchFilters.next({});
+
 	}
 	
 

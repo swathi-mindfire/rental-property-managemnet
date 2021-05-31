@@ -13,11 +13,18 @@ import { NgMatSearchBarModule } from 'ng-mat-search-bar';
 import { MatSidenavModule } from '@angular/material/sidenav';
 import {MatListModule} from '@angular/material/list';
 import{MatProgressSpinnerModule} from'@angular/material/progress-spinner';
+import {MatPaginatorModule} from '@angular/material/paginator';
+import { MatSortModule } from '@angular/material/sort';
+import {MatRadioModule} from '@angular/material/radio'
+
+
+
 
 
 const MaterialComponents = [
                             MatButtonModule,
                             MatSidenavModule,
+                            MatPaginatorModule,
                             MatListModule,
                             MatProgressSpinnerModule,
                             MatButtonToggleModule,
@@ -29,7 +36,9 @@ const MaterialComponents = [
                             MatToolbarModule,
                             MatAutocompleteModule,
                             MatSelectModule,
-                            NgMatSearchBarModule
+                            NgMatSearchBarModule,
+                            MatSortModule,
+                            MatRadioModule
                           
                           ]
 

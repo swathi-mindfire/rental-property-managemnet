@@ -1,15 +1,20 @@
-<div class="mt-4  container" *ngIf="properties;else loadingBlock">
+<div class="mt-4  container" *ngIf="propertiesSelected">
     <div class="row">
-      <div class="col-sm-12  col-md-6 col-lg-4 mb-3" *ngFor="let property of properties">
+      <div class="col-sm-12  col-md-6 col-lg-4 mb-3" *ngFor="let property of obs| async" matSort>
         <app-property-card [property]="property"></app-property-card>
         </div>
     </div>
+  </div> 
+  <div class="mt-5" *ngIf="!propertiesSelected && !error">
+      <mat-spinner color="primary" [diameter]="70" class="mx-auto"></mat-spinner>
   </div>
-  <ng-template #loadingBlock >
-    <div class="mt-5">
-        <mat-spinner color="primary" [diameter]="70" class="mx-auto"></mat-spinner>
-    </div>
-  </ng-template>
-  <div *ngIf = "error" class="text-center text-primary">
-    {{error}}
+  <div *ngIf = "error" class="text-center text-info text-primary mt-4">
+    Error while Fetching Data
   </div>
+<div *ngIf="filteredEmpty" class="text-center text-info">
+  No search results
+</div>
+<div [hidden] ="!propertiesSelected || filteredEmpty" class="matpage ">
+  <mat-paginator [pageSizeOptions]="[5]" showFirstLastButtons></mat-paginator>
+</div>
+

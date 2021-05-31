@@ -2,11 +2,17 @@
 mat-form-field{
     width: 100%;
   }
-  .search{
-    position: relative;
-    top:10px;
-   
-  }
-  button{
-    width: 100%;
-  }
+
+button{
+  width: 100%;
+}
+
+.sort{
+  margin-right: 10px;
+  margin-left: 10px;
+}
+
+.search{
+  padding-left: 70px !important;
+}
+

@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import{FormBuilder,FormGroup,Validators} from '@angular/forms'
+import{FormBuilder,FormGroup,Validators} from '@angular/forms';
 import{passwordChecker} from './../../custom-validators/password-checker'
 
 @Component({
@@ -31,6 +31,7 @@ export class NewUserComponent implements OnInit {
     onReset(){
       this.submitted= false;
       this.registerForm.reset();
+      
     }
     onSubmit(){
       this.submitted = true;
