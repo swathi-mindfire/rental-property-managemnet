@@ -2,5 +2,10 @@
 @import'~bootstrap/dist/css/bootstrap.css';
 html, body { height: 100%; }
 body { margin: 0; font-family: sans-serif;
-        overflow-x: hidden;
+   
+    
+       width: 100%;
+       height: auto;
       }
+
+      

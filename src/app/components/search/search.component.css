@@ -1,4 +1,8 @@
-
+@media (min-width:1266px){
+  .search{
+    padding-left: 70px !important;
+  }  
+}
 mat-form-field{
     width: 100%;
   }
@@ -6,13 +10,22 @@ mat-form-field{
 button{
   width: 100%;
 }
-
+mat-radio-button{
+  width: 50% !important;
+}
 .sort{
-  margin-right: 10px;
-  margin-left: 10px;
+  margin-left: 10px !important;
+  margin-right: 10PX !important;
 }
 
-.search{
-  padding-left: 70px !important;
-}
+@media (min-width:990px){
+  .sort-radio{
+    margin-left:-70px !important ;
+  }
+}  
+  
+
+
+
+
 

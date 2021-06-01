@@ -17,8 +17,10 @@ authenticate(data):Observable<any>{
   // let body = new HttpParams()
   // .set('email', data['email'])
   // .set('passwod', data['passwod']);
-  return this._http.POST(`${this.url}/api/users/login`,data);
+  return this._http.POST(`${this.url}/users/login`,data);
   }
+
+  loginCheck= new BehaviorSubject({loggedIn:false})
 }
 
 

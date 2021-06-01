@@ -24,6 +24,8 @@ import { PropertyListComponent } from './components/property-list/property-list.
 import { FilterLocationPipe } from './pipes/filter-location.pipe';
 import { FilterPropertyTypePipe } from './pipes/filter-property-type.pipe';
 import { FilterMinrentPipe } from './pipes/filter-minrent.pipe';
+import { DashboardComponent } from './components/dashboard/dashboard.component';
+
 
 @NgModule({
   declarations: [
@@ -43,6 +45,8 @@ import { FilterMinrentPipe } from './pipes/filter-minrent.pipe';
     FilterLocationPipe,
     FilterPropertyTypePipe,
     FilterMinrentPipe,
+    DashboardComponent,
+
  
   ],
   imports: [

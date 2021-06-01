@@ -1,5 +1,5 @@
-.mat-button:hover{
-    background-color: indianred;
+a:hover{
+    background-color: indianred !important;
     color: white;
 }
 mat-toolbar{
@@ -7,7 +7,7 @@ mat-toolbar{
 
 }
 
-.example-spacer {
+.spacer {
     flex: 1 1 auto;
   }
 .home-icon{
@@ -15,24 +15,37 @@ mat-toolbar{
     top:3px
 
 }
-.menu{
-    background-color: #616161;
-}
-/* mat-toolbar {
-    height: 4rem;
+.example-icon {
+    padding: 0 14px;
   }
   
-  a {
-    text-decoration: none;
-    color:#fff
+/*   
+  .mat-sidenav-container{
+    height: auto;
   }
-  
-  a:hover, a:active, .mat-icon:hover, .mat-icon:active {
-    color: #e0e0e0;
-  }
-  
-  .nav-items {
-    list-style: none;
-    padding: 0;
-    margin: 0;
+.mat-sidenav {
+     height: 100%;
+    min-height: 100%;
   } */
+    
+  /* mat-sidenav-container {
+  
+    height: 100%;
+    min-height: 100%;
+    width: 100%;
+    min-width: 100%;
+ } */
+
+
+  
+  .mat-sidenav {
+    width: 200px;
+    height: 2000px !important;
+  }
+  mat-sidenav-content {
+    min-height: 1090px !important;
+  
+ }
+  
+
+ 

@@ -1,6 +1,7 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 import { AddNewPropertyComponent } from './components/add-new-property/add-new-property.component';
+import { DashboardComponent } from './components/dashboard/dashboard.component';
 import { HomeComponent } from './components/home/home.component';
 import { LoginComponent } from './components/login/login.component';
 import{NewUserComponent} from './components/new-user/new-user.component'
@@ -30,6 +31,10 @@ const routes: Routes = [
   {
     path:'propertydetails/:id',
     component:PropertyDetailsComponent
+  },
+  {
+    path:'dashboard/:id',
+    component:DashboardComponent
   },
 
 ];

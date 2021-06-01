@@ -41,12 +41,14 @@
                     <button mat-raised-button color="primary" class="login-btn" >Login</button>
                     <!-- [disabled] = "loginForm.invalid" -->
                 </div> 
-                <div *ngIf ="errormsg">
+                <div *ngIf ="errormsg" class="mt-4 text-danger">
                     {{errormsg}}
                 </div>                              
                    
             </form>
         </mat-card-content>
     </mat-card> 
+
+    <!-- <button (click)="closeDialog()"> cancel</button> -->
 </div>
 
