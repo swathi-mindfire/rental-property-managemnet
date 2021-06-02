@@ -1,7 +1,5 @@
 import { Component, OnInit,Input } from '@angular/core';
 import { PropertyService } from 'src/app/services/property.service';
-import{FormBuilder,FormGroup,Validators} from '@angular/forms';
-import { FormControl } from '@angular/forms';
 
 @Component({
   selector: 'app-search',

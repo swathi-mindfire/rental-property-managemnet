@@ -33,7 +33,7 @@ const routes: Routes = [
     component:PropertyDetailsComponent
   },
   {
-    path:'dashboard/:id',
+    path:'dashboard',
     component:DashboardComponent
   },
 

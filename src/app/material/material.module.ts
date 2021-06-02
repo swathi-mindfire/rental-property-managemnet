@@ -16,7 +16,8 @@ import{MatProgressSpinnerModule} from'@angular/material/progress-spinner';
 import {MatPaginatorModule} from '@angular/material/paginator';
 import { MatSortModule } from '@angular/material/sort';
 import {MatRadioModule} from '@angular/material/radio';
-import {MatDialogModule} from '@angular/material/dialog'
+import {MatDialogModule} from '@angular/material/dialog';
+import {MatSnackBarModule} from '@angular/material/snack-bar';
 
 
 
@@ -27,6 +28,7 @@ const MaterialComponents = [
                             MatSidenavModule,
                             MatPaginatorModule,
                             MatListModule,
+                            MatSnackBarModule,
                             MatProgressSpinnerModule,
                             MatButtonToggleModule,
                             MatIconModule,

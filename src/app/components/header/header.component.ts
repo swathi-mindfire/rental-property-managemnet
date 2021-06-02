@@ -11,7 +11,8 @@ import { UserService } from 'src/app/services/user.service';
 })
 export class HeaderComponent implements OnInit {
   signedIn:boolean= false;
-  id:string;
+  id:string=null;
+  username:string= null;
   
   @Output() toggleSidenav = new EventEmitter<void>();
 
@@ -26,14 +27,18 @@ export class HeaderComponent implements OnInit {
     this._us.loginCheck.subscribe(
       (data)=>{
         if(data.loggedIn==false) this.signedIn= false;
-        else this.signedIn= true;
-
+        else {
+          this.signedIn = true; 
+          this.id = localStorage.getItem('id');
+          this.username = localStorage.getItem('username')
+        }
       }
     )
   }
   logout(){
     localStorage.removeItem('id')
     localStorage.removeItem('token')
+    localStorage.removeItem('username')
       this.router.navigate(['/login']);
       this.signedIn=false;
   }

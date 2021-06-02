@@ -4,7 +4,7 @@ import { MatDialog } from '@angular/material/dialog';
 import { Router } from '@angular/router';
 import { UserService } from 'src/app/services/user.service';
 import{User} from './../../model/user';
-
+import {MatSnackBar} from '@angular/material/snack-bar';
 
 
 @Component({
@@ -18,7 +18,7 @@ export class LoginComponent implements OnInit {
   hide= true;
   errormsg="";
 
-  constructor(private _us: UserService, private router :Router,public dialog: MatDialog) { }
+  constructor(private _us: UserService, private router :Router,public dialog: MatDialog,  public snackBar: MatSnackBar) { }
 
   ngOnInit(): void {
     this._us.loginCheck.subscribe();
@@ -28,35 +28,29 @@ export class LoginComponent implements OnInit {
         password :new FormControl('',[Validators.required,Validators.minLength(8)])
       }
     );
-  }
-  
+  }  
   onLogin(){
     if (this.loginForm.invalid) {
+      // this.snackBar.open('Please Fill fields','',{duration: 2000});       
       return;
-    }
-  
+    }  
     this.formData.email =this.loginForm.value.email;
     this.formData.password  = this.loginForm.value.password;
-
     this._us.authenticate(this.formData).subscribe(
       (res)=>{
         localStorage.setItem('id', res['id']);
         localStorage.setItem('token', res['token']);
+        localStorage.setItem('username', res['username']);
         this.errormsg = null;
         this._us.loginCheck.next({loggedIn:true})
-        this.router.navigate(['/dashboard',res['id']]);
+        this.router.navigate(['/dashboard']);
       },
-      (err)=>{
-       
-        this.errormsg= err.error;
-        
+      (err)=>{       
+        this.errormsg= err.error;       
       }
     )   
   }
   closeDialog(): void {
-
       this.dialog.closeAll();
   }
-
-
 }

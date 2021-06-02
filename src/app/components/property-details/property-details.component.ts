@@ -3,6 +3,7 @@ import { PropertyService } from 'src/app/services/property.service';
 import{Property} from 'src/app/model/property';
 import {MatDialog} from '@angular/material/dialog';
 import { LoginComponent } from '../login/login.component';
+import { ContactOwnerComponent } from '../contact-owner/contact-owner.component';
 
 @Component({
   selector: 'app-property-details',
@@ -27,8 +28,8 @@ export class PropertyDetailsComponent implements OnInit {
     )
   }
   openDialog(): void {
-    const dialogRef = this.dialog.open(LoginComponent,{
-      width: '640px',disableClose: true 
+    const dialogRef = this.dialog.open(ContactOwnerComponent,{
+      width: '400px',disableClose: true 
     });
   }
  

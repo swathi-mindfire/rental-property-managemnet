@@ -1,4 +1,4 @@
-a:hover{
+.menu a:hover{
     background-color: indianred !important;
     color: white;
 }
@@ -18,33 +18,26 @@ mat-toolbar{
 .example-icon {
     padding: 0 14px;
   }
-  
-/*   
-  .mat-sidenav-container{
-    height: auto;
+  .mat-icon{
+    margin-right: 10px;
   }
-.mat-sidenav {
-     height: 100%;
-    min-height: 100%;
-  } */
-    
-  /* mat-sidenav-container {
-  
-    height: 100%;
-    min-height: 100%;
-    width: 100%;
-    min-width: 100%;
- } */
-
-
   
   .mat-sidenav {
     width: 200px;
     height: 2000px !important;
   }
   mat-sidenav-content {
-    min-height: 1090px !important;
+    min-height: 700px !important;
   
+ }
+ .user{
+   cursor: none !important;
+
+   
+ }
+ .title{
+   position: relative;
+   left: 500px;
  }
   
 
