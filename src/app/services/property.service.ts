@@ -88,8 +88,9 @@ export class PropertyService {
       gym:null,
       area:null,
       pool:null,
-      parking:null
+      parking:null,
   })
+  ownerPropClick = new BehaviorSubject({ownerProp:false})
   searchFilters={}
   propertySearchFilters= new BehaviorSubject(this.searchFilters)
 }

@@ -12,10 +12,16 @@ import { ContactOwnerComponent } from '../contact-owner/contact-owner.component'
 export class PropertyDetailsComponent implements OnInit {
   selectedProperty:any;
   images=[];
-  imgs=[]
+  imgs=[];
+  ownerProp:boolean = false;
 
-  constructor(private ps: PropertyService,public dialog: MatDialog) { 
-    this.ps.selectedProperty.subscribe(
+  constructor(private _ps: PropertyService,public dialog: MatDialog) {
+    this._ps.ownerPropClick.subscribe(
+      (data)=>{
+        if(data.ownerProp == true) this.ownerProp = true
+        else this.ownerProp = false;
+      })
+    this._ps.selectedProperty.subscribe(
       (res)=>{
         this.selectedProperty=res;
         this.imgs= this.selectedProperty.imgUrls;

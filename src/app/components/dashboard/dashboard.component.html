@@ -1,5 +1,5 @@
 <div class="row mt-4 pl-2 pr-2 dashboard " *ngIf ="properties">
-   <div class="col col-sm-3 pb-2" >
+   <div class="col-xs-12  col-md-6 col-lg-3 pb-2" >
       <mat-card [ngClass]="'danger'" >
           <mat-card-header>
             <div mat-card-avatar>
@@ -13,7 +13,7 @@
           </mat-card-actions>
       </mat-card>
     </div>
-    <div class="col col-sm-3 pb-2">
+    <div class="col-xs-12   col-md-6 col-lg-3 pb-2">
       <mat-card [ngClass]="'success'" >
           <mat-card-header>
             <div mat-card-avatar>
@@ -27,7 +27,7 @@
           </mat-card-actions>
       </mat-card>
     </div>
-    <div class="col col-sm-3 pb-4" >
+    <div class="col-xs-12 col-md-6 col-lg-3 pb-4" >
       <mat-card [ngClass]="'info'">
           <mat-card-header>
             <div mat-card-avatar>
@@ -41,7 +41,7 @@
           </mat-card-actions>
       </mat-card>
     </div>
-    <div class="col col-sm-3 pb-2">
+    <div class="col-xs-12 col-md-6 col-lg-3 pb-2">
       <mat-card [ngClass]="'warn'" >
           <mat-card-header>
             <div mat-card-avatar>
@@ -56,41 +56,41 @@
       </mat-card>
     </div>
 </div>
-<div class="row">
-  <div class="example-header">
-    <mat-form-field>
-      <input matInput (keyup)="applyFilter($event.target.value)" placeholder="Filter">
+<div class="row" [hidden]= "!clicked">
+  <span class="col-xs-12 col-md-6 text-primary text-center heading ">{{viewing}}</span>
+    <mat-form-field  class="col-xs-8 mx-xs-auto col-md-3 filter" >
+      <input  matInput (keyup)="applyFilter($event.target.value)" placeholder="Filter">
     </mat-form-field>
-  </div>
-  
-  <div class="example-container mat-elevation-z8">
-  
-    <mat-table [dataSource]="obs" matSort *ngIf= "clicked">
+</div>
+<div class="row  mx-auto data-table"  [hidden]= "!clicked" >
+  <div class="example-container"> 
+    <mat-table [dataSource]="dataSource" matSort>
       <ng-container matColumnDef="id">
-        <mat-header-cell *matHeaderCellDef mat-sort-header> ID </mat-header-cell>
-        <mat-cell *matCellDef="let row"> {{row.id}} </mat-cell>
+        <mat-header-cell *matHeaderCellDef mat-sort-header >Id </mat-header-cell>
+        <mat-cell *matCellDef="let property"> {{property.id}} </mat-cell>
       </ng-container>
-      <ng-container matColumnDef="progress">
+      <ng-container matColumnDef="location">
         <mat-header-cell *matHeaderCellDef mat-sort-header> Location </mat-header-cell>
-        <mat-cell *matCellDef="let row"> {{row.location}} </mat-cell>
+        <mat-cell *matCellDef="let property"> {{property.location}} </mat-cell>
       </ng-container>
-      <ng-container matColumnDef="name">
-        <mat-header-cell *matHeaderCellDef mat-sort-header> Rent </mat-header-cell>
-        <mat-cell *matCellDef="let row"> {{row.rent}} </mat-cell>
+      <ng-container matColumnDef="rent">
+        <mat-header-cell *matHeaderCellDef mat-sort-header > Rent </mat-header-cell>
+        <mat-cell *matCellDef="let property"> {{property.rent}} </mat-cell>
       </ng-container>
-      <ng-container matColumnDef="color">
-        <mat-header-cell *matHeaderCellDef mat-sort-header> State </mat-header-cell>
-        <mat-cell *matCellDef="let row" [style.color]="row.color"> {{row.state}} </mat-cell>
-      </ng-container>
-  
+      <ng-container matColumnDef="state">
+        <mat-header-cell *matHeaderCellDef mat-sort-header >State </mat-header-cell>
+        <mat-cell *matCellDef="let property"> {{property.state}} </mat-cell>
+      </ng-container>  
       <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
-      <mat-row *matRowDef="let row; columns: displayedColumns;">
-      </mat-row>
+      <mat-row *matRowDef="let property; columns: displayedColumns;" (click)="test(property)"></mat-row>
     </mat-table>
+    <div [hidden] ="!clicked" class="matpage">
+      <mat-paginator [pageSizeOptions]="[5]" showFirstLastButtons></mat-paginator>
+    </div>
   
-    <mat-paginator [pageSizeOptions]="[5, 10, 25, 100]"></mat-paginator>
   </div>
 </div>
 <div class="mt-5" *ngIf="!properties && !error">
   <mat-spinner color="primary" [diameter]="70" class="mx-auto"></mat-spinner>
 </div>
+

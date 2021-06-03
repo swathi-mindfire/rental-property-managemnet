@@ -10,15 +10,17 @@ import { Router} from '@angular/router';
 })
 export class PropertyCardComponent implements OnInit {
   @Input() property: any;
-  constructor(private ps: PropertyService, private router: Router) {    
+  constructor(private _ps: PropertyService, private router: Router) {    
   }
 
   ngOnInit(): void {
-    this.ps.selectedProperty.subscribe()
+    this._ps.selectedProperty.subscribe()
+    this._ps.ownerPropClick.subscribe()
    
   }
   hadlePropertyClick(){
-    this.ps.selectedProperty.next(this.property);
+    this._ps.ownerPropClick.next({ownerProp:false})
+    this._ps.selectedProperty.next(this.property);
     // this.router.navigate(["/propertydetails",{id:this.property.id}])
     // this.router.navigate(["/propertydetails"],{queryParams:{id:this.property.id}})
     this.router.navigate(["/propertydetails",this.property.id])

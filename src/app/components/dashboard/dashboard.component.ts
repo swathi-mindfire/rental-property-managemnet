@@ -1,13 +1,10 @@
 import { Component, OnInit,OnDestroy, ViewChild, ChangeDetectorRef } from '@angular/core';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { PropertyService } from 'src/app/services/property.service';
 import { MatTableDataSource} from '@angular/material/table';
 import { MatPaginator } from '@angular/material/paginator';
 import { Observable } from 'rxjs';
-import{MatSort} from '@angular/material/sort' 
-
-
-
+import{MatSort} from '@angular/material/sort';
 @Component({
   selector: 'app-dashboard',
   templateUrl: './dashboard.component.html',
@@ -21,22 +18,21 @@ export class DashboardComponent implements OnInit {
   clicked:boolean= false
   error: boolean = false;
   properties:[];
+  viewing:string= "";
   pendingProperties :any;
   verifiedProperties:any;
   rentedProperties :any;
   vacantProperties :any;
   dataSource = new MatTableDataSource([]); 
   displayedColumns = ['id', 'location', 'rent', 'state'];
-  constructor(private _ps: PropertyService,private route :ActivatedRoute,private changeDetectorRef: ChangeDetectorRef) { 
+  constructor(private _ps: PropertyService,private route :ActivatedRoute,private router:Router,private changeDetectorRef: ChangeDetectorRef) { 
     this._ps.fetechedOwnerProperties.subscribe(
       (data)=>{
         if(data.fetched==true){
           this._ps.getOwnerProperties().subscribe((properties)=>{
             this.properties= properties;
-            console.log(this.properties)
             this.dataSource = new MatTableDataSource(this.rentedProperties);
             this.dataSource.paginator = this.paginator;
-            this.obs = this.dataSource.connect();
             this.pendingProperties = this.properties.filter(p => p["verified"]=="no");
             this.verifiedProperties =  this.properties.filter(p => p["verified"]=="yes");
             this.rentedProperties =  this.properties.filter(p => p["status"]=="rented");
@@ -57,6 +53,8 @@ export class DashboardComponent implements OnInit {
   
 
   ngOnInit(): void {
+    this._ps.selectedProperty.subscribe();
+    this._ps.ownerPropClick.subscribe()
     this.changeDetectorRef.detectChanges(); 
     this.id = this.route.snapshot.paramMap.get('id');
   }
@@ -71,10 +69,6 @@ export class DashboardComponent implements OnInit {
     this.dataSource.filter = filterValue;
   }
 
-  getProperties(){
-    console.log(this.properties)
-
-  }
   ngOnDestroy() {
     if (this.dataSource) { 
       this.dataSource.disconnect(); 
@@ -83,23 +77,37 @@ export class DashboardComponent implements OnInit {
   showPendingProp(){
     this.dataSource = new MatTableDataSource(this.pendingProperties);
     this.dataSource.paginator = this.paginator;
-    this.obs = this.dataSource.connect();
+    this.dataSource.sort = this.sort;
     this.clicked = true;
+    this.viewing = "Pending Properties";
   }
   showVerifiedProp(){
     this.dataSource = new MatTableDataSource(this.verifiedProperties);
     this.dataSource.paginator = this.paginator;
-    this.obs = this.dataSource.connect();
+    this.dataSource.sort = this.sort;
+    this.clicked = true;
+    this.viewing = "Verified Properties";
   }
   showRentedProp(){
     this.dataSource = new MatTableDataSource(this.rentedProperties);
     this.dataSource.paginator = this.paginator;
-    this.obs = this.dataSource.connect();
+    this.dataSource.sort = this.sort;
+    this.clicked = true;
+    this.viewing = "Rented Properties";
   }
   showVacantProp(){
     this.dataSource = new MatTableDataSource(this.vacantProperties);
     this.dataSource.paginator = this.paginator;
-    this.obs = this.dataSource.connect();
+    this.dataSource.sort = this.sort;
+    this.viewing = "Vacant Properties";
+    this.clicked = true;
+  }
+
+  test(prop){
+    prop["ownerPropClick"] = true;
+    this._ps.ownerPropClick.next({ownerProp:true})
+    this._ps.selectedProperty.next(prop);
+    this.router.navigate(["/propertydetails",prop.id])
   }
 
 }
