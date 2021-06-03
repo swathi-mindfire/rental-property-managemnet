@@ -1,28 +1,22 @@
-<mat-toolbar  color="primary">
+<mat-toolbar  color="primary" class="w-100">
     <button mat-icon-button  [hidden]="!signedIn" (click)="sidenav.toggle()" fxShow="true" fxHide.gt-sm>
         <mat-icon >menu</mat-icon>
-      </button>
-      <div class="menu">
-        <a mat-button routerLink="/" (click)= "handleHome()">
+      </button>    
+        <a mat-button routerLink="/" class="menu" (click)= "handleHome()">
             <span ><mat-icon  class="home-icon">home</mat-icon>Home</span>
         </a>
-      </div>
-      <span class="text-center title" >Reantal Hub</span> 
-      <span class="spacer"></span>
-      <div class="menu">        
-            
-        <a mat-button routerLink="/signup" *ngIf="!signedIn">SignUp</a>
-        <a mat-button routerLink="/login" *ngIf="!signedIn">Login</a>
-      </div>
+      <span class="text-center title spacer" >Reantal Hub</span> 
+        <a mat-button routerLink="/signup"  class="menu" *ngIf="!signedIn">SignUp</a>
+        <a mat-button routerLink="/login"  class="menu" *ngIf="!signedIn">Login</a>
         
 </mat-toolbar>
 
-<mat-sidenav-container fxFlexFill>
+<mat-sidenav-container >
   <mat-sidenav #sidenav [hidden]="!signedIn">
     <mat-nav-list>
       <a  class="user"   *ngIf=" signedIn && id" mat-list-item><mat-icon>account_circle</mat-icon> Hello, {{username}}</a> 
       <div class="menu">
-        <a  routerLink="/dashboard" mat-list-item><mat-icon>dashboard_customize</mat-icon>  DashBoard</a>   
+        <a  [routerLink]= "['/dashboard',id]" mat-list-item><mat-icon>dashboard_customize</mat-icon>  DashBoard</a>   
         <!-- <a routerLink="#" mat-list-item><mat-icon>verified_properties</mat-icon>  Verified Properties</a>
         <a  routerLink="#" mat-list-item><mat-icon>help_outline </mat-icon>  Pending properties</a> -->
         <a  routerLink="#" mat-list-item><mat-icon>maps_home_work </mat-icon>Add New Property</a>
@@ -34,7 +28,7 @@
       </div>
     </mat-nav-list>
   </mat-sidenav>
-  <mat-sidenav-content fxFlexFill> <router-outlet></router-outlet></mat-sidenav-content>
+  <mat-sidenav-content > <router-outlet></router-outlet></mat-sidenav-content>
 </mat-sidenav-container>
 
   

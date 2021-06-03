@@ -11,4 +11,29 @@ export interface Property{
   zipcode:string;
   imgUrls:[];
   status:string;
+  baths:string;
+  gym:string;
+  area:string;
+  pool:string;
+  parking:string;
+ }
+
+ export interface ownerProperty{
+  id:number;
+  rent:number;
+  type:string;
+  bhk:number;
+  location:string;
+  country:string;
+  state:string;
+  address:string;
+  zipcode:string;
+  imgUrls:[];
+  status:string;
+  baths:string;
+  gym:string;
+  area:string;
+  pool:string;
+  parking:string;
+  verified:string
  }

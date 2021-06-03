@@ -17,14 +17,25 @@ POST(path: string, body: HttpParams = null, options?: any): Observable<Object> {
   return this._http.post(path, body, this._httpOptionsForPost)
       
 }
+// GET(path: string,qparams?): Observable<Object> {
+//   if(qparams){
+
+//     return this._http.post(path,qparams);
+//   }
+//   // this.router.navigate(["/propertydetails"],)
+//   return this._http.get(path);
+  
+      
+// }
 GET(path: string,qparams?): Observable<Object> {
   if(qparams){
 
-    return this._http.post(path,qparams);
+    return this._http.get(path, {params: qparams});
   }
   // this.router.navigate(["/propertydetails"],)
   return this._http.get(path);
   
       
 }
+
 }

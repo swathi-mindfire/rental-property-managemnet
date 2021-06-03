@@ -1,36 +1,96 @@
-<div class="row mt-4 pl-3 dashboard ">
-  <div class="col-xs-12 col-md-6">
-    <div class="row">
-      <div class="col col-sm-6 pb-4">
-        <mat-card [ngClass]="'danger'" >
-            <mat-card-header>
-              <div mat-card-avatar>
-                <mat-icon class="icon-lg">help_outline </mat-icon>
-              </div>
-              <mat-card-title>3</mat-card-title>
-              <mat-card-subtitle>Pending properties</mat-card-subtitle>
-            </mat-card-header>
-            <mat-card-actions>
-              <button mat-button >View Details</button>
-            </mat-card-actions>
-        </mat-card>
-     </div>
-    <div class="col col-sm-6">
-        <mat-card [ngClass]="'success'" >
-            <mat-card-header>
-              <div mat-card-avatar>
-                <mat-icon class="icon-lg">verified</mat-icon>
-              </div>
-              <mat-card-title>2</mat-card-title>
-              <mat-card-subtitle>Verified properties</mat-card-subtitle>
-            </mat-card-header>
-            <mat-card-actions>
-              <button mat-button >View Details</button>
-            </mat-card-actions>
-        </mat-card>
-      </div>
+<div class="row mt-4 pl-2 pr-2 dashboard " *ngIf ="properties">
+   <div class="col col-sm-3 pb-2" >
+      <mat-card [ngClass]="'danger'" >
+          <mat-card-header>
+            <div mat-card-avatar>
+              <mat-icon class="icon-lg">help_outline </mat-icon>
+            </div>
+            <mat-card-title>{{pendingProperties.length}}</mat-card-title>
+            <mat-card-subtitle>Pending properties</mat-card-subtitle>
+          </mat-card-header>
+          <mat-card-actions>
+            <button   class="view" mat-button  (click) ="showPendingProp()">View Details</button>
+          </mat-card-actions>
+      </mat-card>
     </div>
+    <div class="col col-sm-3 pb-2">
+      <mat-card [ngClass]="'success'" >
+          <mat-card-header>
+            <div mat-card-avatar>
+              <mat-icon class="icon-lg">verified</mat-icon>
+            </div>
+            <mat-card-title>{{verifiedProperties.length}}</mat-card-title>
+            <mat-card-subtitle>Verified properties</mat-card-subtitle>
+          </mat-card-header>
+          <mat-card-actions>
+            <button  class="view" mat-button   (click) ="showVerifiedProp()">View Details</button>
+          </mat-card-actions>
+      </mat-card>
+    </div>
+    <div class="col col-sm-3 pb-4" >
+      <mat-card [ngClass]="'info'">
+          <mat-card-header>
+            <div mat-card-avatar>
+              <mat-icon class="icon-lg">houseboat</mat-icon>
+            </div>
+            <mat-card-title>{{vacantProperties.length}}</mat-card-title>
+            <mat-card-subtitle>Vacant properties</mat-card-subtitle>
+          </mat-card-header>
+          <mat-card-actions>
+            <button   class="view"  (click) ="showVacantProp()" mat-button >View Details</button>
+          </mat-card-actions>
+      </mat-card>
+    </div>
+    <div class="col col-sm-3 pb-2">
+      <mat-card [ngClass]="'warn'" >
+          <mat-card-header>
+            <div mat-card-avatar>
+              <mat-icon class="icon-lg">no_meeting_room</mat-icon>
+            </div>
+            <mat-card-title>{{rentedProperties.length}}</mat-card-title>
+            <mat-card-subtitle>Rented Properties</mat-card-subtitle>
+          </mat-card-header>
+          <mat-card-actions>
+            <button class="view" mat-button  (click) ="showRentedProp()" >View Details</button>
+          </mat-card-actions>
+      </mat-card>
+    </div>
+</div>
+<div class="row">
+  <div class="example-header">
+    <mat-form-field>
+      <input matInput (keyup)="applyFilter($event.target.value)" placeholder="Filter">
+    </mat-form-field>
   </div>
-  <div class="col-xs-12 col-md-6">
-  </div>  
+  
+  <div class="example-container mat-elevation-z8">
+  
+    <mat-table [dataSource]="obs" matSort *ngIf= "clicked">
+      <ng-container matColumnDef="id">
+        <mat-header-cell *matHeaderCellDef mat-sort-header> ID </mat-header-cell>
+        <mat-cell *matCellDef="let row"> {{row.id}} </mat-cell>
+      </ng-container>
+      <ng-container matColumnDef="progress">
+        <mat-header-cell *matHeaderCellDef mat-sort-header> Location </mat-header-cell>
+        <mat-cell *matCellDef="let row"> {{row.location}} </mat-cell>
+      </ng-container>
+      <ng-container matColumnDef="name">
+        <mat-header-cell *matHeaderCellDef mat-sort-header> Rent </mat-header-cell>
+        <mat-cell *matCellDef="let row"> {{row.rent}} </mat-cell>
+      </ng-container>
+      <ng-container matColumnDef="color">
+        <mat-header-cell *matHeaderCellDef mat-sort-header> State </mat-header-cell>
+        <mat-cell *matCellDef="let row" [style.color]="row.color"> {{row.state}} </mat-cell>
+      </ng-container>
+  
+      <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
+      <mat-row *matRowDef="let row; columns: displayedColumns;">
+      </mat-row>
+    </mat-table>
+  
+    <mat-paginator [pageSizeOptions]="[5, 10, 25, 100]"></mat-paginator>
+  </div>
+</div>
+<div class="mt-5" *ngIf="!properties && !error">
+  <mat-spinner color="primary" [diameter]="70" class="mx-auto"></mat-spinner>
 </div>

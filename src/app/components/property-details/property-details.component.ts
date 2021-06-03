@@ -2,7 +2,6 @@ import { Component, OnInit } from '@angular/core';
 import { PropertyService } from 'src/app/services/property.service';
 import{Property} from 'src/app/model/property';
 import {MatDialog} from '@angular/material/dialog';
-import { LoginComponent } from '../login/login.component';
 import { ContactOwnerComponent } from '../contact-owner/contact-owner.component';
 
 @Component({
@@ -33,7 +32,6 @@ export class PropertyDetailsComponent implements OnInit {
     });
   }
  
-
   ngOnInit(): void {
   
   }

@@ -3,8 +3,8 @@ import{FormGroup,FormControl,Validators} from '@angular/forms';
 import { MatDialog } from '@angular/material/dialog';
 import { Router } from '@angular/router';
 import { UserService } from 'src/app/services/user.service';
-import{User} from './../../model/user';
 import {MatSnackBar} from '@angular/material/snack-bar';
+import { PropertyService } from 'src/app/services/property.service';
 
 
 @Component({
@@ -18,7 +18,13 @@ export class LoginComponent implements OnInit {
   hide= true;
   errormsg="";
 
-  constructor(private _us: UserService, private router :Router,public dialog: MatDialog,  public snackBar: MatSnackBar) { }
+  constructor(private _us: UserService,
+              private _ps: PropertyService,
+              private router :Router,
+              public dialog: MatDialog,
+              public snackBar: MatSnackBar
+               
+               ) { }
 
   ngOnInit(): void {
     this._us.loginCheck.subscribe();
@@ -41,9 +47,10 @@ export class LoginComponent implements OnInit {
         localStorage.setItem('id', res['id']);
         localStorage.setItem('token', res['token']);
         localStorage.setItem('username', res['username']);
+        this._ps.fetchOwnerproperties(res['id'])
         this.errormsg = null;
         this._us.loginCheck.next({loggedIn:true})
-        this.router.navigate(['/dashboard']);
+        this.router.navigate(['/dashboard',res['id']]);
       },
       (err)=>{       
         this.errormsg= err.error;       

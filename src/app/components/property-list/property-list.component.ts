@@ -49,9 +49,7 @@ export class PropertyListComponent implements OnInit,OnDestroy  {
   ngOnInit(): void {
     this.changeDetectorRef.detectChanges();  
     this._ps.propertySearchFilters.subscribe(
-      (data)=>{
-        this.applyFilters(data)
-      });
+      (data)=>this.applyFilters(data));
   }
   applyFilters(data){
     this.searchFilters= data;

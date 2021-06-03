@@ -14,6 +14,17 @@
         <input  matInput placeholder="Enter email"  [(ngModel)] ="mail">
     </mat-form-field>
 </div>
+<div class="row mt-2">
+    <mat-form-field>
+        <input matInput
+          [matDatepicker]="visitdate"
+          placeholder="Visit Date"
+          [(ngModel)] ="visitingDate">
+        <mat-datepicker-toggle matSuffix [for]="visitdate"></mat-datepicker-toggle>
+        <mat-datepicker #visitdate></mat-datepicker>
+    </mat-form-field>
+    
+</div>
 <div  class="d-flex justify-content-around mt-4">                 
     <button mat-raised-button color="primary" class="cancel w-50" (click)="closeDialog()">Cancel</button>                  
     <button mat-raised-button color="primary" class="sumbit w-50" (click)="submit()" >Submit</button>                                             

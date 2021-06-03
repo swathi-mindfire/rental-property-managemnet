@@ -18,6 +18,9 @@ import { MatSortModule } from '@angular/material/sort';
 import {MatRadioModule} from '@angular/material/radio';
 import {MatDialogModule} from '@angular/material/dialog';
 import {MatSnackBarModule} from '@angular/material/snack-bar';
+import {MatDatepickerModule } from '@angular/material/datepicker';
+import{  MatNativeDateModule } from  '@angular/material/core';
+import { MatTableModule } from '@angular/material/table'  
 
 
 
@@ -26,8 +29,10 @@ import {MatSnackBarModule} from '@angular/material/snack-bar';
 const MaterialComponents = [
                             MatButtonModule,
                             MatSidenavModule,
+                            MatDatepickerModule ,
                             MatPaginatorModule,
                             MatListModule,
+                            MatTableModule ,
                             MatSnackBarModule,
                             MatProgressSpinnerModule,
                             MatButtonToggleModule,
@@ -42,7 +47,8 @@ const MaterialComponents = [
                             MatSelectModule,
                             NgMatSearchBarModule,
                             MatSortModule,
-                            MatRadioModule
+                            MatRadioModule,
+                            MatNativeDateModule 
                           
                           ]
 
@@ -50,5 +56,9 @@ const MaterialComponents = [
 
   imports: [MaterialComponents],
   exports :[MaterialComponents],
+  providers: [  
+    MatDatepickerModule,
+    MatNativeDateModule  
+  ],
 })
 export class MaterialModule { }

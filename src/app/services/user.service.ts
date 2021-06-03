@@ -21,6 +21,8 @@ authenticate(data):Observable<any>{
   }
 
   loginCheck= new BehaviorSubject({loggedIn:false})
+
+ 
 }
 
 

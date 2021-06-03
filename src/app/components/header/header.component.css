@@ -1,4 +1,4 @@
-.menu a:hover{
+.mat-button:hover,.menu a:hover {
     background-color: indianred !important;
     color: white;
 }
@@ -35,10 +35,6 @@ mat-toolbar{
 
    
  }
- .title{
-   position: relative;
-   left: 500px;
- }
-  
+ 
 
  

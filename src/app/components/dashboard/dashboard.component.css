@@ -21,6 +21,12 @@
 .success {
     background: linear-gradient(60deg, #66bb6a, #43a047);
 } 
+.warn {
+    background: linear-gradient(60deg, #ffa726, #fb8c00);
+  }
+.info {
+    background: linear-gradient(60deg, #26c6da, #00acc1);
+  }
 .mat-card {
     color: #fff;
 }
@@ -28,3 +34,29 @@
     position: relative;
     left: 20px !important;
 }
+.view:hover{
+    background: #D90368 !important;    
+}
+
+/* #541388 */
+.example-container {
+    display: flex;
+    flex-direction: column;
+    min-width: 300px;
+  }
+  
+  .example-header {
+    min-height: 64px;
+    padding: 8px 24px 0;
+  }
+  
+  .mat-form-field {
+    font-size: 14px;
+    width: 100%;
+  }
+  
+  .mat-table {
+    overflow: auto;
+    max-height: 500px;
+  }
+  

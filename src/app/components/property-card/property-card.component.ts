@@ -10,9 +10,7 @@ import { Router} from '@angular/router';
 })
 export class PropertyCardComponent implements OnInit {
   @Input() property: any;
-
-  constructor(private ps: PropertyService, private router: Router) { 
-    
+  constructor(private ps: PropertyService, private router: Router) {    
   }
 
   ngOnInit(): void {

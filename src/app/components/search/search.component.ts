@@ -70,6 +70,11 @@ export class SearchComponent implements OnInit {
 	}
 
 	handleSearch(){
+		this.pTypePlaceHolder();
+		this.pmaxBudgetPlaceHolder();
+		this.pminBudgetPlaceHolder();
+		this.checkPlaceHolder();
+		this.params ={};
 		if(this.searchLocation!=""){
 			this.params["location"]= this.searchLocation;
 		}
@@ -90,15 +95,18 @@ export class SearchComponent implements OnInit {
 			// this.getProperties(this.params);
            this._ps.propertySearchFilters.next(this._ps.searchFilters);
 		}
-		
+		else this._ps.propertySearchFilters.next({});		
 	}
-
 	clearFilters(){
 		this.searchLocation ="";
 		this.propertyType="";
 		this.minrent="";
 		this.maxrent="";
 		this.sort="no"
+		this.pTypePlaceHolder();
+		this.pmaxBudgetPlaceHolder();
+		this.pminBudgetPlaceHolder();
+		this.checkPlaceHolder();
 		this._ps.propertySearchFilters.next({});
 
 	}
