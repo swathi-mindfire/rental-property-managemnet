@@ -20,6 +20,8 @@ export class PropertyService {
   propertiesGetError= new BehaviorSubject({error:false});
   fetechedOwnerProperties= new BehaviorSubject({fetched:false});
   ownerPropertiesGetError= new BehaviorSubject({error:false});
+  handleNewAndEditProperty= new BehaviorSubject({new:true});
+  editPropertyDetails = new BehaviorSubject({});
   constructor(private _http: HttpService) {
     this.fetchProperties().subscribe(
       (data)=>{

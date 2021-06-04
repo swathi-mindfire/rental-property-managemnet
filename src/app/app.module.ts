@@ -26,6 +26,7 @@ import { FilterPropertyTypePipe } from './pipes/filter-property-type.pipe';
 import { FilterMinrentPipe } from './pipes/filter-minrent.pipe';
 import { DashboardComponent } from './components/dashboard/dashboard.component';
 import { ContactOwnerComponent } from './components/contact-owner/contact-owner.component';
+import { PropertyFormComponent } from './components/property-form/property-form.component';
 
 
 @NgModule({
@@ -48,6 +49,7 @@ import { ContactOwnerComponent } from './components/contact-owner/contact-owner.
     FilterMinrentPipe,
     DashboardComponent,
     ContactOwnerComponent,
+    PropertyFormComponent,
 
  
   ],
