@@ -1,6 +1,9 @@
-<p class="text-primary text-center"> Post Your Property Details </p>
+<button  mat-mini-fab color="warn"  class="close-button" [mat-dialog-close]="true">
+    <mat-icon class="close-icon text-white" >close</mat-icon>
+</button>
+<p class="text-white heading text-center btn btn-primary d-flex justify-content-center"> Post Your Property Details </p>
 <mat-horizontal-stepper [linear]="isLinear" #stepper labelPosition="bottom">
-  <mat-step [stepControl]="formBasicGroup" label="Basic" >
+    <!-- <mat-step [stepControl]="formBasicGroup" label="Basic" >
         <form [formGroup]="formBasicGroup">
             <div class="row">
                 <mat-form-field class="ptype">
@@ -77,10 +80,10 @@
                     <button mat-raised-button color="primary" class="next1"  (click)= "handle()" matStepperNext>Next</button>
                 </div>
             </div>
-         </form>
-  </mat-step>
+        </form>
+    </mat-step> -->
 
-  <mat-step [stepControl]="formAddressGroup" label="Address" >
+    <!-- <mat-step [stepControl]="formAddressGroup" label="Address" >
         <form [formGroup]="formAddressGroup">
             <div class="row">
                 <div class="col-xs-12 col-sm-6">
@@ -95,13 +98,6 @@
                     </mat-form-field>
                 </div>
                 <div class="col-xs-12 col-sm-6">
-                    <!-- <mat-label>State</mat-label>
-                    <mat-form-field >
-                        <input type="text" matInput required formControlName="state">
-                        <mat-error *ngIf="formAddressGroup.controls.state.errors?.required">
-                                Enter Property State
-                        </mat-error>
-                    </mat-form-field> -->
                     <mat-form-field>
                         <mat-label>State</mat-label>
                         <mat-select formControlName="state">
@@ -115,87 +111,87 @@
             </div>
             <div class="row">
                 <div class="col-xs-12 col-sm-6">
-                    <mat-label>Location</mat-label>
                     <mat-form-field >
-                        <input type="text" matInput placeholder="loaction" required formControlName="location">
+                        <input type="text" matInput required formControlName="location" placeholder="Location Name">
                         <mat-error *ngIf="formAddressGroup.controls.location.errors?.required">
                                 Enter Property Location
                         </mat-error>
+                        <mat-error *ngIf="formAddressGroup.controls.location.errors?.pattern">
+                            Enter Valid Location Name
+                    </mat-error>
                     </mat-form-field>
                 </div>
                 <div class="col-xs-12 col-sm-6">
-                    <mat-label>Address</mat-label>
                     <mat-form-field >
-                        <input type="text" matInput placeholder="address" required formControlName="address">
+                        <input type="text" matInput  required formControlName="address" placeholder="Full Address">
                         <mat-error *ngIf="formAddressGroup.controls.address.errors?.required">
                                 Enter Full Address
                         </mat-error>
+                        <mat-error *ngIf="formAddressGroup.controls.address.errors?.pattern">
+                            Enter Valid Address
+                    </mat-error>
                     </mat-form-field>
                 </div>
             </div>
             <div class="row">
-                <mat-label>Zip Code</mat-label>
-                <div class="col-xs-12 ">
+                <div class="col-xs-12 col-sm-6">
                     <mat-form-field >
-                        <input type="text" matInput placeholder="loaction" required formControlName="zipcode">
-                        <mat-error *ngIf="formAddressGroup.controls.zipcode.errors?.required">
-                                Enter Zip Code
-                        </mat-error>
-                    </mat-form-field>
+                        <input type="text" required matInput formControlName="zipcode" placeholder="Zip Code">
+                        <mat-error *ngIf="formAddressGroup.controls.zipcode.errors?.required">Enter Zip Code</mat-error>
+                        <mat-error *ngIf="formAddressGroup.controls.zipcode.errors?.pattern">Enter Valid Zip Code</mat-error>
+                    </mat-form-field>                
                 </div>
-            </div>
-             
-            
-            <button mat-raised-button color="primary" matStepperNext>Next</button>
+                <div class="col-xs-12 col-sm-6">
+                    <button mat-raised-button color="primary" (click)="next2()"  class="next2" matStepperNext>Next</button>
+                </div>
+                
+            </div>            
+
         </form>  
-  </mat-step>
+  </mat-step> -->
 
   <mat-step [stepControl]="formFeaturesGroup" label="Features" >
-    <div style="padding-top: 3%;">
         <form [formGroup]="formFeaturesGroup">
-            <div class="example-form">
-              <mat-form-field class="example-full-width">
-                <input type="text" matInput placeholder="Gym" required formControlName="gym">
-                <!-- <mat-error *ngIf="formEmailGroup.controls['gym'].hasError('required')">
-                        Email is required!
-                    </mat-error>
-                <mat-error *ngIf="formEmailGroup.controls['emailID'].hasError('email')">
-                    Email is not Valid!
-                </mat-error> -->
-                    <!-- <mat-checkbox  color="primary" formControlName="status">Status</mat-checkbox>
-                <mat-error *ngIf="formBasicGroup.controls.status.errors?.required">
-                    Please Enter Pooperty Area
-                </mat-error>
-   -->
-              </mat-form-field>
+            <div class="text-center text-primary  ">Check Belowe Features If Available</div>
+            <div class="row mx-auto mt-4 ">
+                <div class="col col-xs-2 col-md-4">
+                    <mat-checkbox color="primary" formControlName="gym">Gym</mat-checkbox>
+                </div>
+                <div class="col col-xs-2  col-md-4">
+                    <mat-checkbox color="primary" formControlName="parking">Parking</mat-checkbox>                    
+                </div>
+                <div class="col col-xs-6  col-md-4">
+                    <mat-checkbox color="primary" formControlName="pool">Swimming Pool</mat-checkbox>               
+                </div>              
             </div>
-            <br/>
-            <button mat-raised-button color="primary" matStepperNext>Next</button>
+            <div class="d-flex justify-content-center mt-4">
+                <button mat-raised-button color="primary" matStepperNext>Next</button>  
+            </div>              
+        </form> 
+    </mat-step>
+    <mat-step [stepControl]="formMediaGroup"  class="media" label="Media" >
+        <form [formGroup]="formMediaGroup">
+            <div class="row ">              
+                <label for="file" class="btn btn-outline-primary">upload Images <mat-icon class="text-primary upload-icon">file_upload</mat-icon></label>
+                <input formControlName="image"  id="file" type="file" accept="image/*" style="visibility:hidden;" (change)="onSelectFile($event)"  multiple>
+            </div>
+            <div class="row">
+                <div *ngFor="let url of urls;index as i " class="col-md-3 img-container img-pre">
+                    <img [src]="url" alt="Image not found" height="150px" width="150px">
+                    <button mat-mini-fab class="text-danget del-btn d-inline" (click)="deleteImg(i)"><mat-icon>delete</mat-icon></button>
+                </div>
+            </div>   
+            <div class="row mt-4 mx-auto">
+                <div class="col text-center">
+                   <button mat-raised-button color="primary"  (click)="next3()" >Submit</button>                      
+                </div>
+                <div class="col text-center">
+                   <button mat-raised-button color="warn" (click)="stepper.reset();deleteAllImgs()">Reset</button>
+                </div>
+            </div>
         </form>
-    </div>
   </mat-step>
-
-  <!-- <mat-step [stepControl]="formPhoneGroup" label="Mobile" >
-    <div style="padding-top: 3%;">
-        <form [formGroup]="formPhoneGroup">
-            <ng-template matStepLabel>Name</ng-template> 
-            <div class="example-form">
-              <mat-form-field class="example-full-width">
-                <input type="tel" matInput placeholder="Mobile" required formControlName="mobile">
-                <mat-error *ngIf="formPhoneGroup.controls['mobile'].hasError('required')">
-                        Mobile is required!
-                    </mat-error>
-                 <mat-error *ngIf="formPhoneGroup.controls['mobile'].hasError('min')">
-                        Mobile No is Wrong!
-                    </mat-error>
-              </mat-form-field>
-            </div>
-            <br/>
-            <button mat-raised-button color="primary" matStepperNext>Next</button>
-        </form>
-    </div>
-  </mat-step> -->
-  <mat-step>
+  <!-- <mat-step>
     <ng-template matStepLabel>Review</ng-template>
     <h5>You are now done.</h5>
     <div>
@@ -203,9 +199,7 @@
         <button mat-raised-button color="accent" type="submit">Submit</button> &nbsp; &nbsp;
         <button mat-raised-button color="warn" (click)="stepper.reset()">Reset</button>
     </div>
-  </mat-step>
-<!-- <ng-template matStepperIcon="phone">
-    <mat-icon>phone</mat-icon>
-</ng-template> -->
+  </mat-step> -->
+
 
 </mat-horizontal-stepper>

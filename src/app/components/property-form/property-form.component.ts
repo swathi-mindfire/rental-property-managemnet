@@ -21,6 +21,7 @@ export class PropertyFormComponent implements OnInit {
   propertyTypes= ["Villa","House","Apartment"];
   BHKS= [1,2,3,4,5];
   countries = [];
+  urls = [];
 
   constructor(private _ps: PropertyService, private fb: FormBuilder ) { 
     
@@ -28,12 +29,6 @@ export class PropertyFormComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    // this.countries = countryList.map(function(c) {return c.country;});
-    // console.log(this.countries)
-    // console.log(typeof(this.countries))
-    // this.countries = Object.keys(this.countries);
-    // console.log(this.countries)
-    // console.log(typeof(this.countries))
     for (var cl of countryList) {
       this.countries.push(cl.country);
     }
@@ -46,21 +41,6 @@ export class PropertyFormComponent implements OnInit {
 
     )
   }
-  // createForm() {
-  //   this.formNameGroup  = this.fb.group({
-  //     userName: ['', Validators.required]
-  //   });
-  
-  //   this.formPasswordGroup  = this.fb.group({
-  //     passWord: ['', Validators.required]
-  //   });
-  //   this.formEmailGroup  = this.fb.group({
-  //     emailID: ['', Validators.compose([Validators.required, Validators.email])]
-  //   });
-  //   this.formPhoneGroup  = this.fb.group({
-  //     mobile: ['', Validators.compose([Validators.required, Validators.min(10)])]
-  //   });
-  //   }
   private buildPropertyForm(): void {
     this.propertyForm = this.fb.group({
       propertyType: ['', [Validators.required]],
@@ -116,15 +96,15 @@ export class PropertyFormComponent implements OnInit {
     this.formAddressGroup  = this.fb.group({
       country: ['',[Validators.required]],
       state: ['',[Validators.required]],
-      location: ['',[Validators.required,Validators.minLength(2),Validators.maxLength(40)]],
-      address: ['', [Validators.required, Validators.minLength(2),Validators.maxLength(50) ]],
-      zipcode: ['', [Validators.required, Validators.minLength(6),Validators.pattern('[0-9]{6,}')] ],     
+      location: ['',[Validators.required,Validators.pattern('[A-Za-z]{2,30}')]],
+      address: ['', [Validators.required, Validators.pattern('[0-9.a-zA-Z]{1,40}')]],
+      zipcode: ['', [Validators.required,Validators.pattern('[0-9]{6,8}')] ],     
    
     });
     this.formFeaturesGroup  = this.fb.group({
-      parking : ['',Validators.required],
-      gym : ['',Validators.required],
-      pool : ['',Validators.required],
+      parking : [false],
+      gym : [false],
+      pool : [false],
     });
     this.formMediaGroup  = this.fb.group({
       image: ['', Validators.required],
@@ -135,15 +115,50 @@ export class PropertyFormComponent implements OnInit {
   handle(){
     console.log(this.formBasicGroup.value)
   }
+
+  next2(){
+    console.log(this.formAddressGroup.value)
+    console.log(this.formAddressGroup.valid)
+  }
+  next3(){
+    console.log(this.formFeaturesGroup)
+    console.log(this.formFeaturesGroup.value)
+    console.log(this.formFeaturesGroup.valid)
+  }
   loadStates(){
     let selected  =countryList.filter(c=> c.country===this.formAddressGroup.value.country);
     this.states=[];
-    console.log(selected)
-    console.log(selected[0].states)
-    for (var s of selected[0].states) {
-      this.states.push(s);
+    if(this.formAddressGroup.value.country!=""){
+      for (var s of selected[0].states) {
+        this.states.push(s);
+      }
     }
+  }
+ 
+  onSelectFile(event) {
+    console.log(event)
+    if (event.target.files && event.target.files[0]) {
+      console.log(this.formMediaGroup.controls.image)
+        var filesLength = event.target.files.length;
+        console.log(filesLength)
+        for (let i = 0; i < filesLength; i++) {
+                var reader = new FileReader();
+                reader.onload = (event:any) => {
+                   this.urls.push(event.target.result);
+                   console.log(event.target.result) 
+                   
+                }
+                console.log(event.target.files[i])
+              reader.readAsDataURL(event.target.files[i]);
+        }
+    }
+  }
 
+  deleteImg(i){
+    this.urls.splice(i,1)
+  }
+  deleteAllImgs(){
+    this.urls= []
   }
 
 }

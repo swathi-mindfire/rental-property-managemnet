@@ -28,4 +28,50 @@
         width: 100px;
    
       }
-} 
+}
+.next2{
+    position: relative;
+    left: 20px;
+    top:20px;
+    width: 150px;
+}
+.heading{
+    cursor: none;
+}
+.upload-icon{
+    position: relative;
+    top: 7px;
+}
+
+.close-button{
+    float: right;
+    top:0px;
+    right:-10px;
+  }
+  .img-container {
+    display:flex;
+     flex-wrap: wrap;
+    align-content: space-evenly;
+    justify-content: space-evenly;
+    }
+   
+
+  
+  .close-icon {
+    transition: 1s ease-in-out;
+  }
+  
+  .close-icon:hover {
+    transform: rotate(180deg);
+  }
+ .del-btn {
+     position: relative;
+     left:72px;
+     top: -160px;
+     z-index: 7;
+
+ }
+ .img-pre {
+     z-index: 3;
+     margin-right: 40px !important;
+ }

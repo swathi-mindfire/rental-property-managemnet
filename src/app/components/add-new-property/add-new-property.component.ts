@@ -16,7 +16,7 @@ export class AddNewPropertyComponent implements OnInit {
   ngOnInit(): void {
     this._ps.handleNewAndEditProperty.next({new:true})
     const dialogRef = this.dialog.open(PropertyFormComponent,{
-      width: '500px',disableClose: true 
+      width: '650px',disableClose: true ,
     })
     // const dialogRef = this.dialog.open(PropertyFormComponent,{
     //   width: '500px',disableClose: true 
@@ -25,12 +25,9 @@ export class AddNewPropertyComponent implements OnInit {
 
   uploadFile(event){
     let ele = event.target;
-    console.log(ele);
-    console.log(ele.files[0]);
     if(ele.files.length>0){
       let formData =  new FormData();
-      formData.append('image',ele.files[0])
-      
+      formData.append('image',ele.files[0])     
       this._http.post('http://localhost:9000/newpropdoc',formData).subscribe(
         (data)=>{
           console.log(data)
