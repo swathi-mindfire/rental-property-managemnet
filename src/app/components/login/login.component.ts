@@ -52,7 +52,8 @@ export class LoginComponent implements OnInit {
         this._us.loginCheck.next({loggedIn:true})
         this.router.navigate(['/dashboard',res['id']]);
       },
-      (err)=>{       
+      (err)=>{
+  
         this.errormsg= err.error;       
       }
     )   

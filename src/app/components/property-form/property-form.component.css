@@ -1,0 +1,31 @@
+.stepper-label{
+    width: 400px !important;
+}
+.sort{
+    margin-left: 10px !important;
+    margin-right: 10PX !important;
+  }
+@media (max-width:990px){
+.next1{
+    position: relative;
+    margin-top:20px !important ;
+    margin-left: 34%;
+    width: 30%;
+  }
+} 
+.ptype{
+    width: 98%;
+} 
+@media (max-width:375px){
+    .ptype{
+        width: 90%;
+    }
+}
+@media (min-width:990px){
+    .next1{
+        position: relative;
+        top:10px;
+        width: 100px;
+   
+      }
+} 

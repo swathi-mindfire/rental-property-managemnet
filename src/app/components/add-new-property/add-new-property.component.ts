@@ -15,6 +15,9 @@ export class AddNewPropertyComponent implements OnInit {
 
   ngOnInit(): void {
     this._ps.handleNewAndEditProperty.next({new:true})
+    const dialogRef = this.dialog.open(PropertyFormComponent,{
+      width: '500px',disableClose: true 
+    })
     // const dialogRef = this.dialog.open(PropertyFormComponent,{
     //   width: '500px',disableClose: true 
     // });

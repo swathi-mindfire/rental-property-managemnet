@@ -20,8 +20,10 @@ import {MatDialogModule} from '@angular/material/dialog';
 import {MatSnackBarModule} from '@angular/material/snack-bar';
 import {MatDatepickerModule } from '@angular/material/datepicker';
 import{  MatNativeDateModule } from  '@angular/material/core';
-import { MatTableModule } from '@angular/material/table'  
-
+import { MatTableModule } from '@angular/material/table';
+import {MatStepperModule} from '@angular/material/stepper';
+import {MatSliderModule} from '@angular/material/slider';
+import {MatCheckboxModule} from '@angular/material/checkbox';  
 
 
 
@@ -29,9 +31,12 @@ import { MatTableModule } from '@angular/material/table'
 const MaterialComponents = [
                             MatButtonModule,
                             MatSidenavModule,
+                            MatCheckboxModule,
                             MatDatepickerModule ,
                             MatPaginatorModule,
                             MatListModule,
+                            MatStepperModule,
+                            MatSliderModule,
                             MatTableModule ,
                             MatSnackBarModule,
                             MatProgressSpinnerModule,
