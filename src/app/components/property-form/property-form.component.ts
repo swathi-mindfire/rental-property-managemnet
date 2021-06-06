@@ -3,6 +3,7 @@ import { PropertyService } from 'src/app/services/property.service';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import{countryList} from '../../model/country-states';
 import { HttpClient } from '@angular/common/http';
+import { MatDialog } from '@angular/material/dialog';
 @Component({
   selector: 'app-property-form',
   templateUrl: './property-form.component.html',
@@ -24,8 +25,18 @@ export class PropertyFormComponent implements OnInit {
   countries = [];
   urls = [];
   uploads=[];
+  docProof :null;
+  documentErr=null;
+  imagesErr= null;
+  docAdded = false;
+  propertyUploaded = false;
 
-  constructor(private _ps: PropertyService, private fb: FormBuilder,private _http : HttpClient ) { 
+  constructor(
+              private _ps: PropertyService, 
+              private fb: FormBuilder,
+              private _http : HttpClient,
+              public dialog: MatDialog
+            ) { 
     
   this.createForm();
   }
@@ -91,7 +102,7 @@ export class PropertyFormComponent implements OnInit {
       rent: ['', [Validators.required,Validators.pattern('[0-9]*')]],
       bhk: ['' ,Validators.required ],
       area: ['',[Validators.required,Validators.pattern('[0-9.]{1,5}')]],
-      status: [false,Validators.required],
+      status: ['vacant',Validators.required],
       baths: ['',[Validators.required,Validators.pattern('[0-9]{1,5}')]],
     });  
     this.formAddressGroup  = this.fb.group({
@@ -111,20 +122,6 @@ export class PropertyFormComponent implements OnInit {
       document : ['', Validators.required],
     });
     }
-
-  // handle(){
-  //   console.log(this.formBasicGroup.value)
-  // }
-
-  // next2(){
-  //   console.log(this.formAddressGroup.value)
-  //   console.log(this.formAddressGroup.valid)
-  // }
-  // next3(){
-  //   console.log(this.formFeaturesGroup)
-  //   console.log(this.formFeaturesGroup.value)
-  //   console.log(this.formFeaturesGroup.valid)
-  // }
   loadStates(){
     let selected  =countryList.filter(c=> c.country===this.formAddressGroup.value.country);
     this.states=[];
@@ -134,23 +131,24 @@ export class PropertyFormComponent implements OnInit {
       }
     }
   }
-  uploadImages(){
-    let formData =  new FormData();
-    for(let i in this.uploads){
-      formData.append(i,this.uploads[i]); 
-      formData.append('name',"swathi") 
-      console.log(i)
-      console.log(this.uploads[i])
+  // uploadImages(){
+  //   let formData =  new FormData();
+  //   for(let i in this.uploads){
+  //     formData.append(i,this.uploads[i]); 
+  //     formData.append('name',"swathi") 
 
-    }   
-      this._http.post('http://localhost:9000/propimages',formData,{responseType: 'text'}).subscribe(
-        (data)=>{
-          console.log(data)
-          console.log("Uploaded")
-        },
-        (err)=>{console.log(err)}
-      )
-  }
+  //   }   
+  //     this._http.post('http://localhost:9000/propimages',formData,{responseType: 'text'}).subscribe(
+  //       (data)=>{
+   
+  //         this.proprtyUploaded = true;
+  //       },
+  //       (err)=>{
+  //         this.proprtyUploaded = false;
+          
+  //       }
+  //     )
+  // }
  
   onSelectFile(event) {
     if (event.target.files && event.target.files[0]) {
@@ -166,6 +164,13 @@ export class PropertyFormComponent implements OnInit {
         }
     }
   }
+  onSelectDoc(event) {
+    if (event.target.files && event.target.files[0]) {
+      this.docProof= event.target.files[0];
+      this.documentErr= false;
+      this.docAdded = true;
+    }
+  }
 
   deleteImg(i){
     this.urls.splice(i,1)
@@ -174,14 +179,14 @@ export class PropertyFormComponent implements OnInit {
     this.urls= []
   }
   handlePropertyUpload(){
+    if(!this.uploads) this.imagesErr= true;else this.imagesErr = false;
+    if(!this.docProof)  this.documentErr = true;else  this.documentErr = false;
     if(this.formBasicGroup.valid
       && this.formAddressGroup.valid 
       &&this.formFeaturesGroup.valid
-      // &&this.formMediaGroup.valid
+      && !this.documentErr
+      && !this.imagesErr
     ){
-      console.log(this.formAddressGroup.value)
-      console.log(this.formBasicGroup.value)
-      console.log(this.formFeaturesGroup.value)
       let propertyDetails = new FormData();
       Object.keys(this.formBasicGroup.controls).forEach(key => {
         propertyDetails.append(key,this.formBasicGroup.get(key).value) 
@@ -195,17 +200,24 @@ export class PropertyFormComponent implements OnInit {
       for(let i in this.uploads){
         propertyDetails.append(i,this.uploads[i]);
       }
-      this._http.post('http://localhost:9000/propimages',propertyDetails).subscribe(
+      propertyDetails.append('doc',this.docProof)
+      this._http.post('http://localhost:9000/propimages',propertyDetails,{responseType: 'text'}).subscribe(
         (data)=>{
           console.log(data)
           console.log("Uploaded")
+          this.propertyUploaded = true;
+          setTimeout(function(){
+            this.dialog.closeAll();
+          },5000)
+        
         },
-        (err)=>{console.log(err)}
+        (err)=>{
+         this.propertyUploaded = false;
+        }
       )  
     }
-  else{
-    return
-  } 
+  else return;
+   
   }
 
 }

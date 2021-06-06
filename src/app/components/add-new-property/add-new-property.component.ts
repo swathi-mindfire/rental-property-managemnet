@@ -14,32 +14,13 @@ export class AddNewPropertyComponent implements OnInit {
   constructor(private _http : HttpClient,public dialog: MatDialog,private _ps: PropertyService) { }
 
   ngOnInit(): void {
+    
+  }
+
+  openDialog(){
     this._ps.handleNewAndEditProperty.next({new:true})
     const dialogRef = this.dialog.open(PropertyFormComponent,{
       width: '650px',disableClose: true ,
     })
-    // const dialogRef = this.dialog.open(PropertyFormComponent,{
-    //   width: '500px',disableClose: true 
-    // });
   }
-
-  uploadFile(event){
-    let ele = event.target;
-    if(ele.files.length>0){
-      let formData =  new FormData();
-      formData.append('image',ele.files[0])     
-      this._http.post('http://localhost:9000/newpropdoc',formData).subscribe(
-        (data)=>{
-          console.log(data)
-          console.log("Uploaded")
-        },
-        (err)=>{console.log("Error")
-
-        console.log(err)
-
-        }
-      )
-    }
-  }
-
 }

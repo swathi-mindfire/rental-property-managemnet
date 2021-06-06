@@ -5,19 +5,21 @@
 <mat-horizontal-stepper [linear]="isLinear" #stepper labelPosition="bottom">
     <mat-step [stepControl]="formBasicGroup" label="Basic" >
         <form [formGroup]="formBasicGroup">
-            <div class="row">
-                <mat-form-field class="ptype">
-                    <mat-label>Property Type</mat-label>
-                    <mat-select formControlName="propertyType">
-                        <mat-option *ngFor="let p of propertyTypes" [value]="p">{{p}}</mat-option>
-                    </mat-select>
-                    <mat-error *ngIf="formBasicGroup.controls.propertyType.errors?.required">
-                        Please Select Type of Property
-                    </mat-error>
-                </mat-form-field>
+            <div class="row  mx-auto">
+                <div class="col col-xs-8">
+                    <mat-form-field class="ptype">
+                        <mat-label>Property Type</mat-label>
+                        <mat-select formControlName="propertyType">
+                            <mat-option *ngFor="let p of propertyTypes" [value]="p">{{p}}</mat-option>
+                        </mat-select>
+                        <mat-error *ngIf="formBasicGroup.controls.propertyType.errors?.required">
+                            Please Select Type of Property
+                        </mat-error>
+                    </mat-form-field>
+                </div>               
             </div>
-            <div class="row">
-                <div class="col-xs-12 col-sm-6">
+            <div class="row mx-auto">
+                <div class="col-xs-12 col-md-6">
                     <mat-form-field >
                         <mat-label>Rent</mat-label>
                         <input type="text" matInput formControlName="rent">
@@ -29,7 +31,7 @@
                         </mat-error>
                     </mat-form-field>
                 </div>
-                <div class="col-xs-12 col-sm-6">                   
+                <div class="col-xs-12 col-md-6">                   
                     <mat-form-field>
                         <mat-label>BHK</mat-label>
                         <mat-select formControlName="bhk">
@@ -41,8 +43,8 @@
                     </mat-form-field>
                 </div>
             </div>
-            <div class="row">
-                <div class="col-xs-12 col-sm-6">
+            <div class="row mx-auto">
+                <div class="col-xs-12 col-md-6">
                     <mat-form-field >
                         <mat-label>Baths</mat-label>
                         <input type="text" matInput formControlName="baths">
@@ -54,7 +56,7 @@
                         </mat-error>
                       </mat-form-field>
                 </div>
-                <div class="col-xs-12 col-sm-6">
+                <div class="col-xs-12 col-md-6">
                     <mat-form-field class="example-full-width">
                         <mat-label>Area</mat-label>
                         <input type="text" matInput formControlName="area" >
@@ -172,8 +174,11 @@
     <mat-step [stepControl]="formMediaGroup"  class="media" label="Media" >
         <form [formGroup]="formMediaGroup">
             <div class="row ">              
-                <label for="file" class="btn btn-outline-primary">upload Images <mat-icon class="text-primary upload-icon">file_upload</mat-icon></label>
-                <input formControlName="image"  id="file" type="file" accept="image/*"  multiple style="visibility:hidden;" (change)="onSelectFile($event)" >
+                <label for="images" class="btn btn-outline-primary">upload Images <mat-icon class="text-primary upload-icon">file_upload</mat-icon></label>
+                <input formControlName="image"  id="images" type="file" accept="image/*"  multiple style="visibility:hidden;" (change)="onSelectFile($event)" >
+                <mat-error *ngIf="imagesErr">
+                    Please Upload Atleast One Image
+                </mat-error>
             </div>
             <div class="row">
                 <div *ngFor="let url of urls;index as i " class="col-md-3 img-container img-pre">
@@ -181,12 +186,17 @@
                     <button mat-mini-fab class="text-danget del-btn d-inline" (click)="deleteImg(i)"><mat-icon>delete</mat-icon></button>
                 </div>
             </div> 
-            <mat-error *ngIf="formMediaGroup.controls.image.errors?.required">
-                Please Upload Atleast One Image
-            </mat-error>
-            <mat-error *ngIf="formMediaGroup.controls.document.errors?.required">
-                Please Upload Property Documnet Proof
-            </mat-error>  
+           
+            <div class="row ">              
+                <label for="doc" class="btn btn-outline-warning">upload Proerty Document Proof <mat-icon class="text-primary upload-icon">file_upload</mat-icon></label>
+                <input formControlName="document"  id="doc" type="file" accept=".doc,.docx,application/pdf,.pdf"  multiple style="visibility:hidden;" (change)="onSelectDoc($event)" >
+                <mat-error *ngIf="documentErr">
+                    Please Upload Property Documnet Proof
+                </mat-error>
+                <div class="row text-success text-center d-flex justify-content-center align-items-center" *ngIf="docAdded"> 
+                    Document Added
+                </div> 
+            </div>          
             <div class="row mt-4 mx-auto">
                 <div class="col text-center">
                    <button mat-raised-button color="primary"  (click)=" handlePropertyUpload()" >Submit</button>                      
@@ -196,16 +206,8 @@
                 </div>
             </div>
         </form>
+        <div class="row d-flex justify-content-center align-items-center text-success" *ngIf="propertyUploaded">
+            Your Property Uploaded Successfully
+        </div>
   </mat-step>
-  <!-- <mat-step>
-    <ng-template matStepLabel>Review</ng-template>
-    <h5>You are now done.</h5>
-    <div>
-        <button mat-raised-button color="primary" matStepperPrevious>Back</button> &nbsp; &nbsp;
-        <button mat-raised-button color="accent" type="submit">Submit</button> &nbsp; &nbsp;
-        <button mat-raised-button color="warn" (click)="stepper.reset()">Reset</button>
-    </div>
-  </mat-step> -->
-
-
 </mat-horizontal-stepper>

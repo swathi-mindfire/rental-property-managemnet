@@ -75,3 +75,6 @@
      z-index: 3;
      margin-right: 40px !important;
  }
+ .mat-form-field{
+   width: 100%;
+ }
