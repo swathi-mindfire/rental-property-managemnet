@@ -173,7 +173,7 @@
         <form [formGroup]="formMediaGroup">
             <div class="row ">              
                 <label for="file" class="btn btn-outline-primary">upload Images <mat-icon class="text-primary upload-icon">file_upload</mat-icon></label>
-                <input formControlName="image"  id="file" type="file" accept="image/*" style="visibility:hidden;" (change)="onSelectFile($event)"  multiple>
+                <input formControlName="image"  id="file" type="file" accept="image/*"  multiple style="visibility:hidden;" (change)="onSelectFile($event)" >
             </div>
             <div class="row">
                 <div *ngFor="let url of urls;index as i " class="col-md-3 img-container img-pre">
@@ -183,7 +183,7 @@
             </div>   
             <div class="row mt-4 mx-auto">
                 <div class="col text-center">
-                   <button mat-raised-button color="primary"  (click)="next3()" >Submit</button>                      
+                   <button mat-raised-button color="primary"  (click)="next3();uploadImages()" >Submit</button>                      
                 </div>
                 <div class="col text-center">
                    <button mat-raised-button color="warn" (click)="stepper.reset();deleteAllImgs()">Reset</button>

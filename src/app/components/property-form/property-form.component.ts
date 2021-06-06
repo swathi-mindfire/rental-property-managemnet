@@ -1,7 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { PropertyService } from 'src/app/services/property.service';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
-import{countryList} from '../../model/country-states'
+import{countryList} from '../../model/country-states';
+import { HttpClient } from '@angular/common/http';
 @Component({
   selector: 'app-property-form',
   templateUrl: './property-form.component.html',
@@ -22,8 +23,9 @@ export class PropertyFormComponent implements OnInit {
   BHKS= [1,2,3,4,5];
   countries = [];
   urls = [];
+  uploads=[];
 
-  constructor(private _ps: PropertyService, private fb: FormBuilder ) { 
+  constructor(private _ps: PropertyService, private fb: FormBuilder,private _http : HttpClient ) { 
     
   this.createForm();
   }
@@ -134,21 +136,43 @@ export class PropertyFormComponent implements OnInit {
       }
     }
   }
+  uploadImages(){
+    let formData =  new FormData();
+    for(let i in this.uploads){
+      formData.append(i,this.uploads[i]); 
+      formData.append('name',"swathi") 
+      console.log(i)
+      console.log(this.uploads[i])
+
+    }   
+      this._http.post('http://localhost:9000/propimages',formData,{responseType: 'text'}).subscribe(
+        (data)=>{
+          console.log(data)
+          console.log("Uploaded")
+        },
+        (err)=>{console.log(err)}
+      )
+  }
  
   onSelectFile(event) {
-    console.log(event)
+    // console.log(event);
+    // console.log(event.target);
+    // console.log(event.target.files[0])
+    // console.log(this.formMediaGroup.controls.image)
     if (event.target.files && event.target.files[0]) {
-      console.log(this.formMediaGroup.controls.image)
+      // console.log(this.formMediaGroup.controls.image)
+      this.uploads.push(event.target.files[0])
         var filesLength = event.target.files.length;
-        console.log(filesLength)
+         console.log(filesLength)
+         console.log(event.target.files)
         for (let i = 0; i < filesLength; i++) {
                 var reader = new FileReader();
                 reader.onload = (event:any) => {
                    this.urls.push(event.target.result);
-                   console.log(event.target.result) 
+                  //  console.log(event.target.result) 
                    
                 }
-                console.log(event.target.files[i])
+                // console.log(event.target.files[i])
               reader.readAsDataURL(event.target.files[i]);
         }
     }
