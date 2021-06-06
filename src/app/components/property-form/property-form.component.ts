@@ -93,15 +93,13 @@ export class PropertyFormComponent implements OnInit {
       area: ['',[Validators.required,Validators.pattern('[0-9.]{1,5}')]],
       status: [false,Validators.required],
       baths: ['',[Validators.required,Validators.pattern('[0-9]{1,5}')]],
-    });
-  
+    });  
     this.formAddressGroup  = this.fb.group({
       country: ['',[Validators.required]],
       state: ['',[Validators.required]],
       location: ['',[Validators.required,Validators.pattern('[A-Za-z]{2,30}')]],
       address: ['', [Validators.required, Validators.pattern('[0-9.a-zA-Z]{1,40}')]],
-      zipcode: ['', [Validators.required,Validators.pattern('[0-9]{6,8}')] ],     
-   
+      zipcode: ['', [Validators.required,Validators.pattern('[0-9]{6,8}')] ],       
     });
     this.formFeaturesGroup  = this.fb.group({
       parking : [false],
@@ -110,23 +108,23 @@ export class PropertyFormComponent implements OnInit {
     });
     this.formMediaGroup  = this.fb.group({
       image: ['', Validators.required],
-      documnet : ['', Validators.required],
+      document : ['', Validators.required],
     });
     }
 
-  handle(){
-    console.log(this.formBasicGroup.value)
-  }
+  // handle(){
+  //   console.log(this.formBasicGroup.value)
+  // }
 
-  next2(){
-    console.log(this.formAddressGroup.value)
-    console.log(this.formAddressGroup.valid)
-  }
-  next3(){
-    console.log(this.formFeaturesGroup)
-    console.log(this.formFeaturesGroup.value)
-    console.log(this.formFeaturesGroup.valid)
-  }
+  // next2(){
+  //   console.log(this.formAddressGroup.value)
+  //   console.log(this.formAddressGroup.valid)
+  // }
+  // next3(){
+  //   console.log(this.formFeaturesGroup)
+  //   console.log(this.formFeaturesGroup.value)
+  //   console.log(this.formFeaturesGroup.valid)
+  // }
   loadStates(){
     let selected  =countryList.filter(c=> c.country===this.formAddressGroup.value.country);
     this.states=[];
@@ -155,25 +153,16 @@ export class PropertyFormComponent implements OnInit {
   }
  
   onSelectFile(event) {
-    // console.log(event);
-    // console.log(event.target);
-    // console.log(event.target.files[0])
-    // console.log(this.formMediaGroup.controls.image)
     if (event.target.files && event.target.files[0]) {
-      // console.log(this.formMediaGroup.controls.image)
-      this.uploads.push(event.target.files[0])
+      // this.uploads.push(event.target.files[0])
         var filesLength = event.target.files.length;
-         console.log(filesLength)
-         console.log(event.target.files)
         for (let i = 0; i < filesLength; i++) {
+          this.uploads.push(event.target.files[i])
                 var reader = new FileReader();
                 reader.onload = (event:any) => {
                    this.urls.push(event.target.result);
-                  //  console.log(event.target.result) 
-                   
-                }
-                // console.log(event.target.files[i])
-              reader.readAsDataURL(event.target.files[i]);
+                  }
+          reader.readAsDataURL(event.target.files[i]);
         }
     }
   }
@@ -183,6 +172,40 @@ export class PropertyFormComponent implements OnInit {
   }
   deleteAllImgs(){
     this.urls= []
+  }
+  handlePropertyUpload(){
+    if(this.formBasicGroup.valid
+      && this.formAddressGroup.valid 
+      &&this.formFeaturesGroup.valid
+      // &&this.formMediaGroup.valid
+    ){
+      console.log(this.formAddressGroup.value)
+      console.log(this.formBasicGroup.value)
+      console.log(this.formFeaturesGroup.value)
+      let propertyDetails = new FormData();
+      Object.keys(this.formBasicGroup.controls).forEach(key => {
+        propertyDetails.append(key,this.formBasicGroup.get(key).value) 
+      });
+      Object.keys(this.formAddressGroup.controls).forEach(key => {
+        propertyDetails.append(key,this.formAddressGroup.get(key).value) 
+      });
+      Object.keys(this.formFeaturesGroup.controls).forEach(key => {
+        propertyDetails.append(key,this.formFeaturesGroup.get(key).value) 
+      });
+      for(let i in this.uploads){
+        propertyDetails.append(i,this.uploads[i]);
+      }
+      this._http.post('http://localhost:9000/propimages',propertyDetails).subscribe(
+        (data)=>{
+          console.log(data)
+          console.log("Uploaded")
+        },
+        (err)=>{console.log(err)}
+      )  
+    }
+  else{
+    return
+  } 
   }
 
 }
