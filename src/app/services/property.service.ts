@@ -17,11 +17,13 @@ export class PropertyService {
   error=null;
   ownerPropErr = null;
   fetechedProperties= new BehaviorSubject({fetched:false});
+  fetechedPropertyRequests= new BehaviorSubject({fetched:false});
   propertiesGetError= new BehaviorSubject({error:false});
   fetechedOwnerProperties= new BehaviorSubject({fetched:false});
   ownerPropertiesGetError= new BehaviorSubject({error:false});
   handleNewAndEditProperty= new BehaviorSubject({new:true});
   editPropertyDetails = new BehaviorSubject({});
+  propertyContactRequests:any;
   propertyUploadSuccess = new BehaviorSubject({uploaded:false})
   constructor(private _http: HttpService) {
     this.fetchProperties().subscribe(
@@ -79,6 +81,17 @@ export class PropertyService {
   }
   addUserContactInfo(userInfo){
     return this._http.POST(`${this.url}/usercontacts`,userInfo)
+  }
+  getPropertContactRequest(){
+    return of(this.propertyContactRequests)
+  }
+  fetchPropertyContactRequests(o_id){
+    this._http.getContactRequests(`${this.url}/propertyrequests`,o_id).subscribe(
+      (res)=>{
+        this.propertyContactRequests = res;
+      },
+      (err)=>{this.propertyContactRequests = []}
+    )
   }
   selectedProperty = new BehaviorSubject<Property>({    
       id:null,

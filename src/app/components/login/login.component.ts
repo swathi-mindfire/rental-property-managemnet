@@ -48,6 +48,7 @@ export class LoginComponent implements OnInit {
         localStorage.setItem('token', res['token']);
         localStorage.setItem('username', res['username']);
         this._ps.fetchOwnerproperties(res['id'])
+        this._ps.fetchPropertyContactRequests(res['id']);
         this.errormsg = null;
         this._us.loginCheck.next({loggedIn:true})
         this.router.navigate(['/dashboard',res['id']]);

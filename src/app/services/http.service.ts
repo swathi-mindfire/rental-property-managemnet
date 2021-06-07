@@ -17,6 +17,10 @@ POST(path: string, body: HttpParams = null, options?: any): Observable<Object> {
   return this._http.post(path, body, this._httpOptionsForPost)
       
 }
+
+getContactRequests(path,id){
+  return this._http.get(path)
+}
 // GET(path: string,qparams?): Observable<Object> {
 //   if(qparams){
 

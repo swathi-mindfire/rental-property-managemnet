@@ -23,6 +23,7 @@ export class DashboardComponent implements OnInit {
   verifiedProperties:any;
   rentedProperties :any;
   vacantProperties :any;
+  contactRequests :[];
   dataSource = new MatTableDataSource([]); 
   displayedColumns = ['id', 'location', 'rent', 'state'];
   constructor(private _ps: PropertyService,private route :ActivatedRoute,private router:Router,private changeDetectorRef: ChangeDetectorRef) { 
@@ -46,6 +47,17 @@ export class DashboardComponent implements OnInit {
       (data)=>{
         if(data.error== true){
           this.error= true;
+        }
+      }
+    )
+    this._ps.fetechedPropertyRequests.subscribe(
+      (data)=>{
+        if(data.fetched == true){
+          this._ps.getPropertContactRequest().subscribe(
+            (requests)=>{
+              this.contactRequests = requests;
+            }
+          )
         }
       }
     )    
