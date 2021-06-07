@@ -3,6 +3,7 @@ import { MatDialog, MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dial
 import { DateAdapter } from '@angular/material/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { PropertyService } from 'src/app/services/property.service';
+import { MatSnackBar } from '@angular/material/snack-bar';
 @Component({
   selector: 'app-contact-owner',
   templateUrl: './contact-owner.component.html',
@@ -16,6 +17,7 @@ export class ContactOwnerComponent implements OnInit {
               private dateAdapter: DateAdapter<any>,
               private _fb: FormBuilder,
               private _ps:PropertyService,
+              private snackbar:MatSnackBar,
               private  dialogref: MatDialogRef<ContactOwnerComponent>,
               @Inject(MAT_DIALOG_DATA) private data :any
               
@@ -34,26 +36,56 @@ export class ContactOwnerComponent implements OnInit {
   }
   closeDialog(): void {
     this.dialogref.close()
+   
   }
   handleContactInfo(){
     if(this.contactForm.valid){
       let contactDtetails;
       contactDtetails = this.contactForm.value;
-      contactDtetails['property-id']= this.p_id;
+      contactDtetails['property_id']= this.p_id;
       this._ps.addUserContactInfo(contactDtetails).subscribe(
         (res)=>{
-          this.req_submitted = true;
-          setTimeout(()=>{
-            this.req_submitted = false;
-            this.dialogref.close()
+          // this.req_submitted = true;
+          // setTimeout(()=>{
+          //   this.req_submitted = false;
+          //   this.dialogref.close()
 
-          },4000)
+          // },4000)
+          this.contactForm.reset();
+          let sb=  this.snackbar.open("Your Details Posted Successfully","close",{
+          duration : 4000,
+          panelClass: ['snackbar-style']
+          });
+          sb.onAction().subscribe(()=>{
+            this.dialogref.close();
+            sb.dismiss();
+
+          })
+          sb.afterDismissed().subscribe(()=>{
+            this.dialogref.close()
+          })
+    
+        },
+        (err) =>{
+          let sb=  this.snackbar.open("Error while Posting Details","close",{
+            duration : 4000,
+            panelClass: ['snackbar-style']
+            });
+            sb.onAction().subscribe(()=>{
+              this.dialogref.close();
+              sb.dismiss();
+  
+            })
+            sb.afterDismissed().subscribe(()=>{
+              this.dialogref.close()
+            })
+      
         }
       )
-
     }
-
-
-  }
+    else return
+    
+    
+  }  
 
 }

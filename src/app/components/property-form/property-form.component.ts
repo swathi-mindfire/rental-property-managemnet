@@ -4,6 +4,7 @@ import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import{countryList} from '../../model/country-states';
 import { MatDialog } from '@angular/material/dialog';
 import { Router } from '@angular/router';
+import { MatSnackBar } from '@angular/material/snack-bar';
 @Component({
   selector: 'app-property-form',
   templateUrl: './property-form.component.html',
@@ -36,7 +37,8 @@ export class PropertyFormComponent implements OnInit {
               private _ps: PropertyService, 
               private fb: FormBuilder,
               public dialog: MatDialog,
-              private router :Router
+              private router :Router,
+              private snackbar:MatSnackBar
             ) { 
     
   this.createForm();
@@ -187,9 +189,27 @@ export class PropertyFormComponent implements OnInit {
       propertyDetails.append('owner-id',this.owner_id);
       this._ps.addNewProperty(propertyDetails).subscribe(
         (data)=>{
-          this.propertyUploaded = true;
-          this._ps.propertyUploadSuccess.next({uploaded:true})
-          this.dialog.closeAll()        
+          // this.propertyUploaded = true;
+          // this._ps.propertyUploadSuccess.next({uploaded:true})
+          // this.dialog.closeAll() 
+          this.formBasicGroup.reset();
+          this.formAddressGroup.reset();
+          this.formFeaturesGroup.reset();
+          this.formMediaGroup.reset();
+          
+          let sb=  this.snackbar.open("Your Details Posted Successfully","close",{
+            duration : 4000,
+            panelClass: ['snackbar-style']
+            });
+            sb.onAction().subscribe(()=>{
+              this.dialog.closeAll();
+              sb.dismiss();
+  
+            })
+            sb.afterDismissed().subscribe(()=>{
+              this.dialog.closeAll();
+            })
+
         },
         (err)=>{
          this.propertyUploaded = false;
