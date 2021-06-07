@@ -39,7 +39,7 @@ const routes: Routes = [
     component:DashboardComponent,canActivate:[AuthGuard]
   },
   {
-    path:'addnewproperty/:id',
+    path:'addnewproperty',
     component:AddNewPropertyComponent,canActivate:[AuthGuard]
   },
 

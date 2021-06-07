@@ -1,32 +1,59 @@
-<div class="text-primary  mb-4 text-center">please fill these details</div>
-<div class="row">
-    <mat-form-field>
-        <input matInput placeholder="Enter Name" color="primary" [(ngModel)]="name" >
-    </mat-form-field>
-</div> 
-<div class="row mt-2">
-    <mat-form-field>
-        <input matInput placeholder="Enter Mobile Number"  [(ngModel)]="mobile">
-    </mat-form-field>
-</div>
-<div class="row mt-2">
-    <mat-form-field>
-        <input  matInput placeholder="Enter email"  [(ngModel)] ="mail">
-    </mat-form-field>
-</div>
-<div class="row mt-2">
-    <mat-form-field>
-        <input matInput
-          [matDatepicker]="visitdate"
-          placeholder="Visit Date"
-          [(ngModel)] ="visitingDate">
-        <mat-datepicker-toggle matSuffix [for]="visitdate"></mat-datepicker-toggle>
-        <mat-datepicker #visitdate></mat-datepicker>
-    </mat-form-field>
-    
-</div>
+<div class="text-primary  mb-4 text-center">please fill your contact information</div>
+<form [formGroup]="contactForm">
+    <div class="row">
+        <mat-form-field>
+            <mat-label>Enter name</mat-label>
+            <input matInput color="primary" formControlName="name" >
+            <mat-error *ngIf="contactForm.controls.name.errors?.required">
+                Please Provide Your Name For Owner
+            </mat-error>
+            <mat-error *ngIf="contactForm.controls.name.errors?.pattern">
+                Please Enter Valid Name
+            </mat-error>
+        </mat-form-field>      
+    </div>
+    <div class="row mt-2">      
+        <mat-form-field>
+            <mat-label>Your Mobile Number</mat-label>
+            <input matInput formControlName="mobile">
+            <mat-error *ngIf="contactForm.controls.mobile.errors?.required">
+                Please Provide Your Contact Number
+            </mat-error>
+            <mat-error *ngIf="contactForm.controls.mobile.errors?.pattern">
+                Please Enter Valid Mobile Number
+            </mat-error>
+        </mat-form-field>       
+    </div>
+    <div class="row mt-2">    
+        <mat-form-field>
+            <mat-label>Enter Your Mail</mat-label>
+            <input  matInput   formControlName ="mail">
+            <mat-error *ngIf="contactForm.controls.mail.errors?.required">
+                Please Provide Your Mail Id
+            </mat-error>
+            <mat-error *ngIf="contactForm.controls.mail.errors?.email">
+                Please Enter Valid Mail 
+            </mat-error>
+        </mat-form-field>     
+    </div>
+    <div class="row mt-2">
+      
+        <mat-form-field>
+            <mat-label>choose Visiting Date</mat-label>
+            <input matInput
+              [matDatepicker]="visitdate"
+              formControlName ="visitingDate">
+            <mat-datepicker-toggle matSuffix [for]="visitdate"></mat-datepicker-toggle>
+            <mat-datepicker #visitdate></mat-datepicker>
+        </mat-form-field>        
+    </div>          
+</form> 
 <div  class="d-flex justify-content-around mt-4">                 
     <button mat-raised-button color="primary" class="cancel w-50" (click)="closeDialog()">Cancel</button>                  
-    <button mat-raised-button color="primary" class="sumbit w-50" (click)="submit()" >Submit</button>                                             
-</div> 
+    <button mat-raised-button color="primary" class="sumbit w-50" (click)="handleContactInfo()" >Submit</button>                                             
+</div>
+
+<div *ngIf= "req_submitted">
+    Your Detials Posted Owner Get Back back To You Soon
+</div>
   

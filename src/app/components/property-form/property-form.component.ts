@@ -2,8 +2,8 @@ import { Component, OnInit } from '@angular/core';
 import { PropertyService } from 'src/app/services/property.service';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import{countryList} from '../../model/country-states';
-import { HttpClient } from '@angular/common/http';
 import { MatDialog } from '@angular/material/dialog';
+import { Router } from '@angular/router';
 @Component({
   selector: 'app-property-form',
   templateUrl: './property-form.component.html',
@@ -30,12 +30,13 @@ export class PropertyFormComponent implements OnInit {
   imagesErr= null;
   docAdded = false;
   propertyUploaded = false;
+  owner_id = localStorage.getItem('id');
 
   constructor(
               private _ps: PropertyService, 
               private fb: FormBuilder,
-              private _http : HttpClient,
-              public dialog: MatDialog
+              public dialog: MatDialog,
+              private router :Router
             ) { 
     
   this.createForm();
@@ -49,10 +50,8 @@ export class PropertyFormComponent implements OnInit {
       (info)=>{
       if(info.new==true) this.buildPropertyForm()
       else this.editPropertyForm()
-
-      }
-
-    )
+    })
+    this._ps.propertyUploadSuccess.subscribe();
   }
   private buildPropertyForm(): void {
     this.propertyForm = this.fb.group({
@@ -109,7 +108,7 @@ export class PropertyFormComponent implements OnInit {
       country: ['',[Validators.required]],
       state: ['',[Validators.required]],
       location: ['',[Validators.required,Validators.pattern('[A-Za-z]{2,30}')]],
-      address: ['', [Validators.required, Validators.pattern('[0-9.a-zA-Z]{1,40}')]],
+      address: ['', [Validators.required, Validators.pattern('[0-9., a-zA-Z]{1,40}')]],
       zipcode: ['', [Validators.required,Validators.pattern('[0-9]{6,8}')] ],       
     });
     this.formFeaturesGroup  = this.fb.group({
@@ -130,29 +129,9 @@ export class PropertyFormComponent implements OnInit {
         this.states.push(s);
       }
     }
-  }
-  // uploadImages(){
-  //   let formData =  new FormData();
-  //   for(let i in this.uploads){
-  //     formData.append(i,this.uploads[i]); 
-  //     formData.append('name',"swathi") 
-
-  //   }   
-  //     this._http.post('http://localhost:9000/propimages',formData,{responseType: 'text'}).subscribe(
-  //       (data)=>{
-   
-  //         this.proprtyUploaded = true;
-  //       },
-  //       (err)=>{
-  //         this.proprtyUploaded = false;
-          
-  //       }
-  //     )
-  // }
- 
+  } 
   onSelectFile(event) {
     if (event.target.files && event.target.files[0]) {
-      // this.uploads.push(event.target.files[0])
         var filesLength = event.target.files.length;
         for (let i = 0; i < filesLength; i++) {
           this.uploads.push(event.target.files[i])
@@ -195,29 +174,29 @@ export class PropertyFormComponent implements OnInit {
         propertyDetails.append(key,this.formAddressGroup.get(key).value) 
       });
       Object.keys(this.formFeaturesGroup.controls).forEach(key => {
-        propertyDetails.append(key,this.formFeaturesGroup.get(key).value) 
+        let value =""
+        if(this.formFeaturesGroup.get(key).value == true)
+          value = "yes";
+        else value = "no";
+        propertyDetails.append(key,value) 
       });
       for(let i in this.uploads){
         propertyDetails.append(i,this.uploads[i]);
       }
       propertyDetails.append('doc',this.docProof)
-      this._http.post('http://localhost:9000/propimages',propertyDetails,{responseType: 'text'}).subscribe(
+      propertyDetails.append('owner-id',this.owner_id);
+      this._ps.addNewProperty(propertyDetails).subscribe(
         (data)=>{
-          console.log(data)
-          console.log("Uploaded")
           this.propertyUploaded = true;
-          setTimeout(function(){
-            this.dialog.closeAll();
-          },5000)
-        
+          this._ps.propertyUploadSuccess.next({uploaded:true})
+          this.dialog.closeAll()        
         },
         (err)=>{
          this.propertyUploaded = false;
         }
-      )  
+      )     
     }
-  else return;
-   
+  else return;  
   }
 
 }

@@ -22,6 +22,7 @@ export class PropertyService {
   ownerPropertiesGetError= new BehaviorSubject({error:false});
   handleNewAndEditProperty= new BehaviorSubject({new:true});
   editPropertyDetails = new BehaviorSubject({});
+  propertyUploadSuccess = new BehaviorSubject({uploaded:false})
   constructor(private _http: HttpService) {
     this.fetchProperties().subscribe(
       (data)=>{
@@ -59,6 +60,9 @@ export class PropertyService {
           }
         )
   }
+  addNewProperty(propertyDetails){
+    return this._http.postProperty(`${this.url}/properties`,propertyDetails)
+  }
   fetchProperties():Observable<any>{  
     return this._http.GET(`${this.url}/properties`);  
     }
@@ -72,6 +76,9 @@ export class PropertyService {
   getLocations(){
     return this.locations;
     
+  }
+  addUserContactInfo(userInfo){
+    return this._http.POST(`${this.url}/usercontacts`,userInfo)
   }
   selectedProperty = new BehaviorSubject<Property>({    
       id:null,

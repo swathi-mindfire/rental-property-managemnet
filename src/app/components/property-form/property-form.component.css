@@ -48,15 +48,7 @@
     top:0px;
     right:-10px;
   }
-  .img-container {
-    display:flex;
-     flex-wrap: wrap;
-    align-content: space-evenly;
-    justify-content: space-evenly;
-    }
-   
-
-  
+ 
   .close-icon {
     transition: 1s ease-in-out;
   }
@@ -66,8 +58,7 @@
   }
  .del-btn {
      position: relative;
-     left:72px;
-     top: -160px;
+     top: -40px;
      z-index: 7;
 
  }

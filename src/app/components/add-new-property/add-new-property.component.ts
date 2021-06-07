@@ -1,4 +1,3 @@
-import { HttpClient } from '@angular/common/http';
 import { Component, OnInit } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
 import { PropertyService } from 'src/app/services/property.service';
@@ -10,10 +9,19 @@ import { PropertyFormComponent } from '../property-form/property-form.component'
   styleUrls: ['./add-new-property.component.css']
 })
 export class AddNewPropertyComponent implements OnInit {
-
-  constructor(private _http : HttpClient,public dialog: MatDialog,private _ps: PropertyService) { }
+  uploaded:boolean;
+  constructor(public dialog: MatDialog,private _ps: PropertyService) { }
 
   ngOnInit(): void {
+    this._ps.propertyUploadSuccess.subscribe((data)=>{
+      this.uploaded= data.uploaded;
+      if(this.uploaded == true){
+        setTimeout(()=>{
+          (this._ps.propertyUploadSuccess.next({uploaded:false}));
+        },5000)
+
+      }
+    })
     
   }
 

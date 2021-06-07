@@ -34,7 +34,8 @@ export class PropertyDetailsComponent implements OnInit {
   }
   openDialog(): void {
     const dialogRef = this.dialog.open(ContactOwnerComponent,{
-      width: '400px',disableClose: true 
+      width: '400px',disableClose: true,
+      data:{property_id:this.selectedProperty.id}
     });
   }
  

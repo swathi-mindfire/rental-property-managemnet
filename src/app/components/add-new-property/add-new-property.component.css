@@ -9,3 +9,6 @@
     margin: auto;
   
 }
+.add:hover{
+    transform: translate(2px);
+}

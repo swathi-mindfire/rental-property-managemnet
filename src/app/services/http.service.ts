@@ -28,14 +28,15 @@ POST(path: string, body: HttpParams = null, options?: any): Observable<Object> {
       
 // }
 GET(path: string,qparams?): Observable<Object> {
-  if(qparams){
+  if(qparams)
+  return this._http.get(path, {params: qparams});
 
-    return this._http.get(path, {params: qparams});
-  }
   // this.router.navigate(["/propertydetails"],)
-  return this._http.get(path);
-  
-      
+  else return this._http.get(path);
+}
+
+postProperty(path,propertyDetails){
+   return this._http.post(path,propertyDetails,{responseType: 'text'})
 }
 
 }
