@@ -45,12 +45,10 @@ export class ContactOwnerComponent implements OnInit {
       contactDtetails['property_id']= this.p_id;
       this._ps.addUserContactInfo(contactDtetails).subscribe(
         (res)=>{
-          // this.req_submitted = true;
-          // setTimeout(()=>{
-          //   this.req_submitted = false;
-          //   this.dialogref.close()
-
-          // },4000)
+     
+          setTimeout(() => {this.dialogref.close()
+              
+          }, 4000);
           this.contactForm.reset();
           let sb=  this.snackbar.open("Your Details Posted Successfully","close",{
           duration : 4000,

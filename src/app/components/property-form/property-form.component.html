@@ -9,10 +9,10 @@
                 <div class="col col-xs-8">
                     <mat-form-field class="ptype">
                         <mat-label>Property Type</mat-label>
-                        <mat-select formControlName="propertyType">
+                        <mat-select formControlName="type">
                             <mat-option *ngFor="let p of propertyTypes" [value]="p">{{p}}</mat-option>
                         </mat-select>
-                        <mat-error *ngIf="formBasicGroup.controls.propertyType.errors?.required">
+                        <mat-error *ngIf="formBasicGroup.controls.type.errors?.required">
                             Please Select Type of Property
                         </mat-error>
                     </mat-form-field>
@@ -198,7 +198,7 @@
             </div>          
             <div class="row mt-4 mx-auto">
                 <div class="col text-center">
-                   <button mat-raised-button color="primary"  (click)=" handlePropertyUpload()" >Submit</button>                      
+                   <button mat-raised-button color="primary"  (click)=" handlePropertyUpload()" >{{buttonName}}</button>                      
                 </div>
                 <div class="col text-center">
                    <button mat-raised-button color="warn" (click)="stepper.reset();deleteAllImgs()">Reset</button>

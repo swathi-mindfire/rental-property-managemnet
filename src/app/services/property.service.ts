@@ -45,9 +45,6 @@ export class PropertyService {
     )
    }
   fetchOwnerproperties(id){
-    // let params = new HttpParams();
-    //  params = params.append('id', id);
-    // let params= {id: id};
     this._http.GET(`${this.url}/owner/properties/${id}`).subscribe(
       (res)=>{
             this.ownerProperties=res;
@@ -64,6 +61,9 @@ export class PropertyService {
   }
   addNewProperty(propertyDetails){
     return this._http.postProperty(`${this.url}/properties`,propertyDetails)
+  }
+  editProperty(propertyDetails){
+    return this._http.postProperty(`${this.url}/properties/`,propertyDetails)
   }
   fetchProperties():Observable<any>{  
     return this._http.GET(`${this.url}/properties`);  
@@ -89,6 +89,8 @@ export class PropertyService {
     this._http.getContactRequests(`${this.url}/propertyrequests`,o_id).subscribe(
       (res)=>{
         this.propertyContactRequests = res;
+        this.fetechedPropertyRequests.next({fetched:true})
+
       },
       (err)=>{this.propertyContactRequests = []}
     )

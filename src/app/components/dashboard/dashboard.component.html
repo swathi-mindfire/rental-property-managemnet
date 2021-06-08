@@ -82,7 +82,7 @@
         <mat-cell *matCellDef="let property"> {{property.state}} </mat-cell>
       </ng-container>  
       <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
-      <mat-row *matRowDef="let property; columns: displayedColumns;" (click)="test(property)"></mat-row>
+      <mat-row *matRowDef="let property; columns: displayedColumns;" (click)="propertyDetails(property)"></mat-row>
     </mat-table>
     <div [hidden] ="!clicked" class="matpage">
       <mat-paginator [pageSizeOptions]="[5]" showFirstLastButtons></mat-paginator>

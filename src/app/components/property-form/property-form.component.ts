@@ -2,9 +2,9 @@ import { Component, OnInit } from '@angular/core';
 import { PropertyService } from 'src/app/services/property.service';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import{countryList} from '../../model/country-states';
-import { MatDialog } from '@angular/material/dialog';
-import { Router } from '@angular/router';
+import { MatDialog, MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { MatSnackBar } from '@angular/material/snack-bar';
+import { Inject } from '@angular/core';  
 @Component({
   selector: 'app-property-form',
   templateUrl: './property-form.component.html',
@@ -32,74 +32,56 @@ export class PropertyFormComponent implements OnInit {
   docAdded = false;
   propertyUploaded = false;
   owner_id = localStorage.getItem('id');
+  propertyEditDetails;
+  parking: boolean;
+  gym :boolean;
+  pool:boolean;
+  buttonName:string;
+  notification:string
 
   constructor(
               private _ps: PropertyService, 
               private fb: FormBuilder,
               public dialog: MatDialog,
-              private router :Router,
-              private snackbar:MatSnackBar
-            ) { 
-    
-  this.createForm();
+              private snackbar:MatSnackBar,
+              private  dialogref: MatDialogRef<PropertyFormComponent>,
+              @Inject(MAT_DIALOG_DATA) private data :any
+              ) { 
+                this.propertyEditDetails = data;
+                console.log(this.propertyEditDetails);
+                console.log(this.propertyEditDetails.property)
+                console.log(this.propertyEditDetails.images)
+                this._ps.handleNewAndEditProperty.subscribe((data)=>{
+                  this.buttonName= "submit";
+                  this.notification = "Your Property Uploaded sucessfully";
+                  if(data.new == false) this.createForm()
+                  else 
+                  { 
+                    this.urls = this.propertyEditDetails.images;
+                    if(this.propertyEditDetails.property["parking"]== "yes") this.parking = true
+                    else this.parking = false;
+                    if(this.propertyEditDetails.property["gym"]== "yes") this.gym = true
+                    else this.gym = false;
+                    if(this.propertyEditDetails.property["pool"]== "yes") this.pool = true
+                    else this.pool = false;
+                    this.docProof= this.propertyEditDetails.property["document-path"];
+                    this.documentErr= false;
+                    this.buttonName= "Update";
+                    this.notification = "Property Details Changed Sucessfully";
+                    this.editForm();
+                  }
+                })
   }
 
   ngOnInit(): void {
     for (var cl of countryList) {
       this.countries.push(cl.country);
     }
-    this._ps.handleNewAndEditProperty.subscribe(
-      (info)=>{
-      if(info.new==true) this.buildPropertyForm()
-      else this.editPropertyForm()
-    })
     this._ps.propertyUploadSuccess.subscribe();
-  }
-  private buildPropertyForm(): void {
-    this.propertyForm = this.fb.group({
-      propertyType: ['', [Validators.required]],
-      rent: ['', [Validators.required]],
-      country: ['',[Validators.required]],
-      state: ['',[Validators.required]],
-      location: ['',[Validators.required,Validators.minLength(2), Validators.maxLength(40)]],
-      address: ['', [Validators.required, Validators.minLength(2), Validators.maxLength(50) ] ],
-      zipcode: ['', [Validators.required, Validators.minLength(6) ] ],     
-      bhk: ['', Validators.pattern('[1-9]') ],
-      area: ['',Validators.pattern('[0-9.]{1,4}')],
-      baths: ['',Validators.required],
-      parking : ['',Validators.required],
-      gym : ['',Validators.required],
-      pool : ['',Validators.required],
-      status: ['',Validators.required],
-      document: ['',Validators.required]
-    });
-  }
-
-  private editPropertyForm(): void {
-    this._ps.editPropertyDetails.subscribe(property => {
-      this.updatePropertyDetails = property;
-    });
-    this.propertyForm = this.fb.group({
-      propertyType: [this.updatePropertyDetails.type, [Validators.required]],
-      rent: [this.updatePropertyDetails.rent, [Validators.required]],
-      country: [this.updatePropertyDetails.country,[Validators.required]],
-      state: [this.updatePropertyDetails.state,[Validators.required]],
-      location: [this.updatePropertyDetails.location,[Validators.required,Validators.minLength(2), Validators.maxLength(40)]],
-      address: [this.updatePropertyDetails.address, [Validators.required, Validators.minLength(2), Validators.maxLength(50) ] ],
-      zipcode: [this.updatePropertyDetails.zipcode, [Validators.required, Validators.minLength(6) ] ],     
-      bhk: [this.updatePropertyDetails.flat,  Validators.pattern('[1-9]') ],
-      area: [this.updatePropertyDetails.area, Validators.pattern('[0-9.]{1,4}')],
-      baths: [this.updatePropertyDetails.baths,Validators.required],
-      parking : [this.updatePropertyDetails.parking,Validators.required],
-      gym : [this.updatePropertyDetails.gym,Validators.required],
-      pool : [this.updatePropertyDetails.pool,Validators.required],
-      status: [this.updatePropertyDetails.status,Validators.required],
-      document: [this.updatePropertyDetails.documentUrl,Validators.required]
-    });
   }
   createForm() {
     this.formBasicGroup  = this.fb.group({
-      propertyType: ['', [Validators.required]],
+      type: ['', [Validators.required]],
       rent: ['', [Validators.required,Validators.pattern('[0-9]*')]],
       bhk: ['' ,Validators.required ],
       area: ['',[Validators.required,Validators.pattern('[0-9.]{1,5}')]],
@@ -121,6 +103,32 @@ export class PropertyFormComponent implements OnInit {
     this.formMediaGroup  = this.fb.group({
       image: ['', Validators.required],
       document : ['', Validators.required],
+    });
+  }
+  editForm() {
+    this.formBasicGroup  = this.fb.group({
+      type: [this.propertyEditDetails.property['type'], [Validators.required]],
+      rent: [this.propertyEditDetails.property['rent'], [Validators.required,Validators.pattern('[0-9]*')]],
+      bhk: [this.propertyEditDetails.property['bhk'],Validators.required ],
+      area: [this.propertyEditDetails.property['area'],[Validators.required,Validators.pattern('[0-9.]{1,5}')]],
+      status: [this.propertyEditDetails.property['status'],Validators.required],
+      baths: [this.propertyEditDetails.property['baths'],[Validators.required,Validators.pattern('[0-9]{1,5}')]],
+    });  
+    this.formAddressGroup  = this.fb.group({
+      country: [this.propertyEditDetails.property['country'],[Validators.required]],
+      state: [this.propertyEditDetails.property['state'],[Validators.required]],
+      location: [this.propertyEditDetails.property['location'],[Validators.required,Validators.pattern('[A-Za-z]{2,30}')]],
+      address: [this.propertyEditDetails.property['address'], [Validators.required, Validators.pattern('[0-9., a-zA-Z]{1,40}')]],
+      zipcode: [this.propertyEditDetails.property['zipcode'], [Validators.required,Validators.pattern('[0-9]{6,8}')] ],       
+    });
+    this.formFeaturesGroup  = this.fb.group({
+      parking : [this.parking],
+      gym : [this.pool],
+      pool : [this.pool],
+    });
+    this.formMediaGroup  = this.fb.group({
+      image: ['', Validators.required],
+      document : [this.propertyEditDetails.property['document-path'], Validators.required],
     });
     }
   loadStates(){
@@ -187,36 +195,57 @@ export class PropertyFormComponent implements OnInit {
       }
       propertyDetails.append('doc',this.docProof)
       propertyDetails.append('owner-id',this.owner_id);
-      this._ps.addNewProperty(propertyDetails).subscribe(
-        (data)=>{
-          // this.propertyUploaded = true;
-          // this._ps.propertyUploadSuccess.next({uploaded:true})
-          // this.dialog.closeAll() 
-          this.formBasicGroup.reset();
-          this.formAddressGroup.reset();
-          this.formFeaturesGroup.reset();
-          this.formMediaGroup.reset();
-          
-          let sb=  this.snackbar.open("Your Details Posted Successfully","close",{
-            duration : 4000,
-            panelClass: ['snackbar-style']
-            });
-            sb.onAction().subscribe(()=>{
-              this.dialog.closeAll();
-              sb.dismiss();
-  
-            })
-            sb.afterDismissed().subscribe(()=>{
-              this.dialog.closeAll();
-            })
+      propertyDetails.append('property-id',this.propertyEditDetails['id']);
+      if(this.data == "new"){
+        this._ps.addNewProperty(propertyDetails).subscribe(
+          (data)=>{
+            this.handleUploadStatus();
+      
+          },
+          (err)=>{
+            this.propertyUploaded = false;
+           }
+        )
+      }
+      else{
+        this._ps.editProperty(propertyDetails).subscribe(
+          (data)=>{
+            this.handleUploadStatus();
+      
+          },
+          (err)=>{
+            this.propertyUploaded = false;
+           }
+        )
 
-        },
-        (err)=>{
-         this.propertyUploaded = false;
-        }
-      )     
+      }
+       
     }
   else return;  
   }
+  handleUploadStatus(){
+
+    this.formBasicGroup.reset();
+    this.formAddressGroup.reset();
+    this.formFeaturesGroup.reset();
+    this.formMediaGroup.reset();
+    setTimeout(() => {this.dialog.closeAll()
+        
+    }, 4000);
+    
+    let sb=  this.snackbar.open(this.notification,"close",{
+      duration : 4000,
+      panelClass: ['snackbar-style']
+      });
+      sb.onAction().subscribe(()=>{
+        this.dialog.closeAll();
+        sb.dismiss();
+
+      })
+      sb.afterDismissed().subscribe(()=>{
+        this.dialog.closeAll();
+      })
+  }
+ 
 
 }

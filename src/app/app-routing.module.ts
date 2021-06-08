@@ -42,6 +42,9 @@ const routes: Routes = [
     path:'addnewproperty',
     component:AddNewPropertyComponent,canActivate:[AuthGuard]
   },
+  { 
+    path: '**', 
+    redirectTo: 'home', pathMatch: 'full' }
 
 ];
 

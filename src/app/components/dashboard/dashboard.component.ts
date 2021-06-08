@@ -115,7 +115,7 @@ export class DashboardComponent implements OnInit {
     this.clicked = true;
   }
 
-  test(prop){
+  propertyDetails(prop){
     prop["ownerPropClick"] = true;
     this._ps.ownerPropClick.next({ownerProp:true})
     this._ps.selectedProperty.next(prop);

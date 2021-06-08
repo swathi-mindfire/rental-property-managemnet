@@ -3,13 +3,15 @@ import { PropertyService } from 'src/app/services/property.service';
 import{Property} from 'src/app/model/property';
 import {MatDialog} from '@angular/material/dialog';
 import { ContactOwnerComponent } from '../contact-owner/contact-owner.component';
+import { PropertyFormComponent } from '../property-form/property-form.component';
+
 
 @Component({
   selector: 'app-property-details',
   templateUrl: './property-details.component.html',
   styleUrls: ['./property-details.component.css']
 })
-export class PropertyDetailsComponent implements OnInit {
+export class PropertyDetailsComponent {
   selectedProperty:any;
   images=[];
   imgs=[];
@@ -39,8 +41,14 @@ export class PropertyDetailsComponent implements OnInit {
     });
   }
  
-  ngOnInit(): void {
-  
+  openEditForm(){
+    this._ps.handleNewAndEditProperty.next({new:true})
+    const dialogRef2 = this.dialog.open(PropertyFormComponent,{
+      width: '650px',disableClose: true ,
+      data:{property:this.selectedProperty,images:this.imgs}
+    })
   }
+
+  
 
 }
