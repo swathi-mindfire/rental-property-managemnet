@@ -29,6 +29,8 @@ export class AddNewPropertyComponent implements OnInit {
     this._ps.handleNewAndEditProperty.next({new:true})
     const dialogRef = this.dialog.open(PropertyFormComponent,{
       width: '650px',disableClose: true ,
+      data:{property:null,images:null}
     })
+   
   }
 }

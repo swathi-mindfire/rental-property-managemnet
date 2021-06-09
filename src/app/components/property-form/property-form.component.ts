@@ -47,14 +47,15 @@ export class PropertyFormComponent implements OnInit {
               private  dialogref: MatDialogRef<PropertyFormComponent>,
               @Inject(MAT_DIALOG_DATA) private data :any
               ) { 
+                if(data.property!= null)
                 this.propertyEditDetails = data;
-                console.log(this.propertyEditDetails);
-                console.log(this.propertyEditDetails.property)
-                console.log(this.propertyEditDetails.images)
+                // console.log(this.propertyEditDetails);
+                // console.log(this.propertyEditDetails.property)
+                // console.log(this.propertyEditDetails.images)
                 this._ps.handleNewAndEditProperty.subscribe((data)=>{
                   this.buttonName= "submit";
                   this.notification = "Your Property Uploaded sucessfully";
-                  if(data.new == false) this.createForm()
+                  if(data.new == true) this.createForm()
                   else 
                   { 
                     this.urls = this.propertyEditDetails.images;
@@ -195,8 +196,9 @@ export class PropertyFormComponent implements OnInit {
       }
       propertyDetails.append('doc',this.docProof)
       propertyDetails.append('owner-id',this.owner_id);
-      propertyDetails.append('property-id',this.propertyEditDetails['id']);
-      if(this.data == "new"){
+
+      if(this.data.property == null){
+        console.log(propertyDetails);
         this._ps.addNewProperty(propertyDetails).subscribe(
           (data)=>{
             this.handleUploadStatus();
@@ -208,31 +210,28 @@ export class PropertyFormComponent implements OnInit {
         )
       }
       else{
+        propertyDetails.append('property-id',this.propertyEditDetails['id']);
+        console.log(propertyDetails);
         this._ps.editProperty(propertyDetails).subscribe(
           (data)=>{
-            this.handleUploadStatus();
-      
+            this.handleUploadStatus();      
           },
           (err)=>{
             this.propertyUploaded = false;
            }
         )
-
-      }
-       
+      }       
     }
   else return;  
   }
   handleUploadStatus(){
-
     this.formBasicGroup.reset();
     this.formAddressGroup.reset();
     this.formFeaturesGroup.reset();
     this.formMediaGroup.reset();
     setTimeout(() => {this.dialog.closeAll()
         
-    }, 4000);
-    
+    }, 4000);    
     let sb=  this.snackbar.open(this.notification,"close",{
       duration : 4000,
       panelClass: ['snackbar-style']
@@ -246,6 +245,4 @@ export class PropertyFormComponent implements OnInit {
         this.dialog.closeAll();
       })
   }
- 
-
 }

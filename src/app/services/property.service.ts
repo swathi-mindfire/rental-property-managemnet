@@ -63,7 +63,7 @@ export class PropertyService {
     return this._http.postProperty(`${this.url}/properties`,propertyDetails)
   }
   editProperty(propertyDetails){
-    return this._http.postProperty(`${this.url}/properties/`,propertyDetails)
+    return this._http.PUT(`${this.url}/properties`,propertyDetails)
   }
   fetchProperties():Observable<any>{  
     return this._http.GET(`${this.url}/properties`);  

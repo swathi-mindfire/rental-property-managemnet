@@ -11,17 +11,15 @@ export class HttpService {
     headers: new HttpHeaders({ 'Content-Type': 'application/x-www-form-urlencoded' })
 } 
 
-  constructor(private _http:HttpClient) { }
+constructor(private _http:HttpClient) { }
 
 POST(path: string, body: HttpParams = null, options?: any): Observable<Object> {
   return this._http.post(path, body, this._httpOptionsForPost)
       
 }
-
 getContactRequests(path,id){
    
-  return this._http.get(`${path}?id=${id}`)
-  
+  return this._http.get(`${path}?id=${id}`) 
 }
 GET(path: string,qparams?): Observable<Object> {
   if(qparams)
@@ -30,14 +28,11 @@ GET(path: string,qparams?): Observable<Object> {
   // this.router.navigate(["/propertydetails"],)
   else return this._http.get(path);
 }
-
 postProperty(path,propertyDetails){
    return this._http.post(path,propertyDetails,{responseType: 'text'})
 }
-
 PUT(path,propertyDetails){
-  this._http.put(path,propertyDetails)
-
+  return this._http.put(path,propertyDetails)
 }
 
 }
