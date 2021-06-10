@@ -173,8 +173,8 @@
     </mat-step>
     <mat-step [stepControl]="formMediaGroup"  class="media" label="Media" > 
         <form [formGroup]="formMediaGroup">
-            <div class="row ">              
-                <label for="doc" class="btn btn-outline-primary">upload Proerty Document Proof <mat-icon class="text-primary upload-icon">file_upload</mat-icon></label>
+            <div class="row " *ngIf="new">              
+                <label for="doc" class="btn btn-outline-primary" >upload Proerty Document Proof <mat-icon class="text-primary upload-icon">file_upload</mat-icon></label>
                 <input formControlName="document"  id="doc" type="file" accept=".doc,.docx,application/pdf,.pdf"  multiple style="visibility:hidden;" (change)="onSelectDoc($event)" >
                 <mat-error *ngIf="documentErr">
                     Please Upload Property Documnet Proof

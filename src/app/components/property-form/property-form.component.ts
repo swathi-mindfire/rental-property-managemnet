@@ -37,7 +37,8 @@ export class PropertyFormComponent implements OnInit {
   gym :boolean;
   pool:boolean;
   buttonName:string;
-  notification:string
+  notification:string;
+  new:boolean= true
 
   constructor(
               private _ps: PropertyService, 
@@ -47,15 +48,15 @@ export class PropertyFormComponent implements OnInit {
               private  dialogref: MatDialogRef<PropertyFormComponent>,
               @Inject(MAT_DIALOG_DATA) private data :any
               ) { 
-                if(data.property!= null)
+                if(data.property!= null){
+                  this.new = false;
                 this.propertyEditDetails = data;
-                // console.log(this.propertyEditDetails);
-                // console.log(this.propertyEditDetails.property)
-                // console.log(this.propertyEditDetails.images)
-                this._ps.handleNewAndEditProperty.subscribe((data)=>{
+                }
+                else this.new = true;
+                this._ps.handleNewAndEditProperty.subscribe((res)=>{
                   this.buttonName= "submit";
                   this.notification = "Your Property Uploaded sucessfully";
-                  if(data.new == true) this.createForm()
+                  if(res.new == true) this.createForm()
                   else 
                   { 
                     this.urls = this.propertyEditDetails.images;
@@ -66,6 +67,7 @@ export class PropertyFormComponent implements OnInit {
                     if(this.propertyEditDetails.property["pool"]== "yes") this.pool = true
                     else this.pool = false;
                     this.docProof= this.propertyEditDetails.property["document-path"];
+                    console.log(this.docProof)
                     this.documentErr= false;
                     this.buttonName= "Update";
                     this.notification = "Property Details Changed Sucessfully";
@@ -93,7 +95,7 @@ export class PropertyFormComponent implements OnInit {
       country: ['',[Validators.required]],
       state: ['',[Validators.required]],
       location: ['',[Validators.required,Validators.pattern('[A-Za-z]{2,30}')]],
-      address: ['', [Validators.required, Validators.pattern('[0-9., a-zA-Z]{1,40}')]],
+      address: ['', [Validators.required]],
       zipcode: ['', [Validators.required,Validators.pattern('[0-9]{6,8}')] ],       
     });
     this.formFeaturesGroup  = this.fb.group({
@@ -119,7 +121,7 @@ export class PropertyFormComponent implements OnInit {
       country: [this.propertyEditDetails.property['country'],[Validators.required]],
       state: [this.propertyEditDetails.property['state'],[Validators.required]],
       location: [this.propertyEditDetails.property['location'],[Validators.required,Validators.pattern('[A-Za-z]{2,30}')]],
-      address: [this.propertyEditDetails.property['address'], [Validators.required, Validators.pattern('[0-9., a-zA-Z]{1,40}')]],
+      address: [this.propertyEditDetails.property['address'], [Validators.required]],
       zipcode: [this.propertyEditDetails.property['zipcode'], [Validators.required,Validators.pattern('[0-9]{6,8}')] ],       
     });
     this.formFeaturesGroup  = this.fb.group({
@@ -129,7 +131,8 @@ export class PropertyFormComponent implements OnInit {
     });
     this.formMediaGroup  = this.fb.group({
       image: ['', Validators.required],
-      document : [this.propertyEditDetails.property['document-path'], Validators.required],
+      
+
     });
     }
   loadStates(){
@@ -194,11 +197,13 @@ export class PropertyFormComponent implements OnInit {
       for(let i in this.uploads){
         propertyDetails.append(i,this.uploads[i]);
       }
-      propertyDetails.append('doc',this.docProof)
-      propertyDetails.append('owner-id',this.owner_id);
+      if(this.new){
+        propertyDetails.append('doc',this.docProof)
+        propertyDetails.append('owner-id',this.owner_id);
+      }
+      else propertyDetails.append('property-id',this.propertyEditDetails.property.id)  
 
       if(this.data.property == null){
-        console.log(propertyDetails);
         this._ps.addNewProperty(propertyDetails).subscribe(
           (data)=>{
             this.handleUploadStatus();
@@ -211,7 +216,6 @@ export class PropertyFormComponent implements OnInit {
       }
       else{
         propertyDetails.append('property-id',this.propertyEditDetails['id']);
-        console.log(propertyDetails);
         this._ps.editProperty(propertyDetails).subscribe(
           (data)=>{
             this.handleUploadStatus();      

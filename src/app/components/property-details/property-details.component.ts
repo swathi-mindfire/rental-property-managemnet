@@ -42,7 +42,7 @@ export class PropertyDetailsComponent {
   }
  
   openEditForm(){
-    this._ps.handleNewAndEditProperty.next({new:true})
+    this._ps.handleNewAndEditProperty.next({new:false})
     const dialogRef2 = this.dialog.open(PropertyFormComponent,{
       width: '650px',disableClose: true ,
       data:{property:this.selectedProperty,images:this.imgs}

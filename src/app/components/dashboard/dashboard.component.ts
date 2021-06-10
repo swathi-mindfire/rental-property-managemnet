@@ -3,7 +3,6 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { PropertyService } from 'src/app/services/property.service';
 import { MatTableDataSource} from '@angular/material/table';
 import { MatPaginator } from '@angular/material/paginator';
-import { Observable } from 'rxjs';
 import{MatSort} from '@angular/material/sort';
 @Component({
   selector: 'app-dashboard',
@@ -13,7 +12,6 @@ import{MatSort} from '@angular/material/sort';
 export class DashboardComponent implements OnInit {
   @ViewChild(MatPaginator) paginator: MatPaginator;
   @ViewChild(MatSort) sort: MatSort; 
-  obs: Observable<any>;
   id :string;
   clicked:boolean= false
   error: boolean = false;
@@ -23,7 +21,6 @@ export class DashboardComponent implements OnInit {
   verifiedProperties:any;
   rentedProperties :any;
   vacantProperties :any;
-  contactRequests :[];
   dataSource = new MatTableDataSource([]); 
   displayedColumns = ['id', 'location', 'rent', 'state'];
   constructor(private _ps: PropertyService,private route :ActivatedRoute,private router:Router,private changeDetectorRef: ChangeDetectorRef) { 
@@ -50,20 +47,8 @@ export class DashboardComponent implements OnInit {
         }
       }
     )
-    this._ps.fetechedPropertyRequests.subscribe(
-      (data)=>{
-        if(data.fetched == true){
-          this._ps.getPropertContactRequest().subscribe(
-            (requests)=>{
-              this.contactRequests = requests;
-            }
-          )
-        }
-      }
-    )    
+    
   }
-  
-
   ngOnInit(): void {
     this._ps.selectedProperty.subscribe();
     this._ps.ownerPropClick.subscribe()

@@ -27,6 +27,9 @@ import { FilterMinrentPipe } from './pipes/filter-minrent.pipe';
 import { DashboardComponent } from './components/dashboard/dashboard.component';
 import { ContactOwnerComponent } from './components/contact-owner/contact-owner.component';
 import { PropertyFormComponent } from './components/property-form/property-form.component';
+import { PropertyContactRequestsComponent } from './components/property-contact-requests/property-contact-requests.component';
+import { TenantsListComponent } from './components/tenants-list/tenants-list.component';
+import { AddTenantComponent } from './components/add-tenant/add-tenant.component';
 
 
 @NgModule({
@@ -50,6 +53,9 @@ import { PropertyFormComponent } from './components/property-form/property-form.
     DashboardComponent,
     ContactOwnerComponent,
     PropertyFormComponent,
+    PropertyContactRequestsComponent,
+    TenantsListComponent,
+    AddTenantComponent,
 
  
   ],
