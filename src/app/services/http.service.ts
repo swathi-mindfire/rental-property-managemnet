@@ -31,8 +31,8 @@ GET(path: string,qparams?): Observable<Object> {
 postProperty(path,propertyDetails){
    return this._http.post(path,propertyDetails,{responseType: 'text'})
 }
-PUT(path,propertyDetails){
-  return this._http.put(path,propertyDetails)
+PUT(path,body){
+  return this._http.put(path,body)
 }
 
 }

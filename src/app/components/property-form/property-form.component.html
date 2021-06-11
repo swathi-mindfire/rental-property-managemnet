@@ -31,10 +31,10 @@
                         </mat-error>
                     </mat-form-field>
                 </div>
-                <div class="col-xs-12 col-md-6">                   
+                <div class="col-xs-12 col-md-6" (click)="loadBhks()">                   
                     <mat-form-field>
                         <mat-label>BHK</mat-label>
-                        <mat-select formControlName="bhk">
+                        <mat-select formControlName="bhk" >
                             <mat-option *ngFor="let b of BHKS" [value]="b">{{b}} BHK</mat-option>
                         </mat-select>
                         <mat-error *ngIf="formBasicGroup.controls.bhk.errors?.required">

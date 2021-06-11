@@ -38,7 +38,8 @@ export class PropertyFormComponent implements OnInit {
   pool:boolean;
   buttonName:string;
   notification:string;
-  new:boolean= true
+  new:boolean= true;
+
 
   constructor(
               private _ps: PropertyService, 
@@ -51,6 +52,7 @@ export class PropertyFormComponent implements OnInit {
                 if(data.property!= null){
                   this.new = false;
                 this.propertyEditDetails = data;
+                console.log(this.propertyEditDetails)
                 }
                 else this.new = true;
                 this._ps.handleNewAndEditProperty.subscribe((res)=>{
@@ -60,14 +62,17 @@ export class PropertyFormComponent implements OnInit {
                   else 
                   { 
                     this.urls = this.propertyEditDetails.images;
+                    this.uploads = this.propertyEditDetails.images;
                     if(this.propertyEditDetails.property["parking"]== "yes") this.parking = true
                     else this.parking = false;
                     if(this.propertyEditDetails.property["gym"]== "yes") this.gym = true
                     else this.gym = false;
                     if(this.propertyEditDetails.property["pool"]== "yes") this.pool = true
                     else this.pool = false;
+                    this.states = [this.propertyEditDetails.property['state']];
+                    this.BHKS = [this.propertyEditDetails.property['bhk']];
+                    
                     this.docProof= this.propertyEditDetails.property["document-path"];
-                    console.log(this.docProof)
                     this.documentErr= false;
                     this.buttonName= "Update";
                     this.notification = "Property Details Changed Sucessfully";
@@ -144,6 +149,10 @@ export class PropertyFormComponent implements OnInit {
       }
     }
   } 
+  loadBhks(){
+    this.BHKS= [1,2,3,4,5];
+
+  }
   onSelectFile(event) {
     if (event.target.files && event.target.files[0]) {
         var filesLength = event.target.files.length;
@@ -201,9 +210,11 @@ export class PropertyFormComponent implements OnInit {
         propertyDetails.append('doc',this.docProof)
         propertyDetails.append('owner-id',this.owner_id);
       }
-      else propertyDetails.append('property-id',this.propertyEditDetails.property.id)  
+      // else propertyDetails.append('property-id',this.propertyEditDetails.property.id)  
+    
 
       if(this.data.property == null){
+        
         this._ps.addNewProperty(propertyDetails).subscribe(
           (data)=>{
             this.handleUploadStatus();
@@ -215,8 +226,8 @@ export class PropertyFormComponent implements OnInit {
         )
       }
       else{
-        propertyDetails.append('property-id',this.propertyEditDetails['id']);
-        this._ps.editProperty(propertyDetails).subscribe(
+        let  p_id = this.propertyEditDetails.property.id;
+        this._ps.editProperty(propertyDetails,p_id).subscribe(
           (data)=>{
             this.handleUploadStatus();      
           },

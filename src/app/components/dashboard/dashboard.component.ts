@@ -34,7 +34,13 @@ export class DashboardComponent implements OnInit {
             this.pendingProperties = this.properties.filter(p => p["verified"]=="no");
             this.verifiedProperties =  this.properties.filter(p => p["verified"]=="yes");
             this.rentedProperties =  this.properties.filter(p => p["status"]=="rented");
-            this.vacantProperties =  this.properties.filter(p => p["status"]=="vacant")
+            this.vacantProperties =  this.properties.filter(p => p["status"]=="vacant");
+            this.vacantProperties.forEach(property => {
+            this._ps.vacantPropIds.push(property.id)              
+            });
+            this.verifiedProperties.forEach(property => {
+              this._ps.verifiedPropIds.push(property.id)              
+              });
             this.error= null;         
           })
         }

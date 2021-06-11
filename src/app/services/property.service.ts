@@ -25,6 +25,10 @@ export class PropertyService {
   editPropertyDetails = new BehaviorSubject({});
   propertyContactRequests:any;
   propertyUploadSuccess = new BehaviorSubject({uploaded:false})
+  fetchedTenantsList = new BehaviorSubject({fetched:false});
+  vacantPropIds=[];
+  verifiedPropIds=[];
+  tenantsList :any;
   constructor(private _http: HttpService) {
     this.fetchProperties().subscribe(
       (data)=>{
@@ -59,11 +63,27 @@ export class PropertyService {
           }
         )
   }
+  fetchTenantsList(id){
+    this._http.GET(`${this.url}/tenants/${id}`).subscribe(
+      (res)=>{
+            this.tenantsList=res;
+            this.fetchedTenantsList.next({fetched:true});
+     
+          },
+          (err) =>{
+            
+            this.fetchedTenantsList.next({fetched:false});
+      
+          }
+        )
+    
+
+  }
   addNewProperty(propertyDetails){
     return this._http.postProperty(`${this.url}/properties`,propertyDetails)
   }
-  editProperty(propertyDetails){
-    return this._http.PUT(`${this.url}/properties`,propertyDetails)
+  editProperty(propertyDetails,p_id){
+    return this._http.PUT(`${this.url}/properties/${p_id}`,propertyDetails)
   }
   fetchProperties():Observable<any>{  
     return this._http.GET(`${this.url}/properties`);  
