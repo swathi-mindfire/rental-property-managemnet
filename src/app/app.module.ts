@@ -30,6 +30,7 @@ import { PropertyFormComponent } from './components/property-form/property-form.
 import { PropertyContactRequestsComponent } from './components/property-contact-requests/property-contact-requests.component';
 import { TenantsListComponent } from './components/tenants-list/tenants-list.component';
 import { AddTenantComponent } from './components/add-tenant/add-tenant.component';
+import { AdminComponent } from './components/admin/admin.component';
 
 
 @NgModule({
@@ -56,6 +57,7 @@ import { AddTenantComponent } from './components/add-tenant/add-tenant.component
     PropertyContactRequestsComponent,
     TenantsListComponent,
     AddTenantComponent,
+    AdminComponent,
 
  
   ],

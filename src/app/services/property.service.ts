@@ -82,8 +82,8 @@ export class PropertyService {
   addNewProperty(propertyDetails){
     return this._http.postProperty(`${this.url}/properties`,propertyDetails)
   }
-  editProperty(propertyDetails,p_id){
-    return this._http.PUT(`${this.url}/properties/${p_id}`,propertyDetails)
+  editProperty(propertyDetails){
+    return this._http.PUT(`${this.url}/property`,propertyDetails)
   }
   fetchProperties():Observable<any>{  
     return this._http.GET(`${this.url}/properties`);  

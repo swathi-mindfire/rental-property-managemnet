@@ -210,13 +210,14 @@ export class PropertyFormComponent implements OnInit {
         propertyDetails.append('doc',this.docProof)
         propertyDetails.append('owner-id',this.owner_id);
       }
-      // else propertyDetails.append('property-id',this.propertyEditDetails.property.id)  
+      else propertyDetails.append('property-id',this.propertyEditDetails.property.id)  
     
 
       if(this.data.property == null){
         
         this._ps.addNewProperty(propertyDetails).subscribe(
           (data)=>{
+            console.log(data)
             this.handleUploadStatus();
       
           },
@@ -227,7 +228,7 @@ export class PropertyFormComponent implements OnInit {
       }
       else{
         let  p_id = this.propertyEditDetails.property.id;
-        this._ps.editProperty(propertyDetails,p_id).subscribe(
+        this._ps.editProperty(propertyDetails).subscribe(
           (data)=>{
             this.handleUploadStatus();      
           },
