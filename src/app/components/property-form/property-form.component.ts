@@ -52,7 +52,7 @@ export class PropertyFormComponent implements OnInit {
                 if(data.property!= null){
                   this.new = false;
                 this.propertyEditDetails = data;
-                console.log(this.propertyEditDetails)
+              
                 }
                 else this.new = true;
                 this._ps.handleNewAndEditProperty.subscribe((res)=>{

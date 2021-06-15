@@ -9,10 +9,17 @@ import { PropertyFormComponent } from '../property-form/property-form.component'
   styleUrls: ['./add-new-property.component.css']
 })
 export class AddNewPropertyComponent implements OnInit {
+  error :boolean = true;
   uploaded:boolean;
   constructor(public dialog: MatDialog,private _ps: PropertyService) { }
 
   ngOnInit(): void {
+    this._ps.fetechedOwnerProperties.subscribe(
+      (data)=>{
+        if(data.fetched ==  true) this.error = false
+        else this.error = true;
+      }
+    )
     this._ps.propertyUploadSuccess.subscribe((data)=>{
       this.uploaded= data.uploaded;
       if(this.uploaded == true){
@@ -31,6 +38,5 @@ export class AddNewPropertyComponent implements OnInit {
       width: '650px',disableClose: true ,
       data:{property:null,images:null}
     })
-   
   }
 }

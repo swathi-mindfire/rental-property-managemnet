@@ -44,19 +44,32 @@ export class LoginComponent implements OnInit {
     this.formData.password  = this.loginForm.value.password;
     this._us.authenticate(this.formData).subscribe(
       (res)=>{
+        if(res["role"]=="admin")  {
+          this.router.navigate(['/admin']);  
+          localStorage.setItem('role', "admin");
+          this.errormsg = null;
+          this._us.loginCheck.next({loggedIn:true})
+        }
+        else{
         localStorage.setItem('id', res['id']);
         localStorage.setItem('token', res['token']);
         localStorage.setItem('username', res['username']);
+        localStorage.setItem('role', "user")
         this._ps.fetchOwnerproperties(res['id'])
         this._ps.fetchPropertyContactRequests(res['id']);
         this._ps.fetchTenantsList(res['id']);
         this.errormsg = null;
         this._us.loginCheck.next({loggedIn:true})
         this.router.navigate(['/dashboard',res['id']]);
+        }
       },
       (err)=>{
+        if(err.status == 0){
+          this.errormsg = "Server Unavailable";
+        }
   
-        this.errormsg= err.error;       
+        else this.errormsg= err.statusText;     
+       
       }
     )   
   }

@@ -21,3 +21,13 @@
 .action{
     width: 100%;
 }
+::ng-deep .snackbar-style{
+    position: absolute;
+    top:50px;
+    right: -10px;
+    background-color: white;
+    color:rgb(62, 122, 6);
+    font-size: 16px;
+    
+    
+  }

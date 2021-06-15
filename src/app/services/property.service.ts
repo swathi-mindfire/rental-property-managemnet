@@ -26,6 +26,7 @@ export class PropertyService {
   propertyContactRequests:any;
   propertyUploadSuccess = new BehaviorSubject({uploaded:false})
   fetchedTenantsList = new BehaviorSubject({fetched:false});
+  showOwnerProperties = new BehaviorSubject({show:false});
   vacantPropIds=[];
   verifiedPropIds=[];
   tenantsList :any;

@@ -3,6 +3,7 @@ import { RouterModule, Routes } from '@angular/router';
 import { AuthGuard } from './auth.guard';
 import { AddNewPropertyComponent } from './components/add-new-property/add-new-property.component';
 import { AddTenantComponent } from './components/add-tenant/add-tenant.component';
+import { AdminComponent } from './components/admin/admin.component';
 import { DashboardComponent } from './components/dashboard/dashboard.component';
 import { HomeComponent } from './components/home/home.component';
 import { LoginComponent } from './components/login/login.component';
@@ -57,6 +58,11 @@ const routes: Routes = [
     path:'addtenant',
     component:AddTenantComponent,canActivate:[AuthGuard]
   },
+  {
+    path:'admin',
+    component:AdminComponent
+  },
+
   { 
     path: '**', 
     redirectTo: 'home', pathMatch: 'full' }

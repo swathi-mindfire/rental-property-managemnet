@@ -12,3 +12,10 @@
 .add:hover{
     transform: translate(2px);
 }
+.add-prop{
+    position: absolute;
+    top:50px;
+    left:100px;
+    width: 400px;
+    margin-bottom: 500px !important;
+}

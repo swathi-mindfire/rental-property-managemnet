@@ -60,7 +60,7 @@
                 <div> {{selectedProperty.address |titlecase}}</div>
             </div> 
         </div>
-        <div class="row  mt-4 d-flex justify-content-center" *ngIf = "!ownerProp">
+        <div class="row  mt-4 d-flex justify-content-center" *ngIf = "!ownerProp && role != 'admin'">
             <div class="col-sm-12 col-md-5 ">
                 <button mat-raised-button color="primary" class="action" (click)="openDialog()">Contact Owner</button>        
             </div> 
@@ -70,6 +70,21 @@
                 <button mat-raised-button color="primary" class="action" (click)="openEditForm()">Edit Property</button>        
             </div> 
         </div>
+        <div class="row">
+            <div class="col-5  mt-4 d-flex justify-content-center" *ngIf = "role == 'admin'">
+                <div class="col-sm-12 col-md-5 ">
+                    <a href="seldectedProperty.document" download> <button mat-raised-button color="primary" class="action"> view Document</button></a>        
+                </div> 
+            </div>
+            <div class="col-5 mt-4 d-flex justify-content-center" *ngIf = "role == 'admin'">
+                <div class="col-sm-12 col-md-5 ">
+                    <button mat-raised-button color="primary" class="action" (click)="verify()">Verify Property</button>        
+                </div> 
+            </div>
+
+            
+        </div>
+      
     </mat-card>
     
 

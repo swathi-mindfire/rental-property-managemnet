@@ -13,6 +13,7 @@ export class HeaderComponent implements OnInit {
   signedIn:boolean= false;
   id:string=null;
   username:string= null;
+  role:string= null;
   
   @Output() toggleSidenav = new EventEmitter<void>();
 
@@ -28,12 +29,15 @@ export class HeaderComponent implements OnInit {
       (data)=>{
         if(data.loggedIn==false) this.signedIn= false;
         else {
-          this.signedIn = true; 
+          this.signedIn = true;
+          this.role = localStorage.getItem('role');
+
           this.id = localStorage.getItem('id');
           this.username = localStorage.getItem('username')
         }
       }
     )
+    this._ps.showOwnerProperties.subscribe()
   }
   logout(){
     localStorage.removeItem('id')
@@ -48,7 +52,12 @@ export class HeaderComponent implements OnInit {
   }
   handleHome(){
     this._ps.propertySearchFilters.next({});
+    this._ps.ownerPropClick.next({ownerProp:false})
 
+  }
+  handleAddNew(){
+    this._ps.showOwnerProperties.next({show:true})
+    this._ps.ownerPropClick.next({ownerProp:true})
   }
 
 }

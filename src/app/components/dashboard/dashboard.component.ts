@@ -46,7 +46,7 @@ export class DashboardComponent implements OnInit {
         }
       }
     )
-    this._ps.propertiesGetError.subscribe(
+    this._ps.ownerPropertiesGetError.subscribe(
       (data)=>{
         if(data.error== true){
           this.error= true;

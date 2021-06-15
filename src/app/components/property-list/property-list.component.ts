@@ -4,10 +4,6 @@ import{Property} from 'src/app/model/property';
 import { Observable } from 'rxjs';
 import { MatTableDataSource} from '@angular/material/table';
 import { MatPaginator } from '@angular/material/paginator';
-
-
-
-
 @Component({
   selector: 'app-property-list',
   templateUrl: './property-list.component.html',
@@ -21,30 +17,62 @@ export class PropertyListComponent implements OnInit,OnDestroy  {
   propertiesSelected:Property[]=[];
   @ViewChild(MatPaginator) paginator: MatPaginator;
   obs: Observable<any>;
-
   dataSource = new MatTableDataSource([]);   
   constructor(private _ps: PropertyService, private changeDetectorRef: ChangeDetectorRef) {
-    this._ps.fetechedProperties.subscribe(
+    _ps.showOwnerProperties.subscribe(
       (data)=>{
-        if(data.fetched==true){
-          this._ps.getAllProperties().subscribe((properties)=>{
-            this.properties= properties;
-            this.propertiesSelected=properties;
-            this.dataSource = new MatTableDataSource(this.propertiesSelected);
-            this.dataSource.paginator = this.paginator;
-            this.obs = this.dataSource.connect();
-            this.error=null;
-          })
+        if(data.show == true) {
+          this._ps.fetechedOwnerProperties.subscribe(
+            (data)=>{
+              if(data.fetched==true){
+                this._ps.getOwnerProperties().subscribe((properties)=>{
+                  this.properties = properties;
+                  this.propertiesSelected= properties;
+                  this.dataSource = new MatTableDataSource(this.propertiesSelected);
+                  this.dataSource.paginator = this.paginator;
+                  this.obs = this.dataSource.connect();
+                  this.error= null;         
+                })
+              }
+            
+            }
+          )
+          this._ps.ownerPropertiesGetError.subscribe(
+            (data)=>{
+              if(data.error== true){
+                this.error= true;
+              }
+            }
+          )   
+
         }
-      }
+        else{
+          this._ps.fetechedProperties.subscribe(
+            (data)=>{
+              if(data.fetched==true){
+                this._ps.getAllProperties().subscribe((properties)=>{
+                  this.properties= properties;
+                  this.propertiesSelected=properties;
+                  this.dataSource = new MatTableDataSource(this.propertiesSelected);
+                  this.dataSource.paginator = this.paginator;
+                  this.obs = this.dataSource.connect();
+                  this.error=null;
+                })
+              }
+            }
+          )
+          this._ps.propertiesGetError.subscribe(
+            (data)=>{
+              if(data.error== true){
+                this.error= true;
+              }
+            }
+          )    
+
+        }
+     }
     )
-    this._ps.propertiesGetError.subscribe(
-      (data)=>{
-        if(data.error== true){
-          this.error= true;
-        }
-      }
-    )    
+    
   }
   ngOnInit(): void {
     this.changeDetectorRef.detectChanges();  
