@@ -8,17 +8,17 @@
                 <div class="row mt-3">
                     <mat-form-field  class="full-width">
                         <mat-label>Property Id</mat-label>
-                        <mat-select formControlName="propertyId">
+                        <mat-select formControlName="property_id">
                             <mat-option *ngFor="let id of pIds" [value]="id">{{id}}</mat-option>
                         </mat-select>
-                        <mat-error *ngIf="tenantForm.controls.propertyId.errors?.required">
+                        <mat-error *ngIf="tenantForm.controls.property_id.errors?.required">
                             Please Select Property Id Of Tenant
                         </mat-error>
                     </mat-form-field>
                 </div>      
                 <div class="row mt-3">
                     <mat-form-field class="full-width">
-                        <mat-label>Enter Tenant name</mat-label>
+                        <mat-label>Tenant name</mat-label>
                         <input matInput color="primary" formControlName="name" >
                         <mat-error *ngIf="tenantForm.controls.name.errors?.required">
                             Please Provide Tenant Name
@@ -30,7 +30,7 @@
                 </div>
                 <div class="row mt-3">      
                     <mat-form-field class="full-width">
-                        <mat-label>Enter Tenant Mobile Number</mat-label>
+                        <mat-label>Tenant mobile</mat-label>
                         <input matInput formControlName="mobile">
                         <mat-error *ngIf="tenantForm.controls.mobile.errors?.required">
                             Enter Tenant Number
@@ -42,7 +42,7 @@
                 </div>
                 <div class="row mt-3">    
                     <mat-form-field class="full-width">
-                        <mat-label>Enter Tenant Mail Id </mat-label>
+                        <mat-label>Tenant mail id </mat-label>
                         <input  matInput   formControlName ="email">
                         <mat-error *ngIf="tenantForm.controls.email.errors?.required">
                             Please Provide Tenant Mail Id
@@ -54,8 +54,8 @@
                 </div>      
             </form> 
             <div  class="d-flex justify-content-around mt-4">                 
-                <button mat-raised-button color="primary" class="w-25" >Cancel</button>                  
-                <button mat-raised-button color="primary" class=" w-25"  >Add</button>                                             
+                <button mat-raised-button color="primary" class="w-25"(click)=reset() >Reset</button>                  
+                <button mat-raised-button color="primary" class=" w-25" (click)="handleSubmit()" >Add</button>                                             
             </div>
         </mat-card-content>
     </mat-card>    

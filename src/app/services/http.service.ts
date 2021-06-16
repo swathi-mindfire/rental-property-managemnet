@@ -32,7 +32,7 @@ postProperty(path,propertyDetails){
    return this._http.post(path,propertyDetails,{responseType: 'text'})
 }
 PUT(path,body){
-  return this._http.post(path,body)
+  return this._http.put(path,body)
 }
 
 }

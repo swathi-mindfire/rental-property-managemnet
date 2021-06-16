@@ -1,19 +1,32 @@
-<!-- <div class="mt-4  container" *ngIf="propertiesSelected">
-    <div class="row">
-      <div class="col-sm-12  col-md-6 col-lg-4 mb-3" *ngFor="let property of obs| async" matSort>
-        <app-property-card [property]="property"></app-property-card>
-        </div>
+<div class="row  mt-5 mx-auto data-table"  [hidden]= "!clicked" >
+  <div class="example-container"> 
+    <mat-table [dataSource]="dataSource" matSort>
+      <ng-container matColumnDef="property_id">
+        <mat-header-cell *matHeaderCellDef mat-sort-header >Property_Id </mat-header-cell>
+        <mat-cell *matCellDef="let tenant"> {{tenant.property_id}} </mat-cell>
+      </ng-container>
+      <ng-container matColumnDef="name">
+        <mat-header-cell *matHeaderCellDef mat-sort-header>Tenant_ Name </mat-header-cell>
+        <mat-cell *matCellDef="let tenant"> {{tenant.name}} </mat-cell>
+      </ng-container>
+      <ng-container matColumnDef="mobile">
+        <mat-header-cell *matHeaderCellDef mat-sort-header > Tenant_ Mobile </mat-header-cell>
+        <mat-cell *matCellDef="let tenant"> {{tenant.mobile}} </mat-cell>
+      </ng-container>
+      <ng-container matColumnDef="email">
+        <mat-header-cell *matHeaderCellDef mat-sort-header >Tenant_ Mail </mat-header-cell>
+        <mat-cell *matCellDef="let tenant"> {{tenant.email}} </mat-cell>
+      </ng-container>  
+      <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
+      <mat-row *matRowDef="let tenant; columns: displayedColumns;"></mat-row>
+    </mat-table>
+    <div [hidden] ="!clicked" class="matpage">
+      <mat-paginator [pageSizeOptions]="[5]" showFirstLastButtons></mat-paginator>
     </div>
-  </div> 
-  <div class="mt-5" *ngIf="!propertiesSelected && !error">
-      <mat-spinner color="primary" [diameter]="70" class="mx-auto"></mat-spinner>
+  
   </div>
-  <div *ngIf = "error" class="text-center text-info text-primary mt-4">
-    Error while Fetching Properties
-  </div>
-<div *ngIf="filteredEmpty" class="text-center text-info">
-  No search results
 </div>
-<div [hidden] ="!propertiesSelected || filteredEmpty" class="matpage ">
-  <mat-paginator [pageSizeOptions]="[6]" showFirstLastButtons></mat-paginator>
-</div> -->
+<div class="mt-5" *ngIf="!tenantsList && !error">
+  <mat-spinner color="primary" [diameter]="70" class="mx-auto"></mat-spinner>
+</div>
+

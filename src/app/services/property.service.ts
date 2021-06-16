@@ -71,8 +71,7 @@ export class PropertyService {
             this.fetchedTenantsList.next({fetched:true});
      
           },
-          (err) =>{
-            
+          (err) =>{            
             this.fetchedTenantsList.next({fetched:false});
       
           }
@@ -85,6 +84,9 @@ export class PropertyService {
   }
   editProperty(propertyDetails){
     return this._http.PUT(`${this.url}/property`,propertyDetails)
+  }
+  addTenant(tenantDetails){
+    return this._http.postProperty(`${this.url}/tenants`,tenantDetails)
   }
   fetchProperties():Observable<any>{  
     return this._http.GET(`${this.url}/properties`);  

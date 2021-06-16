@@ -1,7 +1,8 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit,ViewChild, ChangeDetectorRef } from '@angular/core';
 import { PropertyService } from 'src/app/services/property.service';
 import { MatTableDataSource} from '@angular/material/table';
 import { MatPaginator } from '@angular/material/paginator';
+import{MatSort} from '@angular/material/sort';
 
 @Component({
   selector: 'app-tenants-list',
@@ -9,14 +10,18 @@ import { MatPaginator } from '@angular/material/paginator';
   styleUrls: ['./tenants-list.component.css']
 })
 export class TenantsListComponent implements OnInit {
+  @ViewChild(MatPaginator) paginator: MatPaginator;
+  @ViewChild(MatSort) sort: MatSort; 
+  dataSource = new MatTableDataSource([]); 
+  displayedColumns = ['name', 'mobile', 'email','property_id'];
 
   verifiedPropIds=[];
   vacantPropeIds=[];
-
+  clicked:boolean = false;
   error :boolean = null;
   errormsg ="";
   tenantsList = [];
- propertyTenantDetails={};
+  propertyTenantDetails={};
   constructor(private _ps:PropertyService) { 
     this._ps.fetchedTenantsList.subscribe(
       (data)=>{
@@ -29,9 +34,11 @@ export class TenantsListComponent implements OnInit {
           }
           else{
           console.log(this.tenantsList)
-          this.tenantsList.forEach(tenant => { console.log(tenant["id"])
-            
-          });
+          this.dataSource = new MatTableDataSource(this.tenantsList);
+          this.dataSource.paginator = this.paginator;
+          this.error= false;
+          this.clicked = true;
+        
         }
  
         }
@@ -44,6 +51,10 @@ export class TenantsListComponent implements OnInit {
          
 
   ngOnInit(): void {
+  }
+  ngAfterViewInit() {
+    this.dataSource.paginator = this.paginator;
+    this.dataSource.sort = this.sort;
   }
 
 }

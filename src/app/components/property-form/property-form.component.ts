@@ -203,9 +203,9 @@ export class PropertyFormComponent implements OnInit {
         else value = "no";
         propertyDetails.append(key,value) 
       });
-      for(let i in this.uploads){
-        propertyDetails.append(i,this.uploads[i]);
-      }
+      // for(let i in this.uploads){
+      //   propertyDetails.append(i,this.uploads[i]);
+      // }
       if(this.new){
         propertyDetails.append('doc',this.docProof)
         propertyDetails.append('owner-id',this.owner_id);
