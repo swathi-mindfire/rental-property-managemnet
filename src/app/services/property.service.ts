@@ -82,8 +82,8 @@ export class PropertyService {
   addNewProperty(propertyDetails){
     return this._http.postProperty(`${this.url}/properties`,propertyDetails)
   }
-  editProperty(propertyDetails){
-    return this._http.PUT(`${this.url}/property`,propertyDetails)
+  editProperty(propertyDetails,id){
+    return this._http.PUT(`${this.url}/property/${id}`,propertyDetails)
   }
   addTenant(tenantDetails){
     return this._http.postProperty(`${this.url}/tenants`,tenantDetails)

@@ -189,32 +189,26 @@ export class PropertyFormComponent implements OnInit {
       && !this.documentErr
       && !this.imagesErr
     ){
-      let propertyDetails = new FormData();
-      Object.keys(this.formBasicGroup.controls).forEach(key => {
-        propertyDetails.append(key,this.formBasicGroup.get(key).value) 
-      });
-      Object.keys(this.formAddressGroup.controls).forEach(key => {
-        propertyDetails.append(key,this.formAddressGroup.get(key).value) 
-      });
-      Object.keys(this.formFeaturesGroup.controls).forEach(key => {
-        let value =""
-        if(this.formFeaturesGroup.get(key).value == true)
-          value = "yes";
-        else value = "no";
-        propertyDetails.append(key,value) 
-      });
-      // for(let i in this.uploads){
-      //   propertyDetails.append(i,this.uploads[i]);
-      // }
-      if(this.new){
+      if(this.data.property == null){
+        let propertyDetails = new FormData();
+        Object.keys(this.formBasicGroup.controls).forEach(key => {
+          propertyDetails.append(key,this.formBasicGroup.get(key).value) 
+        });
+        Object.keys(this.formAddressGroup.controls).forEach(key => {
+          propertyDetails.append(key,this.formAddressGroup.get(key).value) 
+        });
+        Object.keys(this.formFeaturesGroup.controls).forEach(key => {
+          let value =""
+          if(this.formFeaturesGroup.get(key).value == true)
+            value = "yes";
+          else value = "no";
+          propertyDetails.append(key,value) 
+        });
+        for(let i in this.uploads){
+          propertyDetails.append(i,this.uploads[i]);
+        }
         propertyDetails.append('doc',this.docProof)
         propertyDetails.append('owner-id',this.owner_id);
-      }
-      else propertyDetails.append('property-id',this.propertyEditDetails.property.id)  
-    
-
-      if(this.data.property == null){
-        
         this._ps.addNewProperty(propertyDetails).subscribe(
           (data)=>{
             console.log(data)
@@ -225,10 +219,86 @@ export class PropertyFormComponent implements OnInit {
             this.propertyUploaded = false;
            }
         )
+
       }
+      // let propertyDetails = new FormData();
+      // Object.keys(this.formBasicGroup.controls).forEach(key => {
+      //   propertyDetails.append(key,this.formBasicGroup.get(key).value) 
+      // });
+      // Object.keys(this.formAddressGroup.controls).forEach(key => {
+      //   propertyDetails.append(key,this.formAddressGroup.get(key).value) 
+      // });
+      // Object.keys(this.formFeaturesGroup.controls).forEach(key => {
+      //   let value =""
+      //   if(this.formFeaturesGroup.get(key).value == true)
+      //     value = "yes";
+      //   else value = "no";
+      //   propertyDetails.append(key,value) 
+      // });
+      // for(let i in this.uploads){
+      //   propertyDetails.append(i,this.uploads[i]);
+      // }
+      // if(this.new){
+      //   propertyDetails.append('doc',this.docProof)
+      //   propertyDetails.append('owner-id',this.owner_id);
+      // }
+      // else propertyDetails.append('property-id',this.propertyEditDetails.property.id)  
+    
+
+      // if(this.data.property == null){
+        
+      //   this._ps.addNewProperty(propertyDetails).subscribe(
+      //     (data)=>{
+      //       console.log(data)
+      //       this.handleUploadStatus();
+      
+      //     },
+      //     (err)=>{
+      //       this.propertyUploaded = false;
+      //      }
+      //   )
+      // }
       else{
+        let propEditDetails  = {};
         let  p_id = this.propertyEditDetails.property.id;
-        this._ps.editProperty(propertyDetails).subscribe(
+        if(this.formBasicGroup.controls.type.value != this.propertyEditDetails.property['type'])
+           propEditDetails['type'] =  this.formBasicGroup.controls.type.value;
+        if(this.formBasicGroup.controls.rent.value != this.propertyEditDetails.property['rent'])
+           propEditDetails['rent'] =  this.formBasicGroup.controls.rent.value;
+        if(this.formBasicGroup.controls.bhk.value != this.propertyEditDetails.property['bhk'])
+           propEditDetails['bhk'] =  this.formBasicGroup.controls.bhk.value;
+        if(this.formBasicGroup.controls.area.value != this.propertyEditDetails.property['area'])
+           propEditDetails['area'] =  this.formBasicGroup.controls.area.value;
+        if(this.formBasicGroup.controls.status.value != this.propertyEditDetails.property['status'])
+           propEditDetails['status'] =  this.formBasicGroup.controls.status.value;
+        if(this.formBasicGroup.controls.baths.value != this.propertyEditDetails.property['baths'])
+           propEditDetails['baths'] =  this.formBasicGroup.controls.baths.value;
+        if(this.formAddressGroup.controls.country.value != this.propertyEditDetails.property['country'])
+           propEditDetails['country'] =  this.formAddressGroup.controls.country.value;
+        if(this.formAddressGroup.controls.state.value != this.propertyEditDetails.property['state'])
+           propEditDetails['state'] =  this.formAddressGroup.controls.state.value;
+        if(this.formAddressGroup.controls.location.value != this.propertyEditDetails.property['location'])
+           propEditDetails['location'] =  this.formAddressGroup.controls.location.value;
+        if(this.formAddressGroup.controls.address.value != this.propertyEditDetails.property['adress'])
+           propEditDetails['address'] =  this.formAddressGroup.controls.address.value;
+        if(this.formAddressGroup.controls.zipcode.value != this.propertyEditDetails.property['zipcode'])
+           propEditDetails['zipcode'] =  this.formAddressGroup.controls.zipcode.value;
+        let parking =""
+        if(this.formFeaturesGroup.get('parking').value == true) parking = "yes";
+        else parking = "no";
+        if(parking != this.propertyEditDetails.property['parking'])
+           propEditDetails['parking'] = parking
+        let gym =""
+        if(this.formFeaturesGroup.get('gym').value == true) gym = "yes";
+        else gym = "no";
+        if(gym != this.propertyEditDetails.property['gym'])
+           propEditDetails['gym'] = gym
+        let pool =""
+        if(this.formFeaturesGroup.get('pool').value == true)  pool = "yes";
+        else pool = "no";
+        if(pool != this.propertyEditDetails.property['pool'])
+           propEditDetails['pool'] = pool
+        this._ps.editProperty(propEditDetails,p_id).subscribe(
           (data)=>{
             this.handleUploadStatus();      
           },
@@ -261,4 +331,5 @@ export class PropertyFormComponent implements OnInit {
         this.dialog.closeAll();
       })
   }
+ 
 }

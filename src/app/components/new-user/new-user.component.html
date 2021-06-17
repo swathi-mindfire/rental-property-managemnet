@@ -46,7 +46,7 @@
                     <mat-icon class="field-icon"> lock</mat-icon>            
                     <mat-form-field class="full-width" appearance="outline">
                         <mat-label>Password</mat-label>
-                        <input formControlName ="password" matInput [type] = "hide?'password' :'text'" required >
+                        <input formControlName ="password" #pwd  matInput [type] = "hide?'password' :'text'" required >
                         <button mat-icon-button matSuffix (click)="hide = !hide"                       >
                             <mat-icon>{{hide?'visibility_off':'visibility'}}</mat-icon>
                         </button>
@@ -62,18 +62,22 @@
                     <mat-icon class="field-icon"> lock</mat-icon>            
                     <mat-form-field class="full-width" appearance="outline">
                         <mat-label>Confirm Password</mat-label>
-                        <input formControlName ="confirmPassword" matInput [type] = "hide?'password' :'text'" required >
+                        <input formControlName ="confirmPassword" #cpwd matInput [type] = "hide?'password' :'text'" required >
                         <button mat-icon-button matSuffix (click)="hide = !hide"                       >
                             <mat-icon>{{hide?'visibility_off':'visibility'}}</mat-icon>
                         </button>
+                   
                         <mat-error *ngIf = "h.confirmPassword.errors?.required">
                             Please Confirm Password
-                        </mat-error>
-                        <mat-error *ngIf = "h.confirmPassword.errors?.minlength">
-                            Invalid Password
-                        </mat-error>
+                        </mat-error>                                            
                     </mat-form-field>
-                </div>                
+                    <div *ngIf = "pwd.value !==cpwd.value" class="mat-error">
+                        Passwords Not Matched
+                    </div>                
+                </div>  
+        {{h.confirmPassword.touched}}
+        {{h.confirmPassword.dirty}}
+        {{pwd.value !=cpwd.value}}
                 <div  class="d-flex justify-content-around">                 
                     <button mat-raised-button color="primary">Register</button>                  
                     <button mat-raised-button color="primary" (click)="onReset()">Reset</button>                                             
