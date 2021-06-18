@@ -73,12 +73,12 @@
         <div class="row">
             <div class="col-5  mt-4 d-flex justify-content-center" *ngIf = "role == 'admin'">
                 <div class="col-sm-12 col-md-5 ">
-                    <a href="seldectedProperty.document" download> <button mat-raised-button color="primary" class="action"> view Document</button></a>        
+                    <a [href]="documentUrl" download> <button mat-raised-button color="primary" class="action"> view Document</button></a>        
                 </div> 
             </div>
             <div class="col-5 mt-4 d-flex justify-content-center" *ngIf = "role == 'admin'">
                 <div class="col-sm-12 col-md-5 ">
-                    <button mat-raised-button color="primary" class="action" (click)="verify()">Verify Property</button>        
+                    <button mat-raised-button color="primary" class="action" (click)="handleVerify()">Verify Property</button>        
                 </div> 
             </div>
 

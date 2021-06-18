@@ -6,8 +6,7 @@ import { MatTableDataSource} from '@angular/material/table';
 import { MatPaginator } from '@angular/material/paginator';
 import{MatSort} from '@angular/material/sort';
 import { environment } from 'src/environments/environment';
-
-
+import { AdminService } from 'src/app/services/admin.service';
 @Component({
   selector: 'app-admin',
   templateUrl: './admin.component.html',
@@ -23,26 +22,30 @@ export class AdminComponent implements OnInit {
   displayedColumns = ['id', 'location', 'rent', 'state'];
   error:boolean = null;
   clicked:boolean= false;
-
-  constructor(private _http: HttpClient,private _ps: PropertyService,private router:Router,private changeDetectorRef: ChangeDetectorRef) { }
-
+  constructor(private _http: HttpClient,
+    private _ps: PropertyService,
+    private _as: AdminService,
+    private router:Router,
+    private changeDetectorRef: ChangeDetectorRef) {
+      this._as.fetechedVrificationProperties.subscribe(
+        (data)=>{
+          if(data.fetched == true) {
+            this._as.getVerificationProperties().subscribe(
+              (properties)=>{
+                this.vProperties = properties;
+                this.dataSource = new MatTableDataSource(this.vProperties);
+                this.dataSource.paginator = this.paginator;
+              }
+            )
+            this.error = false;
+          }
+          else this.error = true;
+        },
+      )
+     }
   ngOnInit(): void {
-    this._http.get(`${this.url}/verificationproperties`).subscribe(
-      (data) =>{
-        this.vProperties = data;
-        this.dataSource = new MatTableDataSource(this.vProperties);
-        this.dataSource.paginator = this.paginator;
-        this.error= false;
-      },
-      (err)=>{
-        this.error= true; 
-      }
-    )
-      this._ps.selectedProperty.subscribe();
-    
-      this.changeDetectorRef.detectChanges(); 
-     
-   
+      this._ps.selectedProperty.subscribe();    
+      this.changeDetectorRef.detectChanges();    
   }
   ngAfterViewInit() {
     this.dataSource.paginator = this.paginator;

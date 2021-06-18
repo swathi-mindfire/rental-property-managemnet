@@ -7,14 +7,14 @@ import { Observable } from 'rxjs';
   providedIn: 'root'
 })
 export class HttpService {
-  private _httpOptionsForPost = {
-    headers: new HttpHeaders({ 'Content-Type': 'application/x-www-form-urlencoded' })
-} 
+//   private _httpOptionsForPost = {
+//     headers: new HttpHeaders({ 'Content-Type': 'application/x-www-form-urlencoded' })
+// } 
 
 constructor(private _http:HttpClient) { }
 
-POST(path: string, body: HttpParams = null, options?: any): Observable<Object> {
-  return this._http.post(path, body, this._httpOptionsForPost)
+POST(path: string, body): Observable<Object> {
+  return this._http.post(path, body)
       
 }
 getContactRequests(path,id){
@@ -25,7 +25,6 @@ GET(path: string,qparams?): Observable<Object> {
   if(qparams)
   return this._http.get(path, {params: qparams});
 
-  // this.router.navigate(["/propertydetails"],)
   else return this._http.get(path);
 }
 postProperty(path,propertyDetails){

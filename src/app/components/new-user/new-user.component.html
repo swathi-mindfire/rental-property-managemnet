@@ -65,19 +65,15 @@
                         <input formControlName ="confirmPassword" #cpwd matInput [type] = "hide?'password' :'text'" required >
                         <button mat-icon-button matSuffix (click)="hide = !hide"                       >
                             <mat-icon>{{hide?'visibility_off':'visibility'}}</mat-icon>
-                        </button>
-                   
+                        </button>                   
                         <mat-error *ngIf = "h.confirmPassword.errors?.required">
                             Please Confirm Password
                         </mat-error>                                            
-                    </mat-form-field>
-                    <div *ngIf = "pwd.value !==cpwd.value" class="mat-error">
-                        Passwords Not Matched
-                    </div>                
-                </div>  
-        {{h.confirmPassword.touched}}
-        {{h.confirmPassword.dirty}}
-        {{pwd.value !=cpwd.value}}
+                    </mat-form-field>                                    
+                </div> 
+                <div *ngIf = "cpwd.touched && pwd.touched && pwd.value !==cpwd.value" class="mat-error pwd-match">
+                    Passwords not matched
+                </div> 
                 <div  class="d-flex justify-content-around">                 
                     <button mat-raised-button color="primary">Register</button>                  
                     <button mat-raised-button color="primary" (click)="onReset()">Reset</button>                                             

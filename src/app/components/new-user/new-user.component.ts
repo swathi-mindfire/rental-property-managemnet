@@ -1,6 +1,11 @@
 import { Component, OnInit } from '@angular/core';
 import{FormBuilder,FormControl,FormGroup,Validators} from '@angular/forms';
-import{passwordChecker} from './../../custom-validators/password-checker'
+import { UserService } from 'src/app/services/user.service';
+import{passwordChecker} from './../../custom-validators/password-checker';
+import { MatSnackBar } from '@angular/material/snack-bar';
+import { Router } from '@angular/router';
+
+
 
 @Component({
   selector: 'app-new-user',
@@ -13,7 +18,11 @@ export class NewUserComponent implements OnInit {
   registerForm:FormGroup;
   submitted = false;
   hide= true;
-  constructor(private formbuilder:FormBuilder){
+  constructor(private formbuilder:FormBuilder,
+    private _us : UserService, 
+    private snackbar:MatSnackBar,
+    private _router :Router
+    ){
 
   }
   ngOnInit(){
@@ -27,7 +36,6 @@ export class NewUserComponent implements OnInit {
        
 
       });
-      console.log(this.registerForm)
     }
   
     onReset(){
@@ -36,14 +44,42 @@ export class NewUserComponent implements OnInit {
       
     }
     onSubmit(){
-      this.submitted = true;
-      if( this.registerForm.invalid)
-      return
+      if(this.registerForm.valid){
+        this.submitted = true;
+        let userDetails = new FormData()
+        Object.keys(this.registerForm.controls).forEach(key=>{
+          if(key!=="confirmPassword")
+          userDetails.append(key,this.registerForm.get(key).value)
+        })
+        this._us.register(userDetails).subscribe(
+          (res)=>{
+            let sb=  this.snackbar.open("Registration Successfull","close",{
+              duration : 3000,
+              panelClass: ['snackbar-style']
+              });
+              sb.onAction().subscribe(()=>{
+                this._router.navigate(['/login'])
+                sb.dismiss();
+        
+              })
+              sb.afterDismissed().subscribe(()=>{
+                this._router.navigate(['/login'])
+              })
+
+          },
+          (err)=>{
+            let sb=  this.snackbar.open(err.error,"close",{
+              duration : 3000,
+              panelClass: ['snackbar-style']
+              });
+            return
+
+          }
+        )
+      }
+      else return
     
     }
-  ngOnDestroy(){
-
-  }
   get h(){
     return this.registerForm.controls;
   }

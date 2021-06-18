@@ -39,6 +39,8 @@ export class PropertyFormComponent implements OnInit {
   buttonName:string;
   notification:string;
   new:boolean= true;
+  newImageUrls =[];
+  newUploads = [];
 
 
   constructor(
@@ -157,12 +159,23 @@ export class PropertyFormComponent implements OnInit {
     if (event.target.files && event.target.files[0]) {
         var filesLength = event.target.files.length;
         for (let i = 0; i < filesLength; i++) {
-          this.uploads.push(event.target.files[i])
-                var reader = new FileReader();
-                reader.onload = (event:any) => {
-                   this.urls.push(event.target.result);
-                  }
-          reader.readAsDataURL(event.target.files[i]);
+          if(this.new){
+            this.uploads.push(event.target.files[i])
+            var reader = new FileReader();
+            reader.onload = (event:any) => {
+            this.urls.push(event.target.result);
+            }
+            reader.readAsDataURL(event.target.files[i]);
+          }
+          else{
+            this.newUploads.push(event.target.files[i])
+            var reader = new FileReader();
+            reader.onload = (event:any) => {
+            this.newImageUrls.push(event.target.result);
+            }
+            reader.readAsDataURL(event.target.files[i]);
+
+          }
         }
     }
   }
@@ -176,6 +189,9 @@ export class PropertyFormComponent implements OnInit {
 
   deleteImg(i){
     this.urls.splice(i,1)
+  }
+  deleteNewImg(i){
+    this.newImageUrls.splice(i,1)
   }
   deleteAllImgs(){
     this.urls= []
@@ -221,43 +237,6 @@ export class PropertyFormComponent implements OnInit {
         )
 
       }
-      // let propertyDetails = new FormData();
-      // Object.keys(this.formBasicGroup.controls).forEach(key => {
-      //   propertyDetails.append(key,this.formBasicGroup.get(key).value) 
-      // });
-      // Object.keys(this.formAddressGroup.controls).forEach(key => {
-      //   propertyDetails.append(key,this.formAddressGroup.get(key).value) 
-      // });
-      // Object.keys(this.formFeaturesGroup.controls).forEach(key => {
-      //   let value =""
-      //   if(this.formFeaturesGroup.get(key).value == true)
-      //     value = "yes";
-      //   else value = "no";
-      //   propertyDetails.append(key,value) 
-      // });
-      // for(let i in this.uploads){
-      //   propertyDetails.append(i,this.uploads[i]);
-      // }
-      // if(this.new){
-      //   propertyDetails.append('doc',this.docProof)
-      //   propertyDetails.append('owner-id',this.owner_id);
-      // }
-      // else propertyDetails.append('property-id',this.propertyEditDetails.property.id)  
-    
-
-      // if(this.data.property == null){
-        
-      //   this._ps.addNewProperty(propertyDetails).subscribe(
-      //     (data)=>{
-      //       console.log(data)
-      //       this.handleUploadStatus();
-      
-      //     },
-      //     (err)=>{
-      //       this.propertyUploaded = false;
-      //      }
-      //   )
-      // }
       else{
         let propEditDetails  = {};
         let  p_id = this.propertyEditDetails.property.id;
@@ -297,15 +276,21 @@ export class PropertyFormComponent implements OnInit {
         if(this.formFeaturesGroup.get('pool').value == true)  pool = "yes";
         else pool = "no";
         if(pool != this.propertyEditDetails.property['pool'])
-           propEditDetails['pool'] = pool
+           propEditDetails['pool'] = pool;
+        if(this.newUploads) {
+          let newImages = new FormData()  
+          for(let i in this.newUploads){
+          newImages.append(i,this.newUploads[i]);          
+          }
+        }        
         this._ps.editProperty(propEditDetails,p_id).subscribe(
           (data)=>{
-            this.handleUploadStatus();      
+            this.handleUploadStatus();    
           },
           (err)=>{
             this.propertyUploaded = false;
-           }
-        )
+            }
+        )        
       }       
     }
   else return;  

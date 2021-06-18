@@ -76,14 +76,12 @@ export class PropertyService {
       
           }
         )
-    
-
   }
   addNewProperty(propertyDetails){
     return this._http.postProperty(`${this.url}/properties`,propertyDetails)
   }
   editProperty(propertyDetails,id){
-    return this._http.PUT(`${this.url}/property/${id}`,propertyDetails)
+    return this._http.PUT(`${this.url}/properties/${id}`,propertyDetails)
   }
   addTenant(tenantDetails){
     return this._http.postProperty(`${this.url}/tenants`,tenantDetails)
@@ -113,7 +111,6 @@ export class PropertyService {
       (res)=>{
         this.propertyContactRequests = res;
         this.fetechedPropertyRequests.next({fetched:true})
-
       },
       (err)=>{this.propertyContactRequests = []}
     )

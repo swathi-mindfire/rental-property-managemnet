@@ -195,6 +195,12 @@
                     <img [src]="url" alt="Image not found" height="150px" width="150px" class="mb-3">
                     <button mat-mini-fab class="text-danget del-btn " (click)="deleteImg(i)"><mat-icon>delete</mat-icon></button>
                 </div>
+                <div  *ngIf= "!new">
+                    <div *ngFor="let url of newImageUrls;index as i "  class="col-lg-4 col-sm-6 col-12 p-2">                
+                        <img [src]="url" alt="Image not found" height="150px" width="150px" class="mb-3">
+                        <button mat-mini-fab class="text-danget del-btn " (click)="deleteNewImg(i)"><mat-icon>delete</mat-icon></button>
+                    </div>
+                </div>                               
             </div>          
             <div class="row mt-4 mx-auto">
                 <div class="col text-center">
